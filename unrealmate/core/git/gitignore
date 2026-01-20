@@ -1,1 +1,33 @@
-  py
+import os
+from pathlib import Path
+from rich.console import Console
+
+console = Console()
+
+def get_template_path() -> Path:
+    """Get the path to the gitignore template"""
+    return Path(__file__).parent. parent. parent / "templates" / "gitignore.template"
+
+def generate_gitignore(target_path: str = ".", force: bool = False) -> bool:
+    """Generate .gitignore file for Unreal Engine project"""
+    target = Path(target_path) / ". gitignore"
+    template = get_template_path()
+    
+    # Check if . gitignore already exists
+    if target.exists() and not force:
+        console. print("[yellow]⚠️  .gitignore already exists![/yellow]")
+        console.print("[dim]Use --force to overwrite[/dim]")
+        return False
+    
+    # Read template
+    if not template.exists():
+        console.print("[red]❌ Template file not found![/red]")
+        return False
+    
+    content = template.read_text()
+    
+    # Write . gitignore
+    target.write_text(content)
+    console.print("[bold green]✅ .gitignore created successfully![/bold green]")
+    console.print(f"[dim]Location: {target. absolute()}[/dim]")
+    return True

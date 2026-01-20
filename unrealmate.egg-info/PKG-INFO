@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: unrealmate
+Version: 0.1.0
+Summary: All-in-one CLI toolkit for Unreal Engine developers
+Author: gktrk363
+License: MIT
+Project-URL: Homepage, https://github.com/gktrk363/unrealmate
+Project-URL: Repository, https://github.com/gktrk363/unrealmate
+Keywords: unreal,unreal-engine,gamedev,cli,toolkit
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language ::  Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer>=0.9.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: toml>=0.10.2
+Dynamic: license-file
+
+# unrealmate
+All-in-one CLI toolkit for Unreal Engine developers - Git Helper, Asset Organizer &amp; Blueprint Analyzer
