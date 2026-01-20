@@ -19,6 +19,8 @@ app.add_typer(git_app, name="git")
 def version():
     """Show UnrealMate version"""
     console.print("[bold green]UnrealMate v0.1.0[/bold green] 🚀")
+    console.print("[dim]https://github.com/gktrk363/unrealmate[/dim]")
+    console.print("[dim]Created by: gktrk363[/dim]")
 
 
 @app.command()
