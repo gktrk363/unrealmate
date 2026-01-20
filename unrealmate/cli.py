@@ -1,4 +1,5 @@
 import typer
+import subprocess
 from pathlib import Path
 from rich.console import Console
 from rich. table import Table
@@ -32,11 +33,11 @@ def doctor():
     # Check 1: . gitignore
     max_score += 25
     gitignore_path = Path(".gitignore")
-    if gitignore_path.exists():
+    if gitignore_path. exists():
         checks.append(("✅", ". gitignore", "Found", "green"))
         score += 25
     else:
-        checks. append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
+        checks.append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
     
     # Check 2: . uproject file (Unreal Project)
     max_score += 25
@@ -50,10 +51,10 @@ def doctor():
     # Check 3: Git LFS
     max_score += 25
     gitattributes = Path(".gitattributes")
-    if gitattributes.exists() and "lfs" in gitattributes.read_text().lower():
+    if gitattributes.exists() and "lfs" in gitattributes. read_text().lower():
         checks.append(("✅", "Git LFS", "Configured", "green"))
         score += 25
-    else: 
+    else:
         checks.append(("❌", "Git LFS", "Not configured - run 'unrealmate git lfs'", "red"))
     
     # Check 4: Large files check
@@ -107,25 +108,72 @@ def git_init(
     target = Path(".") / ".gitignore"
     template_path = Path(__file__).parent / "templates" / "gitignore.template"
     
-    # Check if . gitignore already exists
     if target.exists() and not force:
         console. print("[yellow]⚠️  .gitignore already exists![/yellow]")
         console.print("[dim]Use --force to overwrite[/dim]")
         return
     
-    # Read template
     if not template_path.exists():
         console.print("[red]❌ Template file not found![/red]")
         console.print(f"[dim]Looking for:  {template_path}[/dim]")
         return
     
     content = template_path.read_text()
-    
-    # Write .gitignore
     target.write_text(content)
     console.print("[bold green]✅ .gitignore created successfully![/bold green]")
     console.print(f"[dim]Location: {target. absolute()}[/dim]")
 
 
-if __name__ == "__main__": 
+@git_app.command("lfs")
+def git_lfs(
+    force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing .gitattributes")
+):
+    """Setup Git LFS for Unreal Engine project"""
+    
+    console.print("\n[bold cyan]🔧 Setting up Git LFS...[/bold cyan]\n")
+    
+    # Check if git lfs is installed
+    try: 
+        result = subprocess.run(["git", "lfs", "version"], capture_output=True, text=True)
+        if result.returncode != 0:
+            console.print("[red]❌ Git LFS is not installed![/red]")
+            console.print("[dim]Install it from:  https://git-lfs.github.com[/dim]")
+            return
+        console.print(f"[green]✅ {result.stdout.strip()}[/green]")
+    except FileNotFoundError:
+        console. print("[red]❌ Git LFS is not installed![/red]")
+        console.print("[dim]Install it from: https://git-lfs.github.com[/dim]")
+        return
+    
+    # Create .gitattributes
+    target = Path(".") / ".gitattributes"
+    template_path = Path(__file__).parent / "templates" / "gitattributes.template"
+    
+    if target.exists() and not force:
+        console.print("[yellow]⚠️  .gitattributes already exists![/yellow]")
+        console.print("[dim]Use --force to overwrite[/dim]")
+        return
+    
+    if not template_path.exists():
+        console.print("[red]❌ Template file not found![/red]")
+        console.print(f"[dim]Looking for: {template_path}[/dim]")
+        return
+    
+    content = template_path.read_text()
+    target.write_text(content)
+    console.print("[bold green]✅ .gitattributes created successfully![/bold green]")
+    
+    # Initialize LFS
+    try:
+        subprocess.run(["git", "lfs", "install"], capture_output=True, text=True)
+        console.print("[bold green]✅ Git LFS initialized![/bold green]")
+    except Exception as e:
+        console.print(f"[yellow]⚠️  Could not run 'git lfs install': {e}[/yellow]")
+    
+    console.print(f"\n[dim]Location: {target.absolute()}[/dim]")
+    console.print("\n[bold green]🎉 Git LFS setup complete![/bold green]")
+    console.print("[dim]Large binary files will now be tracked by LFS[/dim]\n")
+
+
+if __name__ == "__main__":
     app()
