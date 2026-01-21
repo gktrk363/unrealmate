@@ -108,9 +108,9 @@ def get_complexity_rating(nodes: int) -> tuple:
 @app.command()
 def version():
     version_text = Text()
-    version_text.append("UnrealMate v0.1.8", style="bold green")
+    version_text.append("UnrealMate v0.1.9", style="bold green")
     version_text.append(" 🚀\n", style="bold")
-    version_text.append("\nAll-in-one CLI toolkit for Unreal Engine developers", style="italic cyan")
+    version_text.append("\n   All-in-one CLI toolkit for Unreal Engine developers   ", style="italic cyan")
 
     panel = Panel(
         Align.center(version_text),
