@@ -2,6 +2,8 @@ LICENSE
 README.md
 pyproject.toml
 setup.py
+tests/__init__.py
+tests/test_cli.py
 unrealmate/__init__.py
 unrealmate/cli.py
 unrealmate.egg-info/PKG-INFO

@@ -1,7 +1,8 @@
 Metadata-Version: 2.4
 Name: unrealmate
-Version: 0.1.0
+Version: 0.1.5
 Summary: All-in-one CLI toolkit for Unreal Engine developers
+Home-page: https://github.com/gktrk363/unrealmate
 Author: gktrk363
 License: MIT
 Project-URL: Homepage, https://github.com/gktrk363/unrealmate
@@ -11,7 +12,7 @@ Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3.10
-Classifier: Programming Language ::  Python :: 3.11
+Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
@@ -19,7 +20,406 @@ License-File: LICENSE
 Requires-Dist: typer>=0.9.0
 Requires-Dist: rich>=13.0.0
 Requires-Dist: toml>=0.10.2
+Dynamic: home-page
 Dynamic: license-file
+Dynamic: requires-python
 
-# unrealmate
-All-in-one CLI toolkit for Unreal Engine developers - Git Helper, Asset Organizer &amp; Blueprint Analyzer
+<div align="center">
+
+# 🎮 UnrealMate
+
+### All-in-one CLI toolkit for Unreal Engine developers
+### Unreal Engine geliştiricileri için hepsi bir arada CLI araç kiti
+
+[![PyPI](https://img.shields.io/pypi/v/unrealmate?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/unrealmate/)
+[![Tests](https://img.shields.io/github/actions/workflow/status/gktrk363/unrealmate/tests.yml?branch=main&style=for-the-badge&logo=github&label=Tests)](https://github.com/gktrk363/unrealmate/actions/workflows/tests.yml)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Mac%20%7C%20Linux-blue?style=for-the-badge)]()
+[![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-4%20%7C%205-black?style=for-the-badge&logo=unrealengine)](https://unrealengine.com)
+
+<br>
+
+[🇬🇧 English](#-english) • [🇹🇷 Türkçe](#-türkçe)
+
+<br>
+
+*Speed up your Unreal Engine workflow with powerful CLI commands*
+
+</div>
+
+---
+
+# 🇬🇧 English
+
+## 📋 Table of Contents
+
+- [Features](#-features)
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [Commands](#-commands)
+- [Examples](#-examples)
+- [Contributing](#-contributing)
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔧 Git Tools
+Manage your Git workflow efficiently
+
+- ✅ Generate optimized `.gitignore`
+- ✅ Setup Git LFS automatically
+- ✅ Clean temporary files (save GBs!)
+
+</td>
+<td width="50%">
+
+### 📦 Asset Management
+Keep your assets organized
+
+- ✅ Scan & report all assets
+- ✅ Auto-organize into folders
+- ✅ Find duplicate files
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📊 Blueprint Analysis
+Understand your Blueprint complexity
+
+- ✅ Analyze BP statistics
+- ✅ Complexity scoring
+- ✅ Export HTML/JSON reports
+
+</td>
+<td width="50%">
+
+### 🩺 Project Health
+Keep your project healthy
+
+- ✅ Health score (0-100)
+- ✅ Configuration checks
+- ✅ Best practice validation
+
+</td>
+</tr>
+</table>
+
+## 🚀 Installation
+
+The easiest way to install UnrealMate v0.1.5 🚀via pip:
+
+```bash
+pip install unrealmate
+```
+
+### Verification
+```bash
+unrealmate --help
+```
+
+### Dev Installation (Optional)
+
+If you want to contribute or develop:
+
+```bash
+git clone https://github.com/gktrk363/unrealmate.git
+cd unrealmate
+python -m venv venv
+# Windows: venv\Scripts\activate
+# Mac/Linux: source venv/bin/activate
+pip install -e .
+```
+
+## ⚡ Quick Start
+
+```bash
+# Navigate to your UE project
+cd "C:/Projects/MyGame"
+
+# Check project health
+unrealmate doctor
+
+# Setup Git (one-time)
+unrealmate git init
+unrealmate git lfs
+
+# Clean temporary files (save space)
+unrealmate git clean
+
+# Scan assets
+unrealmate asset scan
+
+# Analyze blueprints
+unrealmate blueprint analyze
+```
+
+## 📖 Commands
+
+### 🔧 Git Commands
+
+| Command | Description |
+|---------|-------------|
+| `unrealmate git init` | Generate `.gitignore` for UE projects |
+| `unrealmate git lfs` | Setup Git LFS for large files |
+| `unrealmate git clean` | Remove temporary/cache files |
+
+```bash
+# Examples
+unrealmate git init              # Create .gitignore
+unrealmate git clean --dry-run   # Preview what will be deleted
+```
+
+### 📦 Asset Commands
+
+| Command | Description |
+|---------|-------------|
+| `unrealmate asset scan` | Scan and report all assets |
+| `unrealmate asset organize` | Auto-organize assets into folders |
+| `unrealmate asset duplicates` | Find duplicate assets |
+
+```bash
+# Examples
+unrealmate asset scan --all              # Show all files
+unrealmate asset organize --dry-run      # Preview organization
+unrealmate asset duplicates --content    # Accurate duplicate scan
+```
+
+### 📊 Blueprint Commands
+
+| Command | Description |
+|---------|-------------|
+| `unrealmate blueprint analyze` | Analyze Blueprint statistics |
+| `unrealmate blueprint report` | Generate complexity report |
+
+```bash
+# Examples
+unrealmate blueprint analyze --all        # Show all BPs
+unrealmate blueprint report -o report.html   # Generate HTML report
+```
+
+### 🩺 Health Commands
+
+| Command | Description |
+|---------|-------------|
+| `unrealmate doctor` | Check project health & configuration |
+| `unrealmate version` | Show version info |
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how: 
+
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. ✍️ Commit your changes (`git commit -m '✨ Add amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🔃 Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+# 🇹🇷 Türkçe
+
+## 📋 İçindekiler
+
+- [Özellikler](#-özellikler)
+- [Kurulum](#-kurulum)
+- [Hızlı Başlangıç](#-hızlı-başlangıç)
+- [Komutlar](#-komutlar)
+- [Katkıda Bulunma](#-katkıda-bulunma)
+
+## ✨ Özellikler
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔧 Git Araçları
+Git iş akışınızı verimli yönetin
+
+- ✅ Optimize edilmiş `.gitignore` oluştur
+- ✅ Git LFS'i otomatik kur
+- ✅ Geçici dosyaları temizle (GB'larca yer kazan!)
+
+</td>
+<td width="50%">
+
+### 📦 Asset Yönetimi
+Asset'lerinizi düzenli tutun
+
+- ✅ Tüm asset'leri tara ve raporla
+- ✅ Klasörlere otomatik düzenle
+- ✅ Tekrarlayan dosyaları bul
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📊 Blueprint Analizi
+Blueprint karmaşıklığınızı anlayın
+
+- ✅ BP istatistiklerini analiz et
+- ✅ Karmaşıklık puanlaması
+- ✅ HTML/JSON rapor çıkart
+
+</td>
+<td width="50%">
+
+### 🩺 Proje Sağlığı
+Projenizi sağlıklı tutun
+
+- ✅ Sağlık puanı (0-100)
+- ✅ Yapılandırma kontrolleri
+- ✅ Best practice doğrulama
+
+</td>
+</tr>
+</table>
+
+## 🚀 Kurulum
+
+UnrealMate'i kurmanın en kolay yolu pip kullanmaktır:
+
+```bash
+pip install unrealmate
+```
+
+### Doğrulama
+```bash
+unrealmate --help
+```
+
+### Geliştirici Kurulumu (Opsiyonel)
+
+Eğer projeye katkıda bulunmak istiyorsanız:
+
+```bash
+git clone https://github.com/gktrk363/unrealmate.git
+cd unrealmate
+python -m venv venv
+# Windows: venv\Scripts\activate
+# Mac/Linux: source venv/bin/activate
+pip install -e .
+```
+
+## ⚡ Hızlı Başlangıç
+
+```bash
+# UE projenize gidin
+cd "C:/Projects/MyGame"
+
+# Proje sağlığını kontrol et
+unrealmate doctor
+
+# Git kurulumu (bir kere)
+unrealmate git init
+unrealmate git lfs
+
+# Geçici dosyaları temizle (yer açın)
+unrealmate git clean
+
+# Asset'leri tara
+unrealmate asset scan
+
+# Blueprint'leri analiz et
+unrealmate blueprint analyze
+```
+
+## 📖 Komutlar
+
+### 🔧 Git Komutları
+
+| Komut | Açıklama |
+|-------|----------|
+| `unrealmate git init` | UE projeleri için `.gitignore` oluştur |
+| `unrealmate git lfs` | Büyük dosyalar için Git LFS kur |
+| `unrealmate git clean` | Geçici/önbellek dosyalarını sil |
+
+```bash
+# Örnekler
+unrealmate git init              # .gitignore oluştur
+unrealmate git clean --dry-run   # Silinecekleri önizle
+```
+
+### 📦 Asset Komutları
+
+| Komut | Açıklama |
+|-------|----------|
+| `unrealmate asset scan` | Tüm asset'leri tara ve raporla |
+| `unrealmate asset organize` | Asset'leri klasörlere otomatik düzenle |
+| `unrealmate asset duplicates` | Tekrarlayan asset'leri bul |
+
+```bash
+# Örnekler
+unrealmate asset scan --all              # Tüm dosyaları göster
+unrealmate asset organize --dry-run      # Düzenlemeyi önizle
+unrealmate asset duplicates --content    # İçeriğe göre karşılaştır (doğru)
+```
+
+### 📊 Blueprint Komutları
+
+| Komut | Açıklama |
+|-------|----------|
+| `unrealmate blueprint analyze` | Blueprint istatistiklerini analiz et |
+| `unrealmate blueprint report` | Karmaşıklık raporu oluştur |
+
+```bash
+# Örnekler
+unrealmate blueprint analyze --all        # Tüm BP'leri göster
+unrealmate blueprint report -o report.html   # HTML rapor oluştur
+```
+
+### 🩺 Sağlık Komutları
+
+| Komut | Açıklama |
+|-------|----------|
+| `unrealmate doctor` | Proje sağlığını ve yapılandırmasını kontrol et |
+| `unrealmate version` | Versiyon bilgisini göster |
+
+## 🤝 Katkıda Bulunma
+
+Katkılarınızı bekliyoruz! İşte nasıl yapılır:
+
+1. 🍴 Repoyu fork'layın
+2. 🌿 Feature branch oluşturun (`git checkout -b feature/harika-ozellik`)
+3. ✍️ Değişikliklerinizi commit'leyin (`git commit -m '✨ Harika özellik ekle'`)
+4. 📤 Branch'e push'layın (`git push origin feature/harika-ozellik`)
+5. 🔃 Pull Request açın
+
+## 📄 Lisans
+
+Bu proje **MIT Lisansı** ile lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+---
+
+<div align="center">
+
+## 👤 Author / Geliştirici
+
+**gktrk363**
+
+[![GitHub](https://img.shields.io/badge/GitHub-gktrk363-black?style=for-the-badge&logo=github)](https://github.com/gktrk363)
+
+---
+
+### ⭐ Star this repo if it helped you! / Yardımcı olduysa yıldız ver!
+
+<br>
+
+Made for Unreal Engine developers <3
+Unreal Engine geliştiricileri için yapıldı <3
+
+<br>
+
+**🎮 Happy Game Development! / İyi Oyun Geliştirmeler! 🎮**
+
+</div>

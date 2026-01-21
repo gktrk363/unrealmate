@@ -182,7 +182,7 @@ def doctor():
 def git_init(
     force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing .gitignore")
 ):
-    target = Path(".") / ".gitignore"
+    target = Path.cwd() / ".gitignore"
     template_path = Path(__file__).parent / "templates" / "gitignore.template"
     
     if target.exists() and not force:
@@ -219,7 +219,7 @@ def git_lfs(
         console.print("[dim]Install it from: https://git-lfs.github.com[/dim]")
         return
     
-    target = Path(".") / ".gitattributes"
+    target = Path.cwd() / ".gitattributes"
     template_path = Path(__file__).parent / "templates" / "gitattributes. template"
     
     if target.exists() and not force:
@@ -260,14 +260,14 @@ def git_clean(
     found_folders = []
     total_size = 0
     
-    for folder_name in cleanup_folders: 
-        folder_path = Path(".") / folder_name
+    for folder_name in cleanup_folders:
+        folder_path = Path.cwd() / folder_name
         if folder_path. exists() and folder_path.is_dir():
             size = get_folder_size(folder_path)
             found_folders.append((folder_path, size))
             total_size += size
     
-    for pycache in Path(".").rglob("__pycache__"):
+    for pycache in Path.cwd().rglob("__pycache__"):
         if pycache. is_dir():
             path_str = str(pycache)
             if any(skip in path_str for skip in skip_patterns):
