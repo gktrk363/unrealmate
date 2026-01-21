@@ -5,8 +5,9 @@
 ### All-in-one CLI toolkit for Unreal Engine developers
 ### Unreal Engine geliştiricileri için hepsi bir arada CLI araç kiti
 
-[![Tests](https://img.shields.io/github/actions/workflow/status/gktrk363/unrealmate/tests.yml?branch=main&style=for-the-badge&logo=github&label=Tests)](https://github.com/gktrk363/unrealmate/actions/workflows/tests.yml)
-[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![PyPI](https://img.shields.io/pypi/v/unrealmate?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/unrealmate/)
+[![Tests](https://img.shields.io/github/actions/workflow/status/gktrk363/unrealmate/release.yml?branch=main&style=for-the-badge&logo=github&label=Tests)](https://github.com/gktrk363/unrealmate/actions)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Mac%20%7C%20Linux-blue?style=for-the-badge)]()
 [![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-4%20%7C%205-black?style=for-the-badge&logo=unrealengine)](https://unrealengine.com)
@@ -85,45 +86,28 @@ Keep your project healthy
 
 ## 🚀 Installation
 
-### Prerequisites
-
-| Requirement | Version | Required |
-|-------------|---------|----------|
-| Python | 3.8+ | ✅ Yes |
-| Git | Any | ✅ Yes |
-| Git LFS | Any | ⚠️ Optional |
-
-### Quick Install
+The easiest way to install UnrealMate is via pip:
 
 ```bash
-# Clone the repository
+pip install unrealmate
+```
+
+### Verification
+```bash
+unrealmate --help
+```
+
+### Dev Installation (Optional)
+
+If you want to contribute or develop:
+
+```bash
 git clone https://github.com/gktrk363/unrealmate.git
 cd unrealmate
-
-# Create virtual environment (recommended)
 python -m venv venv
-
-# Activate virtual environment
-# Windows: 
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
-# Install UnrealMate
-pip install -e . 
-```
-
-### Verify Installation
-
-```bash
-unrealmate version
-```
-
-You should see:
-```
-UnrealMate v0.1.0 🚀
-https://github.com/gktrk363/unrealmate
-Created by:  gktrk363
+# Windows: venv\Scripts\activate
+# Mac/Linux: source venv/bin/activate
+pip install -e .
 ```
 
 ## ⚡ Quick Start
@@ -139,7 +123,7 @@ unrealmate doctor
 unrealmate git init
 unrealmate git lfs
 
-# Clean temporary files
+# Clean temporary files (save space)
 unrealmate git clean
 
 # Scan assets
@@ -161,10 +145,8 @@ unrealmate blueprint analyze
 
 ```bash
 # Examples
-unrealmate git init              # Create . gitignore
-unrealmate git init --force      # Overwrite existing
+unrealmate git init              # Create .gitignore
 unrealmate git clean --dry-run   # Preview what will be deleted
-unrealmate git clean --yes       # Delete without confirmation
 ```
 
 ### 📦 Asset Commands
@@ -177,10 +159,9 @@ unrealmate git clean --yes       # Delete without confirmation
 
 ```bash
 # Examples
-unrealmate asset scan                    # Summary view
 unrealmate asset scan --all              # Show all files
 unrealmate asset organize --dry-run      # Preview organization
-unrealmate asset duplicates --content    # Compare by content (accurate)
+unrealmate asset duplicates --content    # Accurate duplicate scan
 ```
 
 ### 📊 Blueprint Commands
@@ -192,11 +173,8 @@ unrealmate asset duplicates --content    # Compare by content (accurate)
 
 ```bash
 # Examples
-unrealmate blueprint analyze              # Quick analysis
 unrealmate blueprint analyze --all        # Show all BPs
-unrealmate blueprint report               # Console report
-unrealmate blueprint report -o report.html   # HTML report
-unrealmate blueprint report -o report.json   # JSON report
+unrealmate blueprint report -o report.html   # Generate HTML report
 ```
 
 ### 🩺 Health Commands
@@ -205,65 +183,6 @@ unrealmate blueprint report -o report.json   # JSON report
 |---------|-------------|
 | `unrealmate doctor` | Check project health & configuration |
 | `unrealmate version` | Show version info |
-
-## 📊 Examples
-
-### Doctor Output
-
-```
-🔍 Running UnrealMate Doctor... 
-
-┏━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Status ┃ Check       ┃ Details                   ┃
-┡━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ ✅     │ . gitignore  │ Found                     │
-│ ✅     │ UE Project  │ Found:  MyGame.uproject    │
-│ ✅     │ Git LFS     │ Configured                │
-│ ⚠️     │ Large Files │ 5 binary files found      │
-└────────┴─────────────┴───────────────────────────┘
-
-🎉 Health Score: 90/100
-```
-
-### Asset Scan Output
-
-```
-📦 Scanning for assets... 
-
-┏━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━┓
-┃ Category    ┃ Count ┃ Size     ┃
-┡━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━┩
-│ Blueprints  │ 45    │ 12.5 MB  │
-│ Textures    │ 128   │ 856. 2 MB │
-│ Audio       │ 32    │ 125.8 MB │
-│ 3D Models   │ 18    │ 234.1 MB │
-├─────────────┼───────┼──────────┤
-│ Total       │ 223   │ 1. 23 GB  │
-└─────────────┴───────┴──────────┘
-```
-
-### Blueprint Complexity Report
-
-```
-📊 Blueprint Complexity Report
-
-🔴 Critical (300+):   2
-🟡 High (100+):       8
-🟢 Medium (50+):      15
-⚪ Low (<50):         45
-
-⚠️ Blueprints That Need Attention: 
-
-┏━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Blueprint       ┃ Nodes ┃ Recommendation                      ┃
-┡━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ BP_GameMode     │ 456   │ Refactor immediately                │
-│ BP_PlayerCtrl   │ 312   │ Refactor immediately                │
-│ BP_Enemy        │ 189   │ Consider breaking into functions    │
-└─────────────────┴───────┴─────────────────────────────────────┘
-
-🎉 Blueprint Health Score: 72/100
-```
 
 ## 🤝 Contributing
 
@@ -289,7 +208,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [Kurulum](#-kurulum)
 - [Hızlı Başlangıç](#-hızlı-başlangıç)
 - [Komutlar](#-komutlar)
-- [Örnekler](#-örnekler)
 - [Katkıda Bulunma](#-katkıda-bulunma)
 
 ## ✨ Özellikler
@@ -343,45 +261,28 @@ Projenizi sağlıklı tutun
 
 ## 🚀 Kurulum
 
-### Gereksinimler
-
-| Gereksinim | Versiyon | Zorunlu |
-|------------|----------|---------|
-| Python | 3.8+ | ✅ Evet |
-| Git | Herhangi | ✅ Evet |
-| Git LFS | Herhangi | ⚠️ Opsiyonel |
-
-### Hızlı Kurulum
+UnrealMate'i kurmanın en kolay yolu pip kullanmaktır:
 
 ```bash
-# Repoyu klonla
+pip install unrealmate
+```
+
+### Doğrulama
+```bash
+unrealmate --help
+```
+
+### Geliştirici Kurulumu (Opsiyonel)
+
+Eğer projeye katkıda bulunmak istiyorsanız:
+
+```bash
 git clone https://github.com/gktrk363/unrealmate.git
 cd unrealmate
-
-# Sanal ortam oluştur (önerilir)
 python -m venv venv
-
-# Sanal ortamı aktifleştir
-# Windows:
-venv\Scripts\activate
-# Mac/Linux: 
-source venv/bin/activate
-
-# UnrealMate'i kur
-pip install -e . 
-```
-
-### Kurulumu Doğrula
-
-```bash
-unrealmate version
-```
-
-Şunu görmelisin:
-```
-UnrealMate v0.1.0 🚀
-https://github.com/gktrk363/unrealmate
-Created by: gktrk363
+# Windows: venv\Scripts\activate
+# Mac/Linux: source venv/bin/activate
+pip install -e .
 ```
 
 ## ⚡ Hızlı Başlangıç
@@ -397,7 +298,7 @@ unrealmate doctor
 unrealmate git init
 unrealmate git lfs
 
-# Geçici dosyaları temizle
+# Geçici dosyaları temizle (yer açın)
 unrealmate git clean
 
 # Asset'leri tara
@@ -419,10 +320,8 @@ unrealmate blueprint analyze
 
 ```bash
 # Örnekler
-unrealmate git init              # . gitignore oluştur
-unrealmate git init --force      # Mevcutun üzerine yaz
+unrealmate git init              # .gitignore oluştur
 unrealmate git clean --dry-run   # Silinecekleri önizle
-unrealmate git clean --yes       # Onay istemeden sil
 ```
 
 ### 📦 Asset Komutları
@@ -435,7 +334,6 @@ unrealmate git clean --yes       # Onay istemeden sil
 
 ```bash
 # Örnekler
-unrealmate asset scan                    # Özet görünüm
 unrealmate asset scan --all              # Tüm dosyaları göster
 unrealmate asset organize --dry-run      # Düzenlemeyi önizle
 unrealmate asset duplicates --content    # İçeriğe göre karşılaştır (doğru)
@@ -450,11 +348,8 @@ unrealmate asset duplicates --content    # İçeriğe göre karşılaştır (do�
 
 ```bash
 # Örnekler
-unrealmate blueprint analyze              # Hızlı analiz
 unrealmate blueprint analyze --all        # Tüm BP'leri göster
-unrealmate blueprint report               # Konsol raporu
-unrealmate blueprint report -o report.html   # HTML rapor
-unrealmate blueprint report -o report. json   # JSON rapor
+unrealmate blueprint report -o report.html   # HTML rapor oluştur
 ```
 
 ### 🩺 Sağlık Komutları
@@ -490,16 +385,15 @@ Bu proje **MIT Lisansı** ile lisanslanmıştır - detaylar için [LICENSE](LICE
 
 ---
 
-### ⭐ Star this repo if it helped you!  / Yardımcı olduysa yıldız ver! 
+### ⭐ Star this repo if it helped you! / Yardımcı olduysa yıldız ver!
 
 <br>
 
 Made for Unreal Engine developers <3
-
-Unreal Engine geliştiricileri yapıldı <3
+Unreal Engine geliştiricileri için yapıldı <3
 
 <br>
 
-**🎮 Happy Game Development!  / İyi Oyun Geliştirmeler!  🎮**
+**🎮 Happy Game Development! / İyi Oyun Geliştirmeler! 🎮**
 
 </div>
