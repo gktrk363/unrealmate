@@ -9,7 +9,14 @@ from rich.console import Console
 from rich.table import Table
 from rich.prompt import Confirm
 from rich.panel import Panel
-from rich.progress import Progress
+from rich.progress import Progress, track
+from rich.status import Status
+from rich.traceback import install
+from rich.align import Align
+from rich.text import Text
+
+# Install rich traceback handler
+install(show_locals=True)
 
 app = typer. Typer(
     name="unrealmate",
@@ -100,58 +107,71 @@ def get_complexity_rating(nodes: int) -> tuple:
 
 @app.command()
 def version():
-    console.print("[bold green]UnrealMate v0.1.5[/bold green] 🚀")
-    console.print("[dim]https://github.com/gktrk363/unrealmate[/dim]")
-    console.print("[dim]Created by:  gktrk363[/dim]")
+    version_text = Text()
+    version_text.append("UnrealMate v0.1.6", style="bold green")
+    version_text.append(" 🚀\n", style="bold")
+    version_text.append("\nAll-in-one CLI toolkit for Unreal Engine developers", style="italic cyan")
+
+    panel = Panel(
+        Align.center(version_text),
+        title="[bold]System Information[/bold]",
+        subtitle="[dim]Created by: gktrk363[/dim]",
+        border_style="green",
+        expand=False,
+        padding=(1, 2)
+    )
+    console.print(panel)
+    console.print(Align.center("[dim]https://github.com/gktrk363/unrealmate[/dim]"))
 
 
 @app.command()
 def doctor():
-    console.print("\n[bold cyan]🔍 Running UnrealMate Doctor.. .[/bold cyan]\n")
-    
+    console.print(Panel("[bold cyan]Running UnrealMate Doctor...[/bold cyan]", border_style="cyan"))
+
     checks = []
     score = 0
     max_score = 0
     current_dir = Path.cwd()
-    console.print(f"[dim]Checking directory: {current_dir}[/dim]")
-    
-    max_score += 25
-    gitignore_path = current_dir / ".gitignore"
-    if gitignore_path.exists():
-        checks.append(("✅", ".gitignore", "Found", "green"))
-        score += 25
-    else:
-        checks.append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
-    
-    max_score += 25
-    uproject_files = list(current_dir.glob("*.uproject"))
-    if uproject_files:
-        checks.append(("✅", "UE Project", f"Found: {uproject_files[0].name}", "green"))
-        score += 25
-    else: 
-        checks.append(("⚠️", "UE Project", "No .uproject file found", "yellow"))
-    
-    max_score += 25
-    gitattributes = current_dir / ".gitattributes"
-    if gitattributes.exists() and "lfs" in gitattributes.read_text().lower():
-        checks.append(("✅", "Git LFS", "Configured", "green"))
-        score += 25
-    else: 
-        checks.append(("❌", "Git LFS", "Not configured - run 'unrealmate git lfs'", "red"))
-    
-    max_score += 25
-    large_files = []
-    for ext in ["*.uasset", "*.umap", "*.pak"]:
-        large_files.extend(current_dir.rglob(ext))
-    
-    if len(large_files) == 0:
-        checks.append(("✅", "Large Files", "No large binary files in root", "green"))
-        score += 25
-    elif len(large_files) < 10:
-        checks. append(("⚠️", "Large Files", f"{len(large_files)} binary files found", "yellow"))
-        score += 15
-    else:
-        checks.append(("❌", "Large Files", f"{len(large_files)} binary files - consider LFS", "red"))
+    console.print(f"[dim]Checking directory: {current_dir}[/dim]\n")
+
+    with console.status("[bold green]Running health checks...", spinner="dots"):
+        max_score += 25
+        gitignore_path = current_dir / ".gitignore"
+        if gitignore_path.exists():
+            checks.append(("✅", ".gitignore", "Found", "green"))
+            score += 25
+        else:
+            checks.append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
+        
+        max_score += 25
+        uproject_files = list(current_dir.glob("*.uproject"))
+        if uproject_files:
+            checks.append(("✅", "UE Project", f"Found: {uproject_files[0].name}", "green"))
+            score += 25
+        else: 
+            checks.append(("⚠️", "UE Project", "No .uproject file found", "yellow"))
+        
+        max_score += 25
+        gitattributes = current_dir / ".gitattributes"
+        if gitattributes.exists() and "lfs" in gitattributes.read_text().lower():
+            checks.append(("✅", "Git LFS", "Configured", "green"))
+            score += 25
+        else: 
+            checks.append(("❌", "Git LFS", "Not configured - run 'unrealmate git lfs'", "red"))
+        
+        max_score += 25
+        large_files = []
+        for ext in ["*.uasset", "*.umap", "*.pak"]:
+            large_files.extend(current_dir.rglob(ext))
+        
+        if len(large_files) == 0:
+            checks.append(("✅", "Large Files", "No large binary files in root", "green"))
+            score += 25
+        elif len(large_files) < 10:
+            checks.append(("⚠️", "Large Files", f"{len(large_files)} binary files found", "yellow"))
+            score += 15
+        else:
+            checks.append(("❌", "Large Files", f"{len(large_files)} binary files - consider LFS", "red"))
     
     table = Table(title="Health Check Results", show_header=True)
     table.add_column("Status", style="bold", width=6)
@@ -252,29 +272,30 @@ def git_clean(
     dry_run: bool = typer.Option(False, "--dry-run", "-d", help="Show what would be deleted without deleting"),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt")
 ):
-    console.print("\n[bold cyan]🧹 Scanning for unnecessary files...[/bold cyan]\n")
+    console.print(Panel("[bold cyan]Scanning for unnecessary files...[/bold cyan]", border_style="cyan"))
     
-    cleanup_folders = ["Saved", "Intermediate", "DerivedDataCache", "Build", ". vs"]
+    cleanup_folders = ["Saved", "Intermediate", "DerivedDataCache", "Build", ".vs"]
     skip_patterns = ["venv", ". venv", "site-packages", "node_modules", ". git"]
     
     found_folders = []
     total_size = 0
     
-    for folder_name in cleanup_folders:
-        folder_path = Path.cwd() / folder_name
-        if folder_path. exists() and folder_path.is_dir():
-            size = get_folder_size(folder_path)
-            found_folders.append((folder_path, size))
-            total_size += size
-    
-    for pycache in Path.cwd().rglob("__pycache__"):
-        if pycache. is_dir():
-            path_str = str(pycache)
-            if any(skip in path_str for skip in skip_patterns):
-                continue
-            size = get_folder_size(pycache)
-            found_folders.append((pycache, size))
-            total_size += size
+    with console.status("[bold yellow]Scanning directories...", spinner="dots"):
+        for folder_name in cleanup_folders:
+            folder_path = Path.cwd() / folder_name
+            if folder_path.exists() and folder_path.is_dir():
+                size = get_folder_size(folder_path)
+                found_folders.append((folder_path, size))
+                total_size += size
+        
+        for pycache in Path.cwd().rglob("__pycache__"):
+            if pycache.is_dir():
+                path_str = str(pycache)
+                if any(skip in path_str for skip in skip_patterns):
+                    continue
+                size = get_folder_size(pycache)
+                found_folders.append((pycache, size))
+                total_size += size
     
     if not found_folders:
         console.print("[green]✨ No unnecessary files found!  Your project is clean.[/green]\n")
@@ -306,12 +327,15 @@ def git_clean(
     deleted_count = 0
     deleted_size = 0
     
-    for folder, size in found_folders:
+    deleted_count = 0
+    deleted_size = 0
+    
+    for folder, size in track(found_folders, description="[red]Deleting files...[/red]"):
         try:
             shutil.rmtree(folder)
             deleted_count += 1
             deleted_size += size
-            console.print(f"[green]✅ Deleted:  {folder}[/green]")
+            # console.print(f"[green]✅ Deleted: {folder}[/green]") # Reduced verbosity for progress bar
         except Exception as e:
             console.print(f"[red]❌ Failed to delete {folder}: {e}[/red]")
     
@@ -324,7 +348,7 @@ def asset_scan(
     path: str = typer.Argument(".", help="Path to scan for assets"),
     show_all: bool = typer.Option(False, "--all", "-a", help="Show all assets (not just summary)")
 ):
-    console.print("\n[bold cyan]📦 Scanning for assets...[/bold cyan]\n")
+    console.print(Panel("[bold cyan]Scanning for assets...[/bold cyan]", border_style="cyan"))
     
     scan_path = Path(path)
     
@@ -349,28 +373,29 @@ def asset_scan(
     
     skip_patterns = ["venv", ".venv", "site-packages", "node_modules", ".git", "Intermediate", "Saved"]
     
-    for category, extensions in asset_types. items():
-        category_files = []
-        category_size = 0
-        
-        for ext in extensions: 
-            for file in scan_path.rglob(ext):
-                if any(skip in str(file) for skip in skip_patterns):
-                    continue
-                
-                size = get_file_size(file)
-                category_files. append((file, size))
-                category_size += size
-                all_assets.append((file, size, category))
-        
-        if category_files:
-            results[category] = {
-                "count": len(category_files),
-                "size": category_size,
-                "files": category_files
-            }
-            total_count += len(category_files)
-            total_size += category_size
+    with console.status("[bold green]Searching for files...", spinner="earth"):
+        for category, extensions in asset_types.items():
+            category_files = []
+            category_size = 0
+            
+            for ext in extensions:
+                for file in scan_path.rglob(ext):
+                    if any(skip in str(file) for skip in skip_patterns):
+                        continue
+                    
+                    size = get_file_size(file)
+                    category_files.append((file, size))
+                    category_size += size
+                    all_assets.append((file, size, category))
+            
+            if category_files:
+                results[category] = {
+                    "count": len(category_files),
+                    "size": category_size,
+                    "files": category_files
+                }
+                total_count += len(category_files)
+                total_size += category_size
     
     if not results:
         console. print("[yellow]⚠️ No assets found in this directory[/yellow]\n")
@@ -431,7 +456,7 @@ def asset_organize(
     dry_run: bool = typer.Option(False, "--dry-run", "-d", help="Show what would be moved without moving"),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt")
 ):
-    console.print("\n[bold cyan]📦 Analyzing assets for organization...[/bold cyan]\n")
+    console.print(Panel("[bold cyan]Analyzing assets for organization...[/bold cyan]", border_style="cyan"))
     
     scan_path = Path(path)
     
@@ -470,22 +495,23 @@ def asset_organize(
     
     files_to_move = []
     
-    for category, rules in organize_rules. items():
-        target_folder = scan_path / rules["folder"]
-        
-        for ext in rules["extensions"]:
-            for file in scan_path.rglob(f"*{ext}"):
-                if any(skip in str(file) for skip in skip_patterns):
-                    continue
-                
-                if rules["folder"] in str(file. parent):
-                    continue
-                
-                if file.parent. name. lower() == rules["folder"].lower():
-                    continue
-                
-                target_path = target_folder / file.name
-                files_to_move. append((file, target_path, category))
+    with console.status("[bold yellow]Categorizing files...", spinner="bouncingBall"):
+        for category, rules in organize_rules.items():
+            target_folder = scan_path / rules["folder"]
+            
+            for ext in rules["extensions"]:
+                for file in scan_path.rglob(f"*{ext}"):
+                    if any(skip in str(file) for skip in skip_patterns):
+                        continue
+                    
+                    if rules["folder"] in str(file.parent):
+                        continue
+                    
+                    if file.parent.name.lower() == rules["folder"].lower():
+                        continue
+                    
+                    target_path = target_folder / file.name
+                    files_to_move.append((file, target_path, category))
     
     if not files_to_move: 
         console.print("[green]✨ All assets are already organized![/green]\n")
@@ -516,7 +542,7 @@ def asset_organize(
     moved_count = 0
     error_count = 0
     
-    for source, dest, category in files_to_move:
+    for source, dest, category in track(files_to_move, description="[cyan]Moving files...[/cyan]"):
         try:
             dest.parent.mkdir(parents=True, exist_ok=True)
             
@@ -529,10 +555,10 @@ def asset_organize(
                     counter += 1
             
             shutil.move(str(source), str(dest))
-            console.print(f"[green]✅ Moved: {source.name} → {dest.parent.name}/[/green]")
+            # console.print(f"[green]✅ Moved: {source.name} → {dest.parent.name}/[/green]")
             moved_count += 1
         except Exception as e:
-            console.print(f"[red]❌ Failed to move {source.name}:  {e}[/red]")
+            console.print(f"[red]❌ Failed to move {source.name}: {e}[/red]")
             error_count += 1
     
     console.print(f"\n[bold green]🎉 Organization complete![/bold green]")
@@ -544,7 +570,8 @@ def asset_duplicates(
     path: str = typer.Argument(".", help="Path to scan for duplicates"),
     by_content: bool = typer.Option(False, "--content", "-c", help="Compare by file content (slower but accurate)")
 ):
-    console.print("\n[bold cyan]🔍 Scanning for duplicate assets...[/bold cyan]\n")
+
+    console.print(Panel("[bold cyan]Scanning for duplicate assets...[/bold cyan]", border_style="cyan"))
     
     scan_path = Path(path)
     
@@ -565,24 +592,25 @@ def asset_duplicates(
     
     file_groups = defaultdict(list)
     
-    for file in scan_path. rglob("*"):
-        if not file.is_file():
-            continue
-        
-        if any(skip in str(file) for skip in skip_patterns):
-            continue
-        
-        if file.suffix.lower() not in asset_extensions: 
-            continue
-        
-        if by_content: 
-            try:
-                file_hash = hashlib.md5(file.read_bytes()).hexdigest()
-                file_groups[file_hash].append(file)
-            except (PermissionError, OSError):
+    with console.status("[bold blue]Finding duplicates...", spinner="pong"):
+        for file in scan_path.rglob("*"):
+            if not file.is_file():
                 continue
-        else: 
-            file_groups[file. name. lower()].append(file)
+            
+            if any(skip in str(file) for skip in skip_patterns):
+                continue
+            
+            if file.suffix.lower() not in asset_extensions:
+                continue
+            
+            if by_content:
+                try:
+                    file_hash = hashlib.md5(file.read_bytes()).hexdigest()
+                    file_groups[file_hash].append(file)
+                except (PermissionError, OSError):
+                    continue
+            else:
+                file_groups[file.name.lower()].append(file)
     
     duplicates = {k: v for k, v in file_groups.items() if len(v) > 1}
     
@@ -617,6 +645,7 @@ def asset_duplicates(
     console.print("[dim]Tip: Remove duplicate files to save space and avoid confusion![/dim]\n")
 
 
+
 @blueprint_app.command("analyze")
 def blueprint_analyze(
     path: str = typer.Argument(".", help="Path to scan for blueprints"),
@@ -624,7 +653,7 @@ def blueprint_analyze(
 ):
     """Analyze Blueprint files and show statistics"""
     
-    console.print("\n[bold cyan]📊 Analyzing Blueprints...[/bold cyan]\n")
+    console.print(Panel("[bold cyan]Analyzing Blueprints...[/bold cyan]", border_style="cyan"))
     
     scan_path = Path(path)
     
@@ -640,7 +669,15 @@ def blueprint_analyze(
     total_events = 0
     total_nodes = 0
     
-    for file in scan_path.rglob("*.uasset"):
+    blueprints = []
+    total_variables = 0
+    total_functions = 0
+    total_events = 0
+    total_nodes = 0
+    
+    uasset_files = list(scan_path.rglob("*.uasset"))
+    
+    for file in track(uasset_files, description="[green]Parsing Blueprints...[/green]"):
         if any(skip in str(file) for skip in skip_patterns):
             continue
         
@@ -720,7 +757,9 @@ def blueprint_report(
 ):
     """Generate a detailed complexity report for all Blueprints"""
     
-    console.print("\n[bold cyan]📊 Generating Blueprint Complexity Report...[/bold cyan]\n")
+    """Generate a detailed complexity report for all Blueprints"""
+    
+    console.print(Panel("[bold cyan]Generating Complexity Report...[/bold cyan]", border_style="cyan"))
     
     scan_path = Path(path)
     
@@ -732,9 +771,13 @@ def blueprint_report(
     
     blueprints = []
     
-    uasset_files = list(scan_path. rglob("*. uasset"))
+    blueprints = []
     
-    for file in uasset_files:
+    uasset_files = []
+    with console.status("[bold green]Finding assets...", spinner="dots"):
+        uasset_files = list(scan_path.rglob("*.uasset"))
+    
+    for file in track(uasset_files, description="[cyan]Analyzing complexity...[/cyan]"):
         if any(skip in str(file) for skip in skip_patterns):
             continue
         

@@ -78,6 +78,7 @@ Keep your project healthy
 
 - ✅ Health score (0-100)
 - ✅ Configuration checks
+- ✅ Modern Rich CLI Interface 🆕
 - ✅ Best practice validation
 
 </td>
@@ -253,6 +254,7 @@ Projenizi sağlıklı tutun
 
 - ✅ Sağlık puanı (0-100)
 - ✅ Yapılandırma kontrolleri
+- ✅ Modern Rich Arayüzü 🆕
 - ✅ Best practice doğrulama
 
 </td>
