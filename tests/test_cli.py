@@ -15,7 +15,7 @@ class TestVersion:
 
     def test_version_shows_version_number(self):
         result = runner.invoke(app, ["version"])
-        assert "v0.1.0" in result.stdout or "0.1.0" in result. stdout
+        assert "v0.1.1" in result.stdout or "0.1.1" in result.stdout
 
 
 class TestDoctor:
