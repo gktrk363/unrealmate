@@ -108,20 +108,19 @@ def get_complexity_rating(nodes: int) -> tuple:
 @app.command()
 def version():
     version_text = Text()
-    version_text.append("UnrealMate v0.1.7", style="bold green")
+    version_text.append("UnrealMate v0.1.8", style="bold green")
     version_text.append(" 🚀\n", style="bold")
     version_text.append("\nAll-in-one CLI toolkit for Unreal Engine developers", style="italic cyan")
 
     panel = Panel(
         Align.center(version_text),
         title="[bold]System Information[/bold]",
-        subtitle="[dim]Created by: gktrk363[/dim]",
+        subtitle="[dim]Created by: gktrk363 | github.com/gktrk363/unrealmate[/dim]",
         border_style="green",
         expand=False,
         padding=(1, 2)
     )
     console.print(panel)
-    console.print(Align.center("[dim]https://github.com/gktrk363/unrealmate[/dim]"))
 
 
 @app.command()
