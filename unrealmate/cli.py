@@ -2,11 +2,12 @@ import typer
 import subprocess
 import shutil
 import hashlib
+import json
 from pathlib import Path
 from collections import defaultdict
 from rich.console import Console
-from rich.table import Table
-from rich. prompt import Confirm
+from rich. table import Table
+from rich.prompt import Confirm
 
 app = typer.Typer(
     name="unrealmate",
@@ -14,20 +15,20 @@ app = typer.Typer(
 )
 console = Console()
 
-# Git komutları için alt grup
 git_app = typer.Typer(help="🔧 Git helper commands")
-app.add_typer(git_app, name="git")
+app. add_typer(git_app, name="git")
 
-# Asset komutları için alt grup
 asset_app = typer.Typer(help="📦 Asset management commands")
 app.add_typer(asset_app, name="asset")
 
+blueprint_app = typer.Typer(help="📊 Blueprint analysis commands")
+app.add_typer(blueprint_app, name="blueprint")
 
-def get_folder_size(path: Path) -> int:
-    """Calculate total size of a folder in bytes"""
+
+def get_folder_size(path:  Path) -> int:
     total = 0
     try:
-        for file in path. rglob("*"):
+        for file in path.rglob("*"):
             if file.is_file():
                 total += file.stat().st_size
     except (PermissionError, OSError):
@@ -35,8 +36,7 @@ def get_folder_size(path: Path) -> int:
     return total
 
 
-def get_file_size(path: Path) -> int:
-    """Get file size in bytes"""
+def get_file_size(path:  Path) -> int:
     try:
         return path.stat().st_size
     except (PermissionError, OSError):
@@ -44,7 +44,6 @@ def get_file_size(path: Path) -> int:
 
 
 def format_size(size_bytes: int) -> str:
-    """Convert bytes to human readable format"""
     if size_bytes >= 1024 * 1024 * 1024:
         return f"{size_bytes / (1024 * 1024 * 1024):.2f} GB"
     elif size_bytes >= 1024 * 1024:
@@ -55,9 +54,38 @@ def format_size(size_bytes: int) -> str:
         return f"{size_bytes} B"
 
 
+def analyze_blueprint_file(file_path: Path) -> dict:
+    """Analyze a . uasset blueprint file and extract metrics"""
+    try:
+        content = file_path.read_bytes()
+        text_content = content.decode('utf-8', errors='ignore')
+        
+        metrics = {
+            "name": file_path.stem,
+            "path": str(file_path),
+            "size": get_file_size(file_path),
+            "variables": 0,
+            "functions": 0,
+            "events": 0,
+            "nodes": 0,
+            "is_blueprint": False
+        }
+        
+        blueprint_indicators = ['Blueprint', 'EventGraph', 'K2Node', 'EdGraph']
+        if any(indicator in text_content for indicator in blueprint_indicators):
+            metrics["is_blueprint"] = True
+            metrics["variables"] = text_content.count('VariableGuid') + text_content.count('NewVar')
+            metrics["functions"] = text_content.count('K2Node_FunctionEntry') + text_content.count('Function_')
+            metrics["events"] = text_content.count('K2Node_Event') + text_content.count('CustomEvent')
+            metrics["nodes"] = text_content.count('K2Node_') + text_content.count('EdGraphNode')
+        
+        return metrics
+    except Exception: 
+        return None
+
+
 @app.command()
 def version():
-    """Show UnrealMate version"""
     console.print("[bold green]UnrealMate v0.1.0[/bold green] 🚀")
     console.print("[dim]https://github.com/gktrk363/unrealmate[/dim]")
     console.print("[dim]Created by:  gktrk363[/dim]")
@@ -65,7 +93,6 @@ def version():
 
 @app.command()
 def doctor():
-    """Check your UE project health and configuration"""
     console.print("\n[bold cyan]🔍 Running UnrealMate Doctor.. .[/bold cyan]\n")
     
     checks = []
@@ -74,7 +101,7 @@ def doctor():
     
     max_score += 25
     gitignore_path = Path(".gitignore")
-    if gitignore_path.exists():
+    if gitignore_path. exists():
         checks.append(("✅", ". gitignore", "Found", "green"))
         score += 25
     else:
@@ -82,7 +109,7 @@ def doctor():
     
     max_score += 25
     uproject_files = list(Path(". ").glob("*.uproject"))
-    if uproject_files:
+    if uproject_files: 
         checks.append(("✅", "UE Project", f"Found:  {uproject_files[0].name}", "green"))
         score += 25
     else:
@@ -139,13 +166,11 @@ def doctor():
 def git_init(
     force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing . gitignore")
 ):
-    """Generate .gitignore for Unreal Engine project"""
-    
     target = Path(".") / ".gitignore"
     template_path = Path(__file__).parent / "templates" / "gitignore.template"
     
-    if target.exists() and not force:
-        console. print("[yellow]⚠️  .gitignore already exists![/yellow]")
+    if target. exists() and not force:
+        console. print("[yellow]⚠️ .gitignore already exists![/yellow]")
         console.print("[dim]Use --force to overwrite[/dim]")
         return
     
@@ -156,7 +181,7 @@ def git_init(
     
     content = template_path.read_text()
     target.write_text(content)
-    console.print("[bold green]✅ . gitignore created successfully![/bold green]")
+    console.print("[bold green]✅ .gitignore created successfully![/bold green]")
     console.print(f"[dim]Location: {target. absolute()}[/dim]")
 
 
@@ -164,8 +189,6 @@ def git_init(
 def git_lfs(
     force: bool = typer. Option(False, "--force", "-f", help="Overwrite existing .gitattributes")
 ):
-    """Setup Git LFS for Unreal Engine project"""
-    
     console.print("\n[bold cyan]🔧 Setting up Git LFS...[/bold cyan]\n")
     
     try:
@@ -184,13 +207,13 @@ def git_lfs(
     template_path = Path(__file__).parent / "templates" / "gitattributes.template"
     
     if target.exists() and not force:
-        console.print("[yellow]⚠️  .gitattributes already exists![/yellow]")
+        console.print("[yellow]⚠️ .gitattributes already exists![/yellow]")
         console.print("[dim]Use --force to overwrite[/dim]")
         return
     
     if not template_path.exists():
         console.print("[red]❌ Template file not found![/red]")
-        console.print(f"[dim]Looking for: {template_path}[/dim]")
+        console.print(f"[dim]Looking for:  {template_path}[/dim]")
         return
     
     content = template_path.read_text()
@@ -201,7 +224,7 @@ def git_lfs(
         subprocess.run(["git", "lfs", "install"], capture_output=True, text=True)
         console.print("[bold green]✅ Git LFS initialized![/bold green]")
     except Exception as e:
-        console.print(f"[yellow]⚠️  Could not run 'git lfs install': {e}[/yellow]")
+        console.print(f"[yellow]⚠️ Could not run 'git lfs install': {e}[/yellow]")
     
     console.print(f"\n[dim]Location: {target.absolute()}[/dim]")
     console.print("\n[bold green]🎉 Git LFS setup complete![/bold green]")
@@ -213,18 +236,9 @@ def git_clean(
     dry_run: bool = typer. Option(False, "--dry-run", "-d", help="Show what would be deleted without deleting"),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt")
 ):
-    """Clean up unnecessary UE project files (Saved, Intermediate, etc.)"""
+    console.print("\n[bold cyan]🧹 Scanning for unnecessary files...[/bold cyan]\n")
     
-    console. print("\n[bold cyan]🧹 Scanning for unnecessary files...[/bold cyan]\n")
-    
-    cleanup_folders = [
-        "Saved",
-        "Intermediate",
-        "DerivedDataCache",
-        "Build",
-        ". vs",
-    ]
-    
+    cleanup_folders = ["Saved", "Intermediate", "DerivedDataCache", "Build", ". vs"]
     skip_patterns = ["venv", ".venv", "site-packages", "node_modules", ". git"]
     
     found_folders = []
@@ -254,7 +268,7 @@ def git_clean(
     table.add_column("📁 Folder", style="cyan")
     table.add_column("Size", style="yellow", justify="right")
     
-    for folder, size in found_folders: 
+    for folder, size in found_folders:
         table.add_row(str(folder), format_size(size))
     
     table.add_row("─" * 20, "─" * 10)
@@ -268,9 +282,9 @@ def git_clean(
         return
     
     if not yes:
-        confirm = Confirm.ask(f"[bold]Do you want to delete these files and free {format_size(total_size)}? [/bold]")
+        confirm = Confirm.ask(f"[bold]Do you want to delete these files and free {format_size(total_size)}?[/bold]")
         if not confirm:
-            console.print("[yellow]❌ Cleanup cancelled[/yellow]\n")
+            console. print("[yellow]❌ Cleanup cancelled[/yellow]\n")
             return
     
     deleted_count = 0
@@ -291,11 +305,9 @@ def git_clean(
 
 @asset_app.command("scan")
 def asset_scan(
-    path: str = typer.Argument(".", help="Path to scan for assets"),
+    path: str = typer. Argument(".", help="Path to scan for assets"),
     show_all: bool = typer.Option(False, "--all", "-a", help="Show all assets (not just summary)")
 ):
-    """Scan and report all assets in your UE project"""
-    
     console.print("\n[bold cyan]📦 Scanning for assets...[/bold cyan]\n")
     
     scan_path = Path(path)
@@ -308,7 +320,7 @@ def asset_scan(
         "Blueprints": ["*. uasset"],
         "Maps": ["*.umap"],
         "Textures": ["*.png", "*.tga", "*.psd", "*.exr", "*.hdr"],
-        "Audio": ["*.wav", "*.mp3", "*.ogg"],
+        "Audio": ["*.wav", "*. mp3", "*.ogg"],
         "3D Models": ["*.fbx", "*.obj"],
         "Materials": ["*.uasset"],
         "Videos": ["*.mp4", "*. mov", "*.avi"],
@@ -319,7 +331,7 @@ def asset_scan(
     total_size = 0
     total_count = 0
     
-    skip_patterns = ["venv", ".venv", "site-packages", "node_modules", ".git", "Intermediate", "Saved"]
+    skip_patterns = ["venv", ". venv", "site-packages", "node_modules", ".git", "Intermediate", "Saved"]
     
     for category, extensions in asset_types.items():
         category_files = []
@@ -337,9 +349,9 @@ def asset_scan(
         
         if category_files:
             results[category] = {
-                "count":  len(category_files),
+                "count": len(category_files),
                 "size": category_size,
-                "files": category_files
+                "files":  category_files
             }
             total_count += len(category_files)
             total_size += category_size
@@ -375,7 +387,7 @@ def asset_scan(
             detail_table.add_row(str(file), category, format_size(size))
         
         if len(all_assets) > 50:
-            detail_table. add_row(f"... and {len(all_assets) - 50} more", "", "")
+            detail_table.add_row(f"... and {len(all_assets) - 50} more", "", "")
         
         console.print(detail_table)
     
@@ -403,9 +415,7 @@ def asset_organize(
     dry_run: bool = typer. Option(False, "--dry-run", "-d", help="Show what would be moved without moving"),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt")
 ):
-    """Auto-organize assets into proper folder structure"""
-    
-    console. print("\n[bold cyan]📦 Analyzing assets for organization...[/bold cyan]\n")
+    console.print("\n[bold cyan]📦 Analyzing assets for organization...[/bold cyan]\n")
     
     scan_path = Path(path)
     
@@ -419,11 +429,11 @@ def asset_organize(
             "folder": "Textures"
         },
         "Audio": {
-            "extensions": [".wav", ".mp3", ". ogg", ".flac"],
+            "extensions": [".wav", ".mp3", ".ogg", ".flac"],
             "folder": "Audio"
         },
         "Models": {
-            "extensions": [".fbx", ". obj", ".blend", ".3ds", ". dae"],
+            "extensions": [".fbx", ".obj", ".blend", ".3ds", ". dae"],
             "folder": "Models"
         },
         "Videos": {
@@ -435,7 +445,7 @@ def asset_organize(
             "folder": "Fonts"
         },
         "Data": {
-            "extensions": [".json", ".csv", ".xml", ".ini"],
+            "extensions": [".json", ".csv", ".xml", ". ini"],
             "folder": "Data"
         },
     }
@@ -477,7 +487,7 @@ def asset_organize(
     console.print(table)
     console.print(f"\n[bold]Total:  {len(files_to_move)} files to organize[/bold]\n")
     
-    if dry_run:
+    if dry_run: 
         console.print("[yellow]🔍 Dry run mode - no files were moved[/yellow]\n")
         return
     
@@ -503,9 +513,9 @@ def asset_organize(
                     counter += 1
             
             shutil.move(str(source), str(dest))
-            console.print(f"[green]✅ Moved: {source. name} → {dest.parent.name}/[/green]")
+            console.print(f"[green]✅ Moved: {source.name} → {dest.parent.name}/[/green]")
             moved_count += 1
-        except Exception as e:
+        except Exception as e: 
             console.print(f"[red]❌ Failed to move {source.name}: {e}[/red]")
             error_count += 1
     
@@ -518,8 +528,6 @@ def asset_duplicates(
     path: str = typer.Argument(".", help="Path to scan for duplicates"),
     by_content: bool = typer.Option(False, "--content", "-c", help="Compare by file content (slower but accurate)")
 ):
-    """Find duplicate assets in your UE project"""
-    
     console.print("\n[bold cyan]🔍 Scanning for duplicate assets...[/bold cyan]\n")
     
     scan_path = Path(path)
@@ -557,7 +565,7 @@ def asset_duplicates(
                 file_groups[file_hash].append(file)
             except (PermissionError, OSError):
                 continue
-        else:
+        else: 
             file_groups[file.name. lower()].append(file)
     
     duplicates = {k: v for k, v in file_groups.items() if len(v) > 1}
@@ -579,7 +587,7 @@ def asset_duplicates(
         
         console.print(f"[bold cyan]📁 {files[0].name}[/bold cyan] [dim]({len(files)} copies, wasting {format_size(wasted)})[/dim]")
         
-        for file in files:
+        for file in files: 
             console.print(f"   [dim]→[/dim] {file}")
         
         console.print()
@@ -591,6 +599,110 @@ def asset_duplicates(
     console.print(f"   [bold red]{format_size(total_wasted)}[/bold red] wasted space\n")
     
     console.print("[dim]Tip: Remove duplicate files to save space and avoid confusion![/dim]\n")
+
+
+@blueprint_app.command("analyze")
+def blueprint_analyze(
+    path: str = typer. Argument(".", help="Path to scan for blueprints"),
+    show_all: bool = typer. Option(False, "--all", "-a", help="Show all blueprints")
+):
+    """Analyze Blueprint files and show statistics"""
+    
+    console.print("\n[bold cyan]📊 Analyzing Blueprints...[/bold cyan]\n")
+    
+    scan_path = Path(path)
+    
+    if not scan_path.exists():
+        console.print(f"[red]❌ Path not found: {path}[/red]")
+        return
+    
+    skip_patterns = ["venv", ". venv", "site-packages", "node_modules", ".git", "Intermediate", "Saved", "__pycache__"]
+    
+    blueprints = []
+    total_variables = 0
+    total_functions = 0
+    total_events = 0
+    total_nodes = 0
+    
+    for file in scan_path.rglob("*.uasset"):
+        if any(skip in str(file) for skip in skip_patterns):
+            continue
+        
+        metrics = analyze_blueprint_file(file)
+        
+        if metrics and metrics["is_blueprint"]: 
+            blueprints.append(metrics)
+            total_variables += metrics["variables"]
+            total_functions += metrics["functions"]
+            total_events += metrics["events"]
+            total_nodes += metrics["nodes"]
+    
+    if not blueprints:
+        console.print("[yellow]⚠️ No Blueprint files found in this directory[/yellow]\n")
+        console.print("[dim]Make sure you're in an Unreal Engine project with . uasset files[/dim]\n")
+        return
+    
+    blueprints.sort(key=lambda x: x["nodes"], reverse=True)
+    
+    table = Table(title="Blueprint Analysis", show_header=True)
+    table.add_column("📘 Blueprint", style="cyan")
+    table.add_column("Variables", style="magenta", justify="right")
+    table.add_column("Functions", style="green", justify="right")
+    table.add_column("Events", style="yellow", justify="right")
+    table.add_column("Nodes", style="red", justify="right")
+    table.add_column("Size", style="dim", justify="right")
+    
+    display_blueprints = blueprints if show_all else blueprints[: 10]
+    
+    for bp in display_blueprints: 
+        table.add_row(
+            bp["name"],
+            str(bp["variables"]),
+            str(bp["functions"]),
+            str(bp["events"]),
+            str(bp["nodes"]),
+            format_size(bp["size"])
+        )
+    
+    if not show_all and len(blueprints) > 10:
+        table.add_row(f"... and {len(blueprints) - 10} more", "", "", "", "", "")
+    
+    table.add_row("─" * 20, "─" * 5, "─" * 5, "─" * 5, "─" * 5, "─" * 8)
+    table.add_row(
+        f"[bold]Total ({len(blueprints)} BPs)[/bold]",
+        f"[bold]{total_variables}[/bold]",
+        f"[bold]{total_functions}[/bold]",
+        f"[bold]{total_events}[/bold]",
+        f"[bold]{total_nodes}[/bold]",
+        ""
+    )
+    
+    console.print(table)
+    
+    if blueprints:
+        console.print("\n[bold]🔝 Most Complex Blueprints:[/bold]\n")
+        
+        top_table = Table(show_header=True)
+        top_table.add_column("Blueprint", style="cyan")
+        top_table.add_column("Nodes", style="red", justify="right")
+        top_table.add_column("Complexity", style="yellow")
+        
+        for bp in blueprints[: 5]:
+            if bp["nodes"] > 200:
+                complexity = "[red]🔴 Very High[/red]"
+            elif bp["nodes"] > 100:
+                complexity = "[yellow]🟡 High[/yellow]"
+            elif bp["nodes"] > 50:
+                complexity = "[green]🟢 Medium[/green]"
+            else:
+                complexity = "[dim]⚪ Low[/dim]"
+            
+            top_table.add_row(bp["name"], str(bp["nodes"]), complexity)
+        
+        console.print(top_table)
+    
+    console.print(f"\n[bold green]✅ Analysis complete![/bold green]")
+    console.print(f"[dim]Analyzed {len(blueprints)} blueprints with {total_nodes} total nodes[/dim]\n")
 
 
 if __name__ == "__main__": 
