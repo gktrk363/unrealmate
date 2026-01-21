@@ -493,9 +493,9 @@ Bu proje **MIT Lisansı** ile lisanslanmıştır - detaylar için [LICENSE](LICE
 
 <br>
 
-Made with ❤️ for Unreal Engine developers
+Made for Unreal Engine developers <3
 
-Unreal Engine geliştiricileri için ❤️ ile yapıldı
+Unreal Engine geliştiricileri yapıldı <3
 
 <br>
 
