@@ -100,7 +100,7 @@ def get_complexity_rating(nodes: int) -> tuple:
 
 @app.command()
 def version():
-    console.print("[bold green]UnrealMate v0.1.0[/bold green] 🚀")
+    console.print("[bold green]UnrealMate v0.1.1[/bold green] 🚀")
     console.print("[dim]https://github.com/gktrk363/unrealmate[/dim]")
     console.print("[dim]Created by:  gktrk363[/dim]")
 
