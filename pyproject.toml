@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unrealmate"
-version = "0.1.6"
+version = "0.1.7"
 description = "All-in-one CLI toolkit for Unreal Engine developers"
 readme = "README.md"
 license = {text = "MIT"}
@@ -33,3 +33,6 @@ unrealmate = "unrealmate.cli:app"
 [project.urls]
 Homepage = "https://github.com/gktrk363/unrealmate"
 Repository = "https://github.com/gktrk363/unrealmate"
+
+[tool.setuptools.package-data]
+unrealmate = ["templates/*"]

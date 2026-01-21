@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: unrealmate
-Version: 0.1.6
+Version: 0.1.7
 Summary: All-in-one CLI toolkit for Unreal Engine developers
 Home-page: https://github.com/gktrk363/unrealmate
 Author: gktrk363
@@ -104,6 +104,7 @@ Keep your project healthy
 
 - ✅ Health score (0-100)
 - ✅ Configuration checks
+- ✅ Modern Rich CLI Interface 🆕
 - ✅ Best practice validation
 
 </td>
@@ -279,6 +280,7 @@ Projenizi sağlıklı tutun
 
 - ✅ Sağlık puanı (0-100)
 - ✅ Yapılandırma kontrolleri
+- ✅ Modern Rich Arayüzü 🆕
 - ✅ Best practice doğrulama
 
 </td>

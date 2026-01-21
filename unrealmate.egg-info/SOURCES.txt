@@ -23,3 +23,5 @@ unrealmate/core/blueprint/report.py
 unrealmate/core/git/__init__.py
 unrealmate/core/git/cleanup.py
 unrealmate/core/git/lfs.py
+unrealmate/templates/gitattributes.template
+unrealmate/templates/gitignore.template
