@@ -100,7 +100,7 @@ def get_complexity_rating(nodes: int) -> tuple:
 
 @app.command()
 def version():
-    console.print("[bold green]UnrealMate v0.1.1[/bold green] 🚀")
+    console.print("[bold green]UnrealMate v0.1.5[/bold green] 🚀")
     console.print("[dim]https://github.com/gktrk363/unrealmate[/dim]")
     console.print("[dim]Created by:  gktrk363[/dim]")
 
@@ -112,26 +112,28 @@ def doctor():
     checks = []
     score = 0
     max_score = 0
+    current_dir = Path.cwd()
+    console.print(f"[dim]Checking directory: {current_dir}[/dim]")
     
     max_score += 25
-    gitignore_path = Path(".gitignore")
+    gitignore_path = current_dir / ".gitignore"
     if gitignore_path.exists():
-        checks.append(("✅", ". gitignore", "Found", "green"))
+        checks.append(("✅", ".gitignore", "Found", "green"))
         score += 25
     else:
-        checks. append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
+        checks.append(("❌", ".gitignore", "Missing - run 'unrealmate git init'", "red"))
     
     max_score += 25
-    uproject_files = list(Path(". ").glob("*.uproject"))
+    uproject_files = list(current_dir.glob("*.uproject"))
     if uproject_files:
-        checks.append(("✅", "UE Project", f"Found:  {uproject_files[0]. name}", "green"))
+        checks.append(("✅", "UE Project", f"Found: {uproject_files[0].name}", "green"))
         score += 25
     else: 
-        checks.append(("⚠️", "UE Project", "No . uproject file found", "yellow"))
+        checks.append(("⚠️", "UE Project", "No .uproject file found", "yellow"))
     
     max_score += 25
-    gitattributes = Path(".gitattributes")
-    if gitattributes. exists() and "lfs" in gitattributes.read_text().lower():
+    gitattributes = current_dir / ".gitattributes"
+    if gitattributes.exists() and "lfs" in gitattributes.read_text().lower():
         checks.append(("✅", "Git LFS", "Configured", "green"))
         score += 25
     else: 
@@ -139,8 +141,8 @@ def doctor():
     
     max_score += 25
     large_files = []
-    for ext in ["*. uasset", "*.umap", "*.pak"]:
-        large_files.extend(Path(". ").rglob(ext))
+    for ext in ["*.uasset", "*.umap", "*.pak"]:
+        large_files.extend(current_dir.rglob(ext))
     
     if len(large_files) == 0:
         checks.append(("✅", "Large Files", "No large binary files in root", "green"))

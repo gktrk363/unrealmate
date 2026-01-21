@@ -86,7 +86,7 @@ Keep your project healthy
 
 ## 🚀 Installation
 
-The easiest way to install UnrealMate is via pip:
+The easiest way to install UnrealMate v0.1.5 🚀via pip:
 
 ```bash
 pip install unrealmate
