@@ -5,6 +5,7 @@
 ### All-in-one CLI toolkit for Unreal Engine developers
 ### Unreal Engine geliştiricileri için hepsi bir arada CLI araç kiti
 
+[![Tests](https://github.com/gktrk363/unrealmate/actions/workflows/tests.yml/badge.svg)](https://github.com/gktrk363/unrealmate/actions/workflows/tests.yml)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Mac%20%7C%20Linux-blue?style=for-the-badge)]()
