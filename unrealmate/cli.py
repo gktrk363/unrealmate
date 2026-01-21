@@ -3,8 +3,8 @@ import subprocess
 import shutil
 from pathlib import Path
 from rich.console import Console
-from rich.table import Table
-from rich. prompt import Confirm
+from rich. table import Table
+from rich.prompt import Confirm
 
 app = typer.Typer(
     name="unrealmate",
@@ -15,6 +15,10 @@ console = Console()
 # Git komutları için alt grup
 git_app = typer.Typer(help="🔧 Git helper commands")
 app.add_typer(git_app, name="git")
+
+# Asset komutları için alt grup
+asset_app = typer.Typer(help="📦 Asset management commands")
+app.add_typer(asset_app, name="asset")
 
 
 def get_folder_size(path: Path) -> int:
@@ -27,6 +31,14 @@ def get_folder_size(path: Path) -> int:
     except (PermissionError, OSError):
         pass
     return total
+
+
+def get_file_size(path:  Path) -> int:
+    """Get file size in bytes"""
+    try:
+        return path.stat().st_size
+    except (PermissionError, OSError):
+        return 0
 
 
 def format_size(size_bytes: int) -> str:
@@ -71,15 +83,15 @@ def doctor():
     max_score += 25
     uproject_files = list(Path(".").glob("*.uproject"))
     if uproject_files:
-        checks.append(("✅", "UE Project", f"Found:  {uproject_files[0]. name}", "green"))
+        checks.append(("✅", "UE Project", f"Found:  {uproject_files[0].name}", "green"))
         score += 25
-    else: 
+    else:
         checks.append(("⚠️", "UE Project", "No .uproject file found", "yellow"))
     
     # Check 3: Git LFS
     max_score += 25
     gitattributes = Path(".gitattributes")
-    if gitattributes.exists() and "lfs" in gitattributes. read_text().lower():
+    if gitattributes.exists() and "lfs" in gitattributes.read_text().lower():
         checks.append(("✅", "Git LFS", "Configured", "green"))
         score += 25
     else:
@@ -131,12 +143,12 @@ def doctor():
 def git_init(
     force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing . gitignore")
 ):
-    """Generate . gitignore for Unreal Engine project"""
+    """Generate .gitignore for Unreal Engine project"""
     
     target = Path(".") / ".gitignore"
     template_path = Path(__file__).parent / "templates" / "gitignore.template"
     
-    if target. exists() and not force:
+    if target.exists() and not force:
         console. print("[yellow]⚠️  .gitignore already exists![/yellow]")
         console.print("[dim]Use --force to overwrite[/dim]")
         return
@@ -148,13 +160,13 @@ def git_init(
     
     content = template_path.read_text()
     target.write_text(content)
-    console.print("[bold green]✅ . gitignore created successfully![/bold green]")
+    console.print("[bold green]✅ .gitignore created successfully![/bold green]")
     console.print(f"[dim]Location: {target. absolute()}[/dim]")
 
 
 @git_app.command("lfs")
 def git_lfs(
-    force: bool = typer. Option(False, "--force", "-f", help="Overwrite existing .gitattributes")
+    force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing .gitattributes")
 ):
     """Setup Git LFS for Unreal Engine project"""
     
@@ -205,7 +217,7 @@ def git_lfs(
 
 @git_app.command("clean")
 def git_clean(
-    dry_run: bool = typer.Option(False, "--dry-run", "-d", help="Show what would be deleted without deleting"),
+    dry_run: bool = typer. Option(False, "--dry-run", "-d", help="Show what would be deleted without deleting"),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt")
 ):
     """Clean up unnecessary UE project files (Saved, Intermediate, etc.)"""
@@ -272,7 +284,7 @@ def git_clean(
     if not yes:
         confirm = Confirm.ask(f"[bold]Do you want to delete these files and free {format_size(total_size)}?[/bold]")
         if not confirm:
-            console.print("[yellow]❌ Cleanup cancelled[/yellow]\n")
+            console. print("[yellow]❌ Cleanup cancelled[/yellow]\n")
             return
     
     # Delete folders
@@ -284,12 +296,129 @@ def git_clean(
             shutil.rmtree(folder)
             deleted_count += 1
             deleted_size += size
-            console.print(f"[green]✅ Deleted:  {folder}[/green]")
-        except Exception as e: 
+            console.print(f"[green]✅ Deleted: {folder}[/green]")
+        except Exception as e:
             console.print(f"[red]❌ Failed to delete {folder}: {e}[/red]")
     
     console.print(f"\n[bold green]🎉 Cleanup complete![/bold green]")
     console.print(f"[dim]Deleted {deleted_count} folders, freed {format_size(deleted_size)}[/dim]\n")
+
+
+@asset_app.command("scan")
+def asset_scan(
+    path: str = typer. Argument(".", help="Path to scan for assets"),
+    show_all: bool = typer.Option(False, "--all", "-a", help="Show all assets (not just summary)")
+):
+    """Scan and report all assets in your UE project"""
+    
+    console.print("\n[bold cyan]📦 Scanning for assets...[/bold cyan]\n")
+    
+    scan_path = Path(path)
+    
+    if not scan_path.exists():
+        console.print(f"[red]❌ Path not found: {path}[/red]")
+        return
+    
+    # Asset types to scan
+    asset_types = {
+        "Blueprints": ["*. uasset"],
+        "Maps": ["*.umap"],
+        "Textures": ["*.png", "*.tga", "*.psd", "*.exr", "*.hdr"],
+        "Audio": ["*.wav", "*.mp3", "*.ogg"],
+        "3D Models": ["*.fbx", "*.obj"],
+        "Materials": ["*.uasset"],  # Materials are also . uasset
+        "Videos": ["*.mp4", "*. mov", "*.avi"],
+    }
+    
+    # Scan results
+    results = {}
+    all_assets = []
+    total_size = 0
+    total_count = 0
+    
+    # Folders to skip
+    skip_patterns = ["venv", ".venv", "site-packages", "node_modules", ".git", "Intermediate", "Saved"]
+    
+    # Scan for each asset type
+    for category, extensions in asset_types.items():
+        category_files = []
+        category_size = 0
+        
+        for ext in extensions:
+            for file in scan_path.rglob(ext):
+                # Skip unwanted folders
+                if any(skip in str(file) for skip in skip_patterns):
+                    continue
+                
+                size = get_file_size(file)
+                category_files.append((file, size))
+                category_size += size
+                all_assets.append((file, size, category))
+        
+        if category_files:
+            results[category] = {
+                "count": len(category_files),
+                "size": category_size,
+                "files": category_files
+            }
+            total_count += len(category_files)
+            total_size += category_size
+    
+    if not results:
+        console.print("[yellow]⚠️ No assets found in this directory[/yellow]\n")
+        return
+    
+    # Display summary table
+    table = Table(title="Asset Summary", show_header=True)
+    table.add_column("📁 Category", style="cyan")
+    table.add_column("Count", style="magenta", justify="right")
+    table.add_column("Size", style="yellow", justify="right")
+    
+    for category, data in results.items():
+        table.add_row(category, str(data["count"]), format_size(data["size"]))
+    
+    table.add_row("─" * 15, "─" * 5, "─" * 10)
+    table.add_row("[bold]Total[/bold]", f"[bold]{total_count}[/bold]", f"[bold green]{format_size(total_size)}[/bold green]")
+    
+    console.print(table)
+    
+    # Show all assets if requested
+    if show_all and all_assets:
+        console.print("\n[bold]All Assets:[/bold]\n")
+        
+        detail_table = Table(show_header=True)
+        detail_table.add_column("File", style="cyan")
+        detail_table.add_column("Category", style="magenta")
+        detail_table. add_column("Size", style="yellow", justify="right")
+        
+        # Sort by size (largest first)
+        all_assets. sort(key=lambda x: x[1], reverse=True)
+        
+        for file, size, category in all_assets[: 50]:  # Show top 50
+            detail_table. add_row(str(file), category, format_size(size))
+        
+        if len(all_assets) > 50:
+            detail_table. add_row(f"... and {len(all_assets) - 50} more", "", "")
+        
+        console.print(detail_table)
+    
+    # Show largest files
+    if all_assets: 
+        console.print("\n[bold]🔝 Top 5 Largest Assets:[/bold]\n")
+        
+        top_table = Table(show_header=True)
+        top_table.add_column("File", style="cyan")
+        top_table.add_column("Size", style="yellow", justify="right")
+        
+        all_assets.sort(key=lambda x: x[1], reverse=True)
+        
+        for file, size, category in all_assets[:5]:
+            top_table.add_row(str(file), format_size(size))
+        
+        console.print(top_table)
+    
+    console.print(f"\n[bold green]✅ Scan complete![/bold green]")
+    console.print(f"[dim]Found {total_count} assets totaling {format_size(total_size)}[/dim]\n")
 
 
 if __name__ == "__main__": 
