@@ -6,7 +6,7 @@
 ### Unreal Engine geliştiricileri için hepsi bir arada CLI araç kiti
 
 [![PyPI](https://img.shields.io/pypi/v/unrealmate?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/unrealmate/)
-[![Tests](https://img.shields.io/github/actions/workflow/status/gktrk363/unrealmate/release.yml?branch=main&style=for-the-badge&logo=github&label=Tests)](https://github.com/gktrk363/unrealmate/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/gktrk363/unrealmate/tests.yml?branch=main&style=for-the-badge&logo=github&label=Tests)](https://github.com/gktrk363/unrealmate/actions/workflows/tests.yml)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Mac%20%7C%20Linux-blue?style=for-the-badge)]()
