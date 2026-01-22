@@ -1,3 +1,17 @@
+"""
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          UnrealMate - cli.py                                 ║
+║                                                                              ║
+║  Author: gktrk363                                                           ║
+║  Purpose: Main CLI interface for UnrealMate toolkit                         ║
+║  Created: 2026-01-23                                                        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Main CLI interface for UnrealMate - All-in-one toolkit for Unreal Engine developers.
+
+© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+"""
+
 import typer
 import subprocess
 import shutil
@@ -15,23 +29,58 @@ from rich.traceback import install
 from rich.align import Align
 from rich.text import Text
 
+# Import UnrealMate modules
+from unrealmate.core.signature import (
+    print_signature_banner,
+    get_signature_console,
+    create_branded_panel,
+    get_signature_footer,
+    DEVELOPER_SIGNATURE
+)
+from unrealmate.core.config import load_config, save_config, init_config, get_config_value, set_config_value
+from unrealmate.core.logger import get_logger
+from unrealmate.core.performance.profiler import PerformanceProfiler
+from unrealmate.core.performance.shader_analyzer import ShaderAnalyzer
+from unrealmate.core.performance.memory_auditor import MemoryAuditor
+from unrealmate.core.plugins.manager import PluginManager
+from unrealmate.core.build.ci_generator import CIGenerator
+
 # Install rich traceback handler
 install(show_locals=True)
 
-app = typer. Typer(
+app = typer.Typer(
     name="unrealmate",
-    help="🎮 All-in-one CLI toolkit for Unreal Engine developers"
+    help="🎮 All-in-one CLI toolkit for Unreal Engine developers",
+    add_completion=False
 )
-console = Console()
 
-git_app = typer. Typer(help="🔧 Git helper commands")
+# Use signature console
+console = get_signature_console()
+
+git_app = typer.Typer(help="🔧 Git helper commands")
 app.add_typer(git_app, name="git")
 
 asset_app = typer.Typer(help="📦 Asset management commands")
 app.add_typer(asset_app, name="asset")
 
-blueprint_app = typer. Typer(help="📊 Blueprint analysis commands")
+blueprint_app = typer.Typer(help="📊 Blueprint analysis commands")
 app.add_typer(blueprint_app, name="blueprint")
+
+# New performance commands
+performance_app = typer.Typer(help="⚡ Performance analysis commands")
+app.add_typer(performance_app, name="performance")
+
+# Configuration commands
+config_app = typer.Typer(help="⚙️  Configuration management")
+app.add_typer(config_app, name="config")
+
+# Plugin commands
+plugin_app = typer.Typer(help="🔌 Plugin management")
+app.add_typer(plugin_app, name="plugin")
+
+# Build commands
+build_app = typer.Typer(help="🏗️  Build and CI/CD tools")
+app.add_typer(build_app, name="build")
 
 
 def get_folder_size(path:  Path) -> int:
@@ -107,20 +156,19 @@ def get_complexity_rating(nodes: int) -> tuple:
 
 @app.command()
 def version():
-    version_text = Text()
-    version_text.append("UnrealMate v0.1.10", style="bold green")
-    version_text.append(" 🚀\n", style="bold")
-    version_text.append("\nAll-in-one CLI toolkit for Unreal Engine developers\n", style="italic cyan")
-    version_text.append("\nCreated by: gktrk363 | github.com/gktrk363/unrealmate", style="dim")
-
-    panel = Panel(
-        Align.center(version_text),
-        title="[bold]System Information[/bold]",
-        border_style="green",
-        expand=False,
-        padding=(1, 2)
+    """Show UnrealMate version and information with signature banner."""
+    config = load_config()
+    
+    # Show banner based on config
+    print_signature_banner(
+        console=console,
+        compact=config.signature.compact_banner,
+        show_version=True,
+        version="1.0.0"
     )
-    console.print(panel)
+    
+    if config.signature.show_footer:
+        console.print(get_signature_footer())
 
 
 @app.command()
@@ -952,6 +1000,400 @@ def blueprint_report(
     
     console.print("[dim]Tip:  Use --output report.html to save a visual report![/dim]\n")
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Performance Commands - © 2026 gktrk363
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@performance_app.command("profile")
+def performance_profile(
+    path: str = typer.Argument(".", help="Project root path"),
+    show_all: bool = typer.Option(False, "--all", "-a", help="Show all metrics")
+):
+    """Analyze performance metrics and detect bottlenecks."""
+    console.print(create_branded_panel(
+        "[bold cyan]Running Performance Analysis...[/bold cyan]",
+        "Performance Profiler"
+    ))
+    
+    project_path = Path(path)
+    profiler = PerformanceProfiler(project_path)
+    
+    # Find profiling data
+    csv_files = profiler.find_csv_reports()
+    
+    if not csv_files:
+        console.print("[yellow]⚠️  No profiling data found![/yellow]")
+        console.print("[dim]Run your game with profiling enabled and try again.[/dim]")
+        console.print(f"[dim]Looking in: {profiler.profiling_dir}[/dim]\n")
+        return
+    
+    console.print(f"[green]✅ Found {len(csv_files)} profiling report(s)[/green]\n")
+    
+    # Analyze
+    metrics, bottlenecks = profiler.analyze()
+    
+    # Generate report
+    profiler.generate_report(console)
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+@performance_app.command("shaders")
+def performance_shaders(
+    path: str = typer.Argument(".", help="Project root path"),
+    show_all: bool = typer.Option(False, "--all", "-a", help="Show all shaders")
+):
+    """Analyze shader complexity and optimization opportunities."""
+    console.print(create_branded_panel(
+        "[bold cyan]Running Shader Analysis...[/bold cyan]",
+        "Shader Analyzer"
+    ))
+    
+    project_path = Path(path)
+    analyzer = ShaderAnalyzer(project_path)
+    
+    # Analyze shaders
+    shaders = analyzer.analyze_all()
+    
+    if not shaders:
+        console.print("[yellow]⚠️  No shader files found![/yellow]")
+        console.print(f"[dim]Looking in: {analyzer.shaders_dir}[/dim]\n")
+        return
+    
+    # Generate report
+    analyzer.generate_report(console, show_all=show_all)
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Configuration Commands - © 2026 gktrk363
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@config_app.command("init")
+def config_init(
+    force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing config")
+):
+    """Initialize .unrealmate.toml configuration file."""
+    console.print(create_branded_panel(
+        "[bold cyan]Initializing Configuration...[/bold cyan]",
+        "Config Manager"
+    ))
+    
+    if init_config(force=force):
+        console.print("[green]✅ Configuration file created![/green]")
+        console.print(f"[dim]Location: {Path.cwd() / '.unrealmate.toml'}[/dim]\n")
+    else:
+        console.print("[yellow]⚠️  Configuration already exists![/yellow]")
+        console.print("[dim]Use --force to overwrite[/dim]\n")
+
+
+@config_app.command("show")
+def config_show():
+    """Show current configuration."""
+    console.print(create_branded_panel(
+        "[bold cyan]Current Configuration[/bold cyan]",
+        "Config Manager"
+    ))
+    
+    config = load_config()
+    
+    table = Table(title="UnrealMate Configuration")
+    table.add_column("Section", style="cyan")
+    table.add_column("Key", style="magenta")
+    table.add_column("Value", style="green")
+    
+    # Performance settings
+    table.add_row("performance", "cache_enabled", str(config.performance.cache_enabled))
+    table.add_row("performance", "cache_ttl_hours", str(config.performance.cache_ttl_hours))
+    table.add_row("performance", "parallel_processing", str(config.performance.parallel_processing))
+    
+    # Signature settings
+    table.add_row("signature", "show_banner", str(config.signature.show_banner))
+    table.add_row("signature", "compact_banner", str(config.signature.compact_banner))
+    table.add_row("signature", "color_theme", config.signature.color_theme)
+    
+    # Git settings
+    table.add_row("git", "auto_lfs", str(config.git.auto_lfs))
+    table.add_row("git", "commit_template_enabled", str(config.git.commit_template_enabled))
+    
+    console.print(table)
+    console.print()
+
+
+@config_app.command("set")
+def config_set(
+    key: str = typer.Argument(..., help="Config key (e.g., performance.cache_enabled)"),
+    value: str = typer.Argument(..., help="Value to set")
+):
+    """Set a configuration value."""
+    if set_config_value(key, value):
+        console.print(f"[green]✅ Set {key} = {value}[/green]\n")
+    else:
+        console.print(f"[red]❌ Failed to set {key}[/red]\n")
+
+
+@config_app.command("get")
+def config_get(
+    key: str = typer.Argument(..., help="Config key (e.g., performance.cache_enabled)")
+):
+    """Get a configuration value."""
+    value = get_config_value(key)
+    
+    if value is not None:
+        console.print(f"[cyan]{key}[/cyan] = [green]{value}[/green]\n")
+    else:
+        console.print(f"[red]❌ Key not found: {key}[/red]\n")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Additional Performance Commands - © 2026 gktrk363
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@performance_app.command("memory")
+def performance_memory(
+    path: str = typer.Argument(".", help="Project root path"),
+    show_all: bool = typer.Option(False, "--all", "-a", help="Show all assets")
+):
+    """Audit memory usage and identify optimization opportunities."""
+    console.print(create_branded_panel(
+        "[bold cyan]Running Memory Audit...[/bold cyan]",
+        "Memory Auditor"
+    ))
+    
+    project_path = Path(path)
+    auditor = MemoryAuditor(project_path)
+    
+    # Scan assets
+    with console.status("[bold green]Scanning assets...", spinner="dots"):
+        assets = auditor.scan_assets()
+    
+    if not assets:
+        console.print("[yellow]⚠️  No assets found to audit![/yellow]\n")
+        return
+    
+    # Generate report
+    auditor.generate_report(console)
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Plugin Commands - © 2026 gktrk363
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@plugin_app.command("list")
+def plugin_list(
+    path: str = typer.Argument(".", help="Project root path")
+):
+    """List all installed plugins."""
+    console.print(create_branded_panel(
+        "[bold cyan]Listing Plugins...[/bold cyan]",
+        "Plugin Manager"
+    ))
+    
+    project_path = Path(path)
+    manager = PluginManager(project_path)
+    
+    manager.generate_report(console)
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+@plugin_app.command("install")
+def plugin_install(
+    source: str = typer.Argument(..., help="Git URL or local path"),
+    name: str = typer.Option(None, "--name", "-n", help="Plugin name"),
+    path: str = typer.Option(".", "--path", "-p", help="Project root path")
+):
+    """Install a plugin from Git or local directory."""
+    console.print(create_branded_panel(
+        "[bold cyan]Installing Plugin...[/bold cyan]",
+        "Plugin Manager"
+    ))
+    
+    project_path = Path(path)
+    manager = PluginManager(project_path)
+    
+    # Determine if source is Git URL or local path
+    if source.startswith(('http://', 'https://', 'git@')):
+        # Git URL
+        with console.status("[bold yellow]Cloning repository...", spinner="dots"):
+            success = manager.install_from_git(source, name)
+    else:
+        # Local path
+        source_path = Path(source)
+        with console.status("[bold yellow]Copying plugin...", spinner="dots"):
+            success = manager.install_from_local(source_path, name)
+    
+    if success:
+        console.print("[green]✅ Plugin installed successfully![/green]\n")
+    else:
+        console.print("[red]❌ Failed to install plugin![/red]")
+        console.print("[dim]Plugin may already exist or source is invalid.[/dim]\n")
+
+
+@plugin_app.command("enable")
+def plugin_enable(
+    name: str = typer.Argument(..., help="Plugin name"),
+    path: str = typer.Option(".", "--path", "-p", help="Project root path")
+):
+    """Enable a plugin in .uproject file."""
+    project_path = Path(path)
+    manager = PluginManager(project_path)
+    
+    if manager.enable_plugin(name):
+        console.print(f"[green]✅ Enabled plugin: {name}[/green]\n")
+    else:
+        console.print(f"[red]❌ Failed to enable plugin: {name}[/red]\n")
+
+
+@plugin_app.command("disable")
+def plugin_disable(
+    name: str = typer.Argument(..., help="Plugin name"),
+    path: str = typer.Option(".", "--path", "-p", help="Project root path")
+):
+    """Disable a plugin in .uproject file."""
+    project_path = Path(path)
+    manager = PluginManager(project_path)
+    
+    if manager.disable_plugin(name):
+        console.print(f"[green]✅ Disabled plugin: {name}[/green]\n")
+    else:
+        console.print(f"[red]❌ Failed to disable plugin: {name}[/red]\n")
+
+
+@plugin_app.command("remove")
+def plugin_remove(
+    name: str = typer.Argument(..., help="Plugin name"),
+    path: str = typer.Option(".", "--path", "-p", help="Project root path"),
+    yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation")
+):
+    """Remove a plugin from project."""
+    project_path = Path(path)
+    manager = PluginManager(project_path)
+    
+    if not yes:
+        confirm = Confirm.ask(f"[bold]Remove plugin '{name}'?[/bold]")
+        if not confirm:
+            console.print("[yellow]❌ Cancelled[/yellow]\n")
+            return
+    
+    if manager.remove_plugin(name):
+        console.print(f"[green]✅ Removed plugin: {name}[/green]\n")
+    else:
+        console.print(f"[red]❌ Failed to remove plugin: {name}[/red]\n")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Build & CI/CD Commands - © 2026 gktrk363
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@build_app.command("ci-init")
+def build_ci_init(
+    platform: str = typer.Option("github", "--platform", "-p", help="CI platform (github/gitlab/jenkins)"),
+    path: str = typer.Option(".", "--path", help="Project root path")
+):
+    """Generate CI/CD pipeline configuration."""
+    console.print(create_branded_panel(
+        f"[bold cyan]Generating {platform.upper()} CI/CD Configuration...[/bold cyan]",
+        "CI/CD Generator"
+    ))
+    
+    project_path = Path(path)
+    generator = CIGenerator(project_path)
+    
+    try:
+        if platform.lower() == "github":
+            file_path = generator.save_github_actions()
+            console.print(f"[green]✅ GitHub Actions workflow created![/green]")
+        elif platform.lower() == "gitlab":
+            file_path = generator.save_gitlab_ci()
+            console.print(f"[green]✅ GitLab CI configuration created![/green]")
+        elif platform.lower() == "jenkins":
+            file_path = generator.save_jenkins()
+            console.print(f"[green]✅ Jenkinsfile created![/green]")
+        else:
+            console.print(f"[red]❌ Unknown platform: {platform}[/red]")
+            console.print("[dim]Supported: github, gitlab, jenkins[/dim]\n")
+            return
+        
+        console.print(f"[dim]Location: {file_path}[/dim]\n")
+        console.print("[bold]Next Steps:[/bold]")
+        console.print("1. Review and customize the generated configuration")
+        console.print("2. Commit and push to your repository")
+        console.print("3. Configure CI/CD runners/agents\n")
+        
+    except Exception as e:
+        console.print(f"[red]❌ Error: {e}[/red]\n")
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+@build_app.command("info")
+def build_info(
+    path: str = typer.Option(".", "--path", help="Project root path")
+):
+    """Show build information and recommendations."""
+    console.print(create_branded_panel(
+        "[bold cyan]Build Information[/bold cyan]",
+        "Build Tools"
+    ))
+    
+    project_path = Path(path)
+    
+    # Find .uproject file
+    uproject_files = list(project_path.glob("*.uproject"))
+    
+    if not uproject_files:
+        console.print("[red]❌ No .uproject file found![/red]\n")
+        return
+    
+    uproject_file = uproject_files[0]
+    
+    try:
+        with open(uproject_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Display project info
+        table = Table(title="Project Information")
+        table.add_column("Property", style="cyan")
+        table.add_column("Value", style="green")
+        
+        table.add_row("Project Name", uproject_file.stem)
+        table.add_row("Engine Version", data.get('EngineAssociation', 'Unknown'))
+        table.add_row("Category", data.get('Category', 'N/A'))
+        table.add_row("Description", data.get('Description', 'N/A'))
+        
+        plugins = data.get('Plugins', [])
+        table.add_row("Plugins", str(len(plugins)))
+        
+        console.print(table)
+        console.print()
+        
+        # Build recommendations
+        console.print("[bold]💡 Build Recommendations:[/bold]\n")
+        console.print("• Use `unrealmate build ci-init` to generate CI/CD pipelines")
+        console.print("• Enable parallel compilation for faster builds")
+        console.print("• Use incremental builds during development")
+        console.print("• Configure build configurations (Development, Shipping, etc.)\n")
+        
+    except Exception as e:
+        console.print(f"[red]❌ Error reading project file: {e}[/red]\n")
+    
+    if console:
+        console.print(get_signature_footer())
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# ═══════════════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__": 
     app()

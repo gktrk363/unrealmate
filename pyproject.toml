@@ -4,17 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unrealmate"
-version = "0.1.10"
-description = "All-in-one CLI toolkit for Unreal Engine developers"
+version = "1.0.0"
+description = "Professional CLI toolkit for Unreal Engine developers - Complete with performance profiling, plugin management, CI/CD generation, and personal branding by gktrk363"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
     {name = "gktrk363"}
 ]
-keywords = ["unreal", "unreal-engine", "gamedev", "cli", "toolkit"]
+keywords = ["unreal", "unreal-engine", "gamedev", "cli", "toolkit", "performance", "profiler", "plugins", "cicd"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.10",

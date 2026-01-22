@@ -1,14 +1,14 @@
 Metadata-Version: 2.4
 Name: unrealmate
-Version: 0.1.10
-Summary: All-in-one CLI toolkit for Unreal Engine developers
+Version: 1.0.0
+Summary: Professional CLI toolkit for Unreal Engine developers - Complete with performance profiling, plugin management, CI/CD generation, and personal branding by gktrk363
 Home-page: https://github.com/gktrk363/unrealmate
 Author: gktrk363
 License: MIT
 Project-URL: Homepage, https://github.com/gktrk363/unrealmate
 Project-URL: Repository, https://github.com/gktrk363/unrealmate
-Keywords: unreal,unreal-engine,gamedev,cli,toolkit
-Classifier: Development Status :: 3 - Alpha
+Keywords: unreal,unreal-engine,gamedev,cli,toolkit,performance,profiler,plugins,cicd
+Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3.10

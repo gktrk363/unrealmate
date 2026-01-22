@@ -13,6 +13,9 @@ unrealmate.egg-info/entry_points.txt
 unrealmate.egg-info/requires.txt
 unrealmate.egg-info/top_level.txt
 unrealmate/core/__init__.py
+unrealmate/core/config.py
+unrealmate/core/logger.py
+unrealmate/core/signature.py
 unrealmate/core/assets/__init__.py
 unrealmate/core/assets/duplicates.py
 unrealmate/core/assets/organizer.py
@@ -20,8 +23,16 @@ unrealmate/core/assets/scanner.py
 unrealmate/core/blueprint/__init__.py
 unrealmate/core/blueprint/parser.py
 unrealmate/core/blueprint/report.py
+unrealmate/core/build/__init__.py
+unrealmate/core/build/ci_generator.py
 unrealmate/core/git/__init__.py
 unrealmate/core/git/cleanup.py
 unrealmate/core/git/lfs.py
+unrealmate/core/performance/__init__.py
+unrealmate/core/performance/memory_auditor.py
+unrealmate/core/performance/profiler.py
+unrealmate/core/performance/shader_analyzer.py
+unrealmate/core/plugins/__init__.py
+unrealmate/core/plugins/manager.py
 unrealmate/templates/gitattributes.template
 unrealmate/templates/gitignore.template
