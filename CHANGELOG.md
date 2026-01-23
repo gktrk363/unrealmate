@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+
+## [1.0.7] - 2026-01-24
+
+### Fixed
+- 🐛 **Fixed:** Updated default banner ASCII art to ensures correct Green Blocky design is shown for all users, regardless of config settings.
+- 🎨 Synchronized version number across all files to 1.0.7.
+
 ## [1.0.6] - 2026-01-24
 
 ### Fixed

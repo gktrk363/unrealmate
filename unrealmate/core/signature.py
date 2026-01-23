@@ -30,7 +30,7 @@ SIGNATURE_THEME = Theme({
 })
 
 
-def get_ascii_banner(version: str = "1.0.0") -> str:
+def get_ascii_banner(version: str = "1.0.6") -> str:
     """
     Returns the UnrealMate ASCII art banner with developer signature.
     
@@ -45,24 +45,35 @@ def get_ascii_banner(version: str = "1.0.0") -> str:
         # Displays branded ASCII art
     """
     lines = [
+        "",
         "    ═══════════════════════════════════════════════════════════════",
         "    ",
-        "         _   _ _   _ ____  _____    _    _     __  __    _  _____ _____ ",
-        "        | | | | \\ | |  _ \\| ____|  / \\  | |   |  \\/  |  / \\|_   _| ____|",
-        "        | | | |  \\| | |_) |  _|   / _ \\ | |   | |\\/| | / _ \\ | | |  _|  ",
-        "        | |_| | |\\  |  _ <| |___ / ___ \\| |___| |  | |/ ___ \\| | | |___ ",
-        "         \\___/|_| \\_|_| \\_\\_____/_/   \\_\\_____|_|  |_/_/   \\_\\_| |_____|",
+        "           ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ",
+        "           ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ",
+        "           ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ",
+        "           ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ",
+        "           ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗",
+        "            ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝",
         "    ",
-        "              All-in-One CLI Toolkit for Unreal Engine",
+        "                  ███╗   ███╗ █████╗ ████████╗███████╗",
+        "                  ████╗ ████║██╔══██╗╚══██╔══╝██╔════╝",
+        "                  ██╔████╔██║███████║   ██║   █████╗  ",
+        "                  ██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ",
+        "                  ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗",
+        "                  ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝",
+        "    ",
+        "                All-in-One CLI Toolkit for Unreal Engine",
         "    ",
         "                      ⚡ Crafted by gktrk363 ⚡",
-        "              Version: v" + version + " | GitHub: gktrk363/unrealmate",
+        "               Version: v" + version + " │ GitHub: gktrk363/unrealmate",
+        "    ",
         "    ═══════════════════════════════════════════════════════════════",
+        "",
     ]
     return "\n".join(lines)
 
 
-def get_compact_banner(version: str = "1.0.0") -> str:
+def get_compact_banner(version: str = "1.0.6") -> str:
     """
     Returns a compact version of the banner with version info.
     
@@ -148,7 +159,7 @@ def print_signature_banner(
     console: Optional[Console] = None,
     compact: bool = False,
     show_version: bool = True,
-    version: str = "1.0.4"
+    version: str = "1.0.6"
 ) -> None:
     """
     Prints the branded banner to console with custom styling.
