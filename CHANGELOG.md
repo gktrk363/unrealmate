@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.0.8] - 2026-01-24
+
+### Fixed
+- 🐛 **Fixed:** Updated banner to Lime Green/Dark Gray theme as per user request.
+- 🎨 Synchronized version number to 1.0.8.
+
 ## [1.0.7] - 2026-01-24
 
 ### Fixed

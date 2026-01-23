@@ -22,15 +22,15 @@ from typing import Optional
 
 # Custom color theme - Standard Terminal Colors
 SIGNATURE_THEME = Theme({
-    "signature.primary": "bright_green bold",      # Bright Green
-    "signature.secondary": "magenta bold",         # Magenta
-    "signature.accent": "yellow",                  # Yellow
+    "signature.primary": "bright_green bold",      # Lime Green
+    "signature.secondary": "bright_green",         # Lime Green (Unified)
+    "signature.accent": "bright_green",            # Lime Green (Unified)
     "signature.text": "white",                     # White
-    "signature.dim": "bright_black",               # Gray
+    "signature.dim": "bright_black",               # Dark Gray
 })
 
 
-def get_ascii_banner(version: str = "1.0.6") -> str:
+def get_ascii_banner(version: str = "1.0.8") -> str:
     """
     Returns the UnrealMate ASCII art banner with developer signature.
     
@@ -159,7 +159,7 @@ def print_signature_banner(
     console: Optional[Console] = None,
     compact: bool = False,
     show_version: bool = True,
-    version: str = "1.0.6"
+    version: str = "1.0.8"
 ) -> None:
     """
     Prints the branded banner to console with custom styling.

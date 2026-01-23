@@ -41,12 +41,13 @@ UnrealMate is a **comprehensive command-line toolkit** designed to supercharge y
 
 ---
 
-## 🎉 What's New in v1.0.2
+## 🎉 What's New in v1.0.8
 
-**Latest Release** - Banner color update
+**Latest Release** - Banner Color & UI Update
 
-- 🎨 **Updated:** Banner color scheme to lime green and dark gray theme
-- ✨ **Improved:** Visual aesthetics for better terminal display
+- 🎨 **New Look:** Updated banner color scheme to Lime Green and Dark Gray
+- ✨ **Improved:** Professional two-tone aesthetic
+- 🐛 **Fixed:** Version banner display issues
 
 See [CHANGELOG.md](CHANGELOG.md) for complete release history.
 
@@ -408,7 +409,7 @@ Special thanks to all Unreal Engine developers who inspired this project!
 
 ## 📊 Project Stats
 
-- **Version:** 1.0.1 (Production/Stable)
+- **Version:** 1.0.8 (Production/Stable)
 - **Commands:** 30+
 - **Python Support:** 3.10, 3.11, 3.12
 - **Platforms:** Windows, macOS, Linux

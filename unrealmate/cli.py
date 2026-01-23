@@ -164,7 +164,7 @@ def version():
         console=console,
         compact=config.signature.compact_banner,
         show_version=True,
-        version="1.0.7"
+        version="1.0.8"
     )
     
     if config.signature.show_footer:
