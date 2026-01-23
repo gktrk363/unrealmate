@@ -56,7 +56,6 @@ def get_ascii_banner(version: str = "1.0.0") -> str:
         "              All-in-One CLI Toolkit for Unreal Engine",
         "    ",
         "                      ⚡ Crafted by gktrk363 ⚡",
-        "    ───────────────────────────────────────────────────────────────",
         "              Version: v" + version + " | GitHub: gktrk363/unrealmate",
         "    ═══════════════════════════════════════════════════════════════",
     ]
