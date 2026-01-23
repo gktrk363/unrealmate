@@ -20,13 +20,13 @@ from rich.theme import Theme
 from datetime import datetime
 from typing import Optional
 
-# Custom color theme - Cyan & Magenta gradient
+# Custom color theme - Lime Green-Dark Gray
 SIGNATURE_THEME = Theme({
-    "signature.primary": "#00D9FF bold",      # Cyan
-    "signature.secondary": "#FF006E bold",    # Magenta
+    "signature.primary": "#32CD32 bold",      # Lime Green
+    "signature.secondary": "#2F4F4F bold",    # Dark Slate Gray
     "signature.accent": "#FFD700",            # Gold
     "signature.text": "#FFFFFF",              # White
-    "signature.dim": "#888888",               # Gray
+    "signature.dim": "#708090",               # Slate Gray
 })
 
 
@@ -74,21 +74,30 @@ def get_compact_banner(version: str = "1.0.0") -> str:
     """
     # Build banner line by line to ensure version is included
     lines = [
-        "    ════════════════════════════════════════════════════════════════",
+        "",
+        "    ═══════════════════════════════════════════════════════════════",
         "    ",
-        "      ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ███╗   ███╗",
-        "      ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ████╗ ████║",
-        "      ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ██╔████╔██║",
-        "      ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ██║╚██╔╝██║",
-        "      ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗██║ ╚═╝ ██║",
-        "       ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝",
+        "           ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ",
+        "           ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ",
+        "           ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ",
+        "           ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ",
+        "           ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗",
+        "            ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝",
         "    ",
-        "            All-in-One CLI Toolkit for Unreal Engine",
-        "            ",
-        "                  ⚡ Crafted by gktrk363 ⚡",
-        "    ────────────────────────────────────────────────────────────────",
-        "              Version: v" + version + " | GitHub: gktrk363/unrealmate",
-        "    ════════════════════════════════════════════════════════════════",
+        "                  ███╗   ███╗ █████╗ ████████╗███████╗",
+        "                  ████╗ ████║██╔══██╗╚══██╔══╝██╔════╝",
+        "                  ██╔████╔██║███████║   ██║   █████╗  ",
+        "                  ██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ",
+        "                  ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗",
+        "                  ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝",
+        "    ",
+        "                All-in-One CLI Toolkit for Unreal Engine",
+        "    ",
+        "                      ⚡ Crafted by gktrk363 ⚡",
+        "               Version: v" + version + " │ GitHub: gktrk363/unrealmate",
+        "    ",
+        "    ═══════════════════════════════════════════════════════════════",
+        "",
     ]
     return "\n".join(lines)
 
