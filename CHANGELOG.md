@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.0.9] - 2026-01-24
+
+### Changed
+- 🎨 **UI Polish:** Refined banner aesthetics - "Crafted by" text is now Gray, while developer name remains Green for better contrast and elegance.
+- 📦 Version bumped to 1.0.9.
+
 ## [1.0.8] - 2026-01-24
 
 ### Fixed
