@@ -3,12 +3,12 @@
 # 🎮 UnrealMate
 
 ### Professional CLI Toolkit for Unreal Engine Developers
-### Unreal Engine geliştiricileri için profesyonel CLI araç kiti
 
-[![PyPI](https://img.shields.io/pypi/v/unrealmate?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/unrealmate/)
-[![Version](https://img.shields.io/badge/Version-1.0.0-00D9FF?style=for-the-badge&logo=semver)](https://github.com/gktrk363/unrealmate/releases)
+[![PyPI Version](https://img.shields.io/pypi/v/unrealmate?style=for-the-badge&logo=pypi&logoColor=white&color=00D9FF)](https://pypi.org/project/unrealmate/)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/unrealmate?style=for-the-badge&color=FF006E)](https://pypi.org/project/unrealmate/)
+
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Mac%20%7C%20Linux-blue?style=for-the-badge)](https://github.com/gktrk363/unrealmate)
 [![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-4%20%7C%205-black?style=for-the-badge&logo=unrealengine)](https://unrealengine.com)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge)](https://github.com/gktrk363/unrealmate)
@@ -17,26 +17,63 @@
 
 **⚡ Crafted by gktrk363 ⚡**
 
-*Speed up your Unreal Engine workflow with 30+ powerful CLI commands*
+*Streamline your Unreal Engine workflow with 30+ powerful CLI commands*
 
-[🚀 Quick Start](#-installation) • [📖 Documentation](#-commands) • [🎯 Features](#-features) • [🇹🇷 Türkçe](#-türkçe)
+[🚀 Quick Start](#-installation) • [📖 Documentation](#-commands) • [🎯 Features](#-features) • [💡 Examples](#-usage-examples)
 
 </div>
 
 ---
 
-## 🎉 What's New in v1.0.0
+## 🌟 What is UnrealMate?
 
-**Production/Stable Release** - Complete feature set with personal branding!
+UnrealMate is a **comprehensive command-line toolkit** designed to supercharge your Unreal Engine development workflow. Whether you're managing Git repositories, analyzing blueprints, profiling performance, or organizing assets, UnrealMate provides intuitive commands that save you hours of manual work.
 
-- ✨ **Personal Signature System** - Beautiful cyan/magenta themed interface
-- ⚡ **Performance Profiler** - Analyze CPU/GPU/Memory bottlenecks
-- 🔍 **Shader Analyzer** - Detect shader complexity issues
-- 💾 **Memory Auditor** - Track asset memory usage
-- 🔌 **Plugin Manager** - Install/manage UE plugins via CLI
-- 🏗️ **CI/CD Generator** - GitHub Actions, GitLab CI, Jenkins
-- ⚙️ **Configuration System** - `.unrealmate.toml` support
-- 📝 **Comprehensive Logging** - Debug mode with file logging
+### Why UnrealMate?
+
+- ✨ **30+ Specialized Commands** - Purpose-built for Unreal Engine projects
+- 🎨 **Beautiful CLI Interface** - Cyan/magenta themed with rich formatting
+- ⚡ **Performance Tools** - Profile, analyze, and optimize your projects
+- 🔌 **Plugin Management** - Install and manage plugins via CLI
+- 🏗️ **CI/CD Generation** - Auto-generate GitHub Actions, GitLab CI, Jenkins
+- ⚙️ **Configurable** - Customize behavior with `.unrealmate.toml`
+- 🚀 **Production Ready** - Stable, tested, and actively maintained
+
+---
+
+## 🎉 What's New in v1.0.1
+
+**Latest Release** - Critical package distribution fix
+
+- ✅ **Fixed:** All submodules now included in PyPI package
+- ✅ **Fixed:** Installation from PyPI works perfectly
+- ✅ **Improved:** Banner display across all terminal widths
+
+See [CHANGELOG.md](CHANGELOG.md) for complete release history.
+
+---
+
+## 📦 Installation
+
+### Via pip (Recommended)
+
+```bash
+pip install unrealmate
+```
+
+### Verify Installation
+
+```bash
+unrealmate version
+```
+
+You should see the beautiful UnrealMate banner! 🎨
+
+### Requirements
+
+- **Python:** 3.10 or higher
+- **OS:** Windows, macOS, or Linux
+- **Unreal Engine:** 4.x or 5.x (optional, for project-specific commands)
 
 ---
 
@@ -47,47 +84,43 @@
 <td width="50%">
 
 ### 🔧 Git Tools
-Manage your Git workflow efficiently
+Streamline your Git workflow for Unreal projects
 
-- ✅ Generate optimized `.gitignore`
-- ✅ Setup Git LFS automatically
-- ✅ Clean temporary files (save GBs!)
-- ✅ Pre-commit hooks
+- **Smart Initialization** - `.gitignore` and `.gitattributes` for UE
+- **LFS Setup** - Auto-configure Git LFS for large assets
+- **Repository Cleanup** - Remove unnecessary files safely
 
 </td>
 <td width="50%">
 
-### 📦 Asset Management
-Keep your assets organized
+### 📁 Asset Management
+Organize and optimize your project assets
 
-- ✅ Scan & report all assets
-- ✅ Auto-organize into folders
-- ✅ Find duplicate files
-- ✅ Dependency tracking
+- **Asset Scanner** - Find all assets with detailed info
+- **Smart Organization** - Auto-organize by type/category
+- **Duplicate Detection** - Find and remove duplicate assets
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-### 📊 Blueprint Analysis
-Understand your Blueprint complexity
+### 🎯 Blueprint Analysis
+Understand and optimize your blueprints
 
-- ✅ Analyze BP statistics
-- ✅ Complexity scoring
-- ✅ Export HTML/JSON reports
-- ✅ Visual graph generation
+- **Complexity Analysis** - Measure blueprint complexity
+- **Dependency Mapping** - Visualize blueprint relationships
+- **Performance Reports** - Identify optimization opportunities
 
 </td>
 <td width="50%">
 
-### ⚡ Performance Tools
-Optimize your project
+### ⚡ Performance Profiling
+Analyze and optimize game performance
 
-- ✅ Performance profiling
-- ✅ Shader complexity analysis
-- ✅ Memory auditing
-- ✅ Bottleneck detection
+- **CPU/GPU Profiler** - Parse profiling reports
+- **Shader Analyzer** - Detect shader complexity issues
+- **Memory Auditor** - Track asset memory usage
 
 </td>
 </tr>
@@ -95,23 +128,47 @@ Optimize your project
 <td width="50%">
 
 ### 🔌 Plugin Management
-Manage plugins easily
+Manage Unreal Engine plugins effortlessly
 
-- ✅ Install from Git/local
-- ✅ Enable/disable plugins
-- ✅ List installed plugins
-- ✅ Remove plugins
+- **Install from Git** - Clone and install plugins
+- **Enable/Disable** - Toggle plugins in `.uproject`
+- **List Plugins** - View all installed plugins
+- **Safe Removal** - Uninstall plugins cleanly
 
 </td>
 <td width="50%">
 
-### 🏗️ Build & CI/CD
-Automate your builds
+### 🏗️ CI/CD Generation
+Automate your build pipelines
 
-- ✅ GitHub Actions generator
-- ✅ GitLab CI generator
-- ✅ Jenkins pipelines
-- ✅ Build optimization
+- **GitHub Actions** - Generate workflow files
+- **GitLab CI** - Create `.gitlab-ci.yml`
+- **Jenkins** - Generate Jenkinsfile
+- **Best Practices** - Industry-standard templates
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### ⚙️ Configuration System
+Customize UnrealMate to your needs
+
+- **TOML Configuration** - `.unrealmate.toml` support
+- **User Preferences** - Save your settings
+- **Easy Management** - Get/set config values
+- **Sensible Defaults** - Works out of the box
+
+</td>
+<td width="50%">
+
+### 🏥 Project Health
+Keep your project in top shape
+
+- **Doctor Command** - Comprehensive health checks
+- **Issue Detection** - Find common problems
+- **Recommendations** - Get actionable advice
+- **Auto-fix** - Automatic problem resolution (coming soon)
 
 </td>
 </tr>
@@ -119,367 +176,282 @@ Automate your builds
 
 ---
 
-## 🚀 Installation
+## 🎯 Commands
 
-### Via pip (Recommended)
-
-```bash
-pip install unrealmate
-```
-
-### From source
-
-```bash
-git clone https://github.com/gktrk363/unrealmate.git
-cd unrealmate
-pip install -e .
-```
-
-### Verification
-
-```bash
-unrealmate version
-```
-
-You should see the beautiful UnrealMate banner! 🎨
-
----
-
-## 📖 Commands
+UnrealMate provides **7 command groups** with **30+ commands**:
 
 ### Core Commands
 
 ```bash
-unrealmate version          # Show version and signature banner
-unrealmate doctor           # Health check with recommendations
-unrealmate --help           # Show all available commands
+unrealmate version          # Show version with beautiful banner
+unrealmate doctor           # Run project health checks
 ```
 
 ### Git Commands
 
 ```bash
-unrealmate git init         # Generate .gitignore for UE projects
+unrealmate git init         # Initialize Git with UE-specific config
 unrealmate git lfs          # Setup Git LFS for large files
-unrealmate git clean        # Clean temporary files (Saved, Intermediate, etc.)
+unrealmate git clean        # Clean repository safely
 ```
 
 ### Asset Commands
 
 ```bash
-unrealmate asset scan                    # Scan all assets in project
-unrealmate asset scan --all              # Show detailed asset list
-unrealmate asset organize                # Auto-organize assets by type
-unrealmate asset organize --dry-run      # Preview organization
-unrealmate asset duplicates              # Find duplicate files
-unrealmate asset duplicates --content    # Compare by content (slower but accurate)
+unrealmate asset scan       # Scan all project assets
+unrealmate asset organize   # Auto-organize assets by type
+unrealmate asset duplicates # Find duplicate assets
 ```
 
 ### Blueprint Commands
 
 ```bash
-unrealmate blueprint analyze             # Analyze all blueprints
-unrealmate blueprint analyze --all       # Show all blueprints
-unrealmate blueprint report              # Generate complexity report
-unrealmate blueprint report -o report.html  # Export to HTML
+unrealmate blueprint analyze  # Analyze blueprint complexity
+unrealmate blueprint report   # Generate detailed reports
 ```
 
 ### Performance Commands ⚡ NEW!
 
 ```bash
-unrealmate performance profile           # Analyze performance bottlenecks
-unrealmate performance shaders           # Analyze shader complexity
-unrealmate performance shaders --all     # Show all shaders
-unrealmate performance memory            # Audit memory usage
+unrealmate performance profile  # Analyze CPU/GPU/Memory
+unrealmate performance shaders  # Detect shader issues
+unrealmate performance memory   # Track memory usage
 ```
 
 ### Plugin Commands 🔌 NEW!
 
 ```bash
-unrealmate plugin list                   # List installed plugins
-unrealmate plugin install <git-url>      # Install from Git
-unrealmate plugin install <local-path>   # Install from local directory
-unrealmate plugin enable <name>          # Enable a plugin
-unrealmate plugin disable <name>         # Disable a plugin
-unrealmate plugin remove <name>          # Remove a plugin
+unrealmate plugin list          # List all plugins
+unrealmate plugin install       # Install from Git/local
+unrealmate plugin enable        # Enable a plugin
+unrealmate plugin disable       # Disable a plugin
+unrealmate plugin remove        # Uninstall a plugin
 ```
 
 ### Build Commands 🏗️ NEW!
 
 ```bash
-unrealmate build ci-init --platform github   # Generate GitHub Actions
-unrealmate build ci-init --platform gitlab   # Generate GitLab CI
-unrealmate build ci-init --platform jenkins  # Generate Jenkinsfile
-unrealmate build info                        # Show build information
+unrealmate build ci-init        # Generate CI/CD configs
+unrealmate build info           # Show project info
 ```
 
 ### Config Commands ⚙️ NEW!
 
 ```bash
-unrealmate config init                   # Create .unrealmate.toml
-unrealmate config show                   # Show all settings
-unrealmate config set <key> <value>      # Set a configuration value
-unrealmate config get <key>              # Get a configuration value
+unrealmate config init          # Create config file
+unrealmate config show          # Display current config
+unrealmate config set           # Set a config value
+unrealmate config get           # Get a config value
 ```
 
 ---
 
-## 💡 Examples
+## 💡 Usage Examples
 
-### Complete Workflow
+### Quick Start
 
 ```bash
-# 1. Initialize your project
-unrealmate config init
+# Initialize a new Unreal project with Git
 unrealmate git init
 unrealmate git lfs
 
-# 2. Check project health
+# Check project health
 unrealmate doctor
 
-# 3. Analyze performance
-unrealmate performance profile
-unrealmate performance shaders
-unrealmate performance memory
-
-# 4. Manage plugins
-unrealmate plugin list
-unrealmate plugin install https://github.com/example/ue-plugin.git
-
-# 5. Generate CI/CD
-unrealmate build ci-init --platform github
-
-# 6. Organize assets
+# Scan and organize assets
 unrealmate asset scan
 unrealmate asset organize
-
-# 7. Analyze blueprints
-unrealmate blueprint analyze
-unrealmate blueprint report -o report.html
 ```
 
-### Clean Up Project
+### Performance Optimization
 
 ```bash
-# Preview what will be deleted
-unrealmate git clean --dry-run
+# Profile your game
+unrealmate performance profile --csv-file profiling_report.csv
 
-# Clean temporary files (saves GBs!)
-unrealmate git clean
+# Analyze shaders
+unrealmate performance shaders --shader-dir Content/Shaders
+
+# Check memory usage
+unrealmate performance memory --content-dir Content
 ```
 
-### Find Issues
+### Plugin Management
 
 ```bash
-# Find duplicate assets
-unrealmate asset duplicates --content
+# List installed plugins
+unrealmate plugin list
 
-# Find complex blueprints
-unrealmate blueprint analyze --all
+# Install a plugin from GitHub
+unrealmate plugin install https://github.com/user/plugin.git
 
-# Find shader issues
-unrealmate performance shaders
+# Enable a plugin
+unrealmate plugin enable MyPlugin
+```
+
+### CI/CD Setup
+
+```bash
+# Generate GitHub Actions workflow
+unrealmate build ci-init --platform github
+
+# Generate GitLab CI config
+unrealmate build ci-init --platform gitlab
+```
+
+### Configuration
+
+```bash
+# Create config file
+unrealmate config init
+
+# Set preferences
+unrealmate config set signature.compact_banner true
+unrealmate config set signature.show_footer false
+
+# View current config
+unrealmate config show
 ```
 
 ---
 
-## 🎨 Personal Signature
+## 📖 Documentation
 
-Every command features beautiful branding by **gktrk363**:
+### Configuration File
 
-- 🎨 Cyan (#00D9FF) and Magenta (#FF006E) color theme
-- ⚡ Signature banner on version command
-- 🎯 Branded panels in all commands
-- ✨ Signature footer: "Powered by UnrealMate | Crafted by gktrk363"
+UnrealMate uses `.unrealmate.toml` for configuration:
+
+```toml
+[signature]
+compact_banner = false
+show_footer = true
+
+[logging]
+level = "INFO"
+file_logging = false
+
+[paths]
+unreal_engine_path = "C:/Program Files/Epic Games/UE_5.3"
+```
+
+### Environment Variables
+
+```bash
+UNREALMATE_CONFIG_PATH    # Custom config file location
+UNREALMATE_LOG_LEVEL      # Override log level
+```
 
 ---
 
-## 📊 Project Statistics
+## 🛠️ Development
 
-- **30+ Commands** across 7 command groups
-- **8 New Modules** in v1.0.0
-- **2000+ Lines** of code added
-- **Production/Stable** status
-- **Personal Signature** throughout
+### For Contributors
+
+```bash
+# Clone repository
+git clone https://github.com/gktrk363/unrealmate.git
+cd unrealmate
+
+# Install in development mode
+pip install -e .
+
+# Run commands
+unrealmate --help
+```
+
+### Building from Source
+
+```bash
+# Install build tools
+pip install build twine
+
+# Build package
+python -m build
+
+# Install locally
+pip install dist/unrealmate-*.whl
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Here's how you can help:
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. **Report Bugs** - Open an issue with detailed information
+2. **Suggest Features** - Share your ideas for improvements
+3. **Submit PRs** - Fix bugs or add features
+4. **Improve Docs** - Help make documentation better
+5. **Share** - Tell others about UnrealMate!
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+UnrealMate is licensed under the **MIT License**.
+
+See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Built with [Typer](https://typer.tiangolo.com/) and [Rich](https://rich.readthedocs.io/)
-- Inspired by the Unreal Engine developer community
-- Special thanks to all contributors
+- **Unreal Engine** by Epic Games
+- **Typer** for amazing CLI framework
+- **Rich** for beautiful terminal output
+- **Community** for feedback and support
+
+Special thanks to all Unreal Engine developers who inspired this project!
 
 ---
 
-## 📧 Contact
+## 📊 Project Stats
 
-**Developer:** gktrk363  
-**GitHub:** [@gktrk363](https://github.com/gktrk363)  
-**Project:** [UnrealMate](https://github.com/gktrk363/unrealmate)
+- **Version:** 1.0.1 (Production/Stable)
+- **Commands:** 30+
+- **Python Support:** 3.10, 3.11, 3.12
+- **Platforms:** Windows, macOS, Linux
+- **License:** MIT
+- **Status:** Actively Maintained
+
+---
+
+## 🔗 Links
+
+- **PyPI:** https://pypi.org/project/unrealmate/
+- **GitHub:** https://github.com/gktrk363/unrealmate
+- **Issues:** https://github.com/gktrk363/unrealmate/issues
+- **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-<div align="center">
+## 💬 Support
 
-## ⭐ Star this repository if you find it helpful!
+Need help? Have questions?
 
-**© 2026 gktrk363 - Crafted with passion for Unreal Engine developers**
-
-✨ **Powered by UnrealMate** ✨
-
-</div>
+- 📧 **Email:** Open an issue on GitHub
+- 💬 **Discussions:** Use GitHub Discussions
+- 🐛 **Bug Reports:** Open an issue with details
+- 💡 **Feature Requests:** Share your ideas
 
 ---
----
 
-# 🇹🇷 Türkçe
+## 🌟 Star History
 
-## 📋 İçindekiler
-
-- [Özellikler](#-özellikler-1)
-- [Kurulum](#-kurulum-1)
-- [Hızlı Başlangıç](#-hızlı-başlangıç)
-- [Komutlar](#-komutlar-1)
-- [Örnekler](#-örnekler-1)
-
-## ✨ Özellikler
-
-### 🔧 Git Araçları
-- ✅ Optimize edilmiş `.gitignore` oluşturma
-- ✅ Git LFS otomatik kurulum
-- ✅ Geçici dosyaları temizleme (GB'larca yer kazanın!)
-
-### 📦 Asset Yönetimi
-- ✅ Tüm assetleri tarama ve raporlama
-- ✅ Otomatik klasörlere organize etme
-- ✅ Duplicate dosyaları bulma
-
-### 📊 Blueprint Analizi
-- ✅ Blueprint istatistikleri
-- ✅ Karmaşıklık skorlama
-- ✅ HTML/JSON rapor çıktısı
-
-### ⚡ Performans Araçları (YENİ!)
-- ✅ Performans profilleme
-- ✅ Shader karmaşıklık analizi
-- ✅ Bellek denetimi
-
-### 🔌 Plugin Yönetimi (YENİ!)
-- ✅ Git'ten plugin kurma
-- ✅ Plugin aktif/pasif etme
-- ✅ Plugin listesi
-
-### 🏗️ Build & CI/CD (YENİ!)
-- ✅ GitHub Actions oluşturma
-- ✅ GitLab CI oluşturma
-- ✅ Jenkins pipeline
-
-## 🚀 Kurulum
-
-```bash
-pip install unrealmate
-```
-
-## 🎯 Hızlı Başlangıç
-
-```bash
-# Versiyon kontrolü
-unrealmate version
-
-# Proje sağlık kontrolü
-unrealmate doctor
-
-# Git kurulumu
-unrealmate git init
-unrealmate git lfs
-
-# Asset tarama
-unrealmate asset scan
-
-# Blueprint analizi
-unrealmate blueprint analyze
-```
-
-## 📖 Komutlar
-
-Tüm komutlar için:
-```bash
-unrealmate --help
-```
-
-Her komut grubu için yardım:
-```bash
-unrealmate git --help
-unrealmate asset --help
-unrealmate blueprint --help
-unrealmate performance --help
-unrealmate plugin --help
-unrealmate build --help
-unrealmate config --help
-```
-
-## 💡 Örnekler
-
-### Proje Temizleme
-
-```bash
-# Önizleme
-unrealmate git clean --dry-run
-
-# Temizle
-unrealmate git clean
-```
-
-### Performans Analizi
-
-```bash
-# Performans profili
-unrealmate performance profile
-
-# Shader analizi
-unrealmate performance shaders
-
-# Bellek denetimi
-unrealmate performance memory
-```
-
-### Plugin Yönetimi
-
-```bash
-# Kurulu pluginleri listele
-unrealmate plugin list
-
-# Git'ten plugin kur
-unrealmate plugin install https://github.com/example/plugin.git
-
-# Plugin aktif et
-unrealmate plugin enable MyPlugin
-```
+If you find UnrealMate useful, please consider giving it a ⭐ on GitHub!
 
 ---
 
 <div align="center">
 
-**⚡ gktrk363 tarafından Unreal Engine geliştiricileri için özenle hazırlanmıştır ⚡**
+### Made with ❤️ for Unreal Engine Developers
 
-[⬆ Başa Dön](#-unrealmate)
+**⚡ Crafted by gktrk363 ⚡**
+
+*Streamline your workflow. Build better games.*
+
+[⬆ Back to Top](#-unrealmate)
 
 </div>
