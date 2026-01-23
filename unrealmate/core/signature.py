@@ -20,13 +20,13 @@ from rich.theme import Theme
 from datetime import datetime
 from typing import Optional
 
-# Custom color theme - Lime Green-Dark Gray
+# Custom color theme - Standard Terminal Colors
 SIGNATURE_THEME = Theme({
-    "signature.primary": "#32CD32 bold",      # Lime Green
-    "signature.secondary": "#2F4F4F bold",    # Dark Slate Gray
-    "signature.accent": "#FFD700",            # Gold
-    "signature.text": "#FFFFFF",              # White
-    "signature.dim": "#708090",               # Slate Gray
+    "signature.primary": "bright_green bold",      # Bright Green
+    "signature.secondary": "magenta bold",         # Magenta
+    "signature.accent": "yellow",                  # Yellow
+    "signature.text": "white",                     # White
+    "signature.dim": "bright_black",               # Gray
 })
 
 
