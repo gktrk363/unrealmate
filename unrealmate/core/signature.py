@@ -59,22 +59,32 @@ def get_ascii_banner() -> str:
     return banner
 
 
-def get_compact_banner() -> str:
+def get_compact_banner(version: str = "1.0.0") -> str:
     """
-    Returns a compact version of the banner for smaller displays.
+    Returns a compact version of the banner with version info.
+    
+    Args:
+        version: Version string to display
     
     Returns:
-        str: Compact ASCII art banner
+        str: Compact ASCII art banner with version
     """
-    banner = """
-    ════════════════════════════════════════════════════════
+    banner = f"""
+    ════════════════════════════════════════════════════════════════
     
-      🎮  U N R E A L M A T E
+      ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ███╗   ███╗
+      ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ████╗ ████║
+      ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ██╔████╔██║
+      ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ██║╚██╔╝██║
+      ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗██║ ╚═╝ ██║
+       ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝
     
-      All-in-One CLI Toolkit for Unreal Engine
-      ⚡ Crafted by gktrk363
-    
-    ════════════════════════════════════════════════════════
+            All-in-One CLI Toolkit for Unreal Engine
+            
+                  ⚡ Crafted by gktrk363 ⚡
+    ────────────────────────────────────────────────────────────────
+              Version: v{version} | GitHub: gktrk363/unrealmate
+    ════════════════════════════════════════════════════════════════
     """
     return banner
 
@@ -148,8 +158,11 @@ def print_signature_banner(
     if terminal_width < 80 and not compact:
         compact = True  # Force compact mode for narrow terminals
     
-    # Get appropriate banner
-    banner_text = get_compact_banner() if compact else get_ascii_banner()
+    # Get appropriate banner (compact always gets version parameter)
+    if compact:
+        banner_text = get_compact_banner(version)  # Always pass version
+    else:
+        banner_text = get_ascii_banner()
     
     # Create styled text
     styled_banner = Text()
@@ -157,38 +170,21 @@ def print_signature_banner(
         if 'gktrk363' in line:
             # Highlight developer name in magenta
             styled_banner.append(line, style="signature.secondary")
-        elif 'UnrealMate' in line or 'UNREAL' in line:
+        elif 'UnrealMate' in line or 'UNREAL' in line or '██' in line:
             # Highlight product name in cyan
             styled_banner.append(line, style="signature.primary")
         elif '⚡' in line or '🎮' in line:
             # Highlight emojis in gold
             styled_banner.append(line, style="signature.accent")
+        elif 'Version:' in line or 'GitHub:' in line:
+            # Highlight version line in dim
+            styled_banner.append(line, style="signature.dim")
         else:
             styled_banner.append(line, style="signature.text")
         styled_banner.append('\n')
     
     console.print(styled_banner)
-    
-    # Add version info if requested - properly aligned and centered
-    if show_version:
-        console.print()  # Empty line for spacing
-        
-        # Create centered version text
-        version_line = f"Version: v{version} | GitHub: github.com/gktrk363/unrealmate"
-        
-        # Calculate padding for centering
-        padding = max(0, (terminal_width - len(version_line)) // 2)
-        
-        version_text = Text()
-        version_text.append(" " * padding)
-        version_text.append("Version: ", style="signature.dim")
-        version_text.append(f"v{version}", style="signature.primary bold")
-        version_text.append(" | ", style="signature.dim")
-        version_text.append("GitHub: ", style="signature.dim")
-        version_text.append("github.com/gktrk363/unrealmate", style="signature.accent")
-        
-        console.print(version_text)
-        console.print()  # Empty line after
+    console.print()  # Empty line after
 
 
 def get_signature_footer() -> str:
@@ -280,3 +276,6 @@ if __name__ == "__main__":
     console.print(panel)
     
     console.print(get_signature_footer())
+
+
+# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
