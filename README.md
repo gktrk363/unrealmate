@@ -41,13 +41,12 @@ UnrealMate is a **comprehensive command-line toolkit** designed to supercharge y
 
 ---
 
-## 🎉 What's New in v1.0.1
+## 🎉 What's New in v1.0.2
 
-**Latest Release** - Critical package distribution fix
+**Latest Release** - Banner color update
 
-- ✅ **Fixed:** All submodules now included in PyPI package
-- ✅ **Fixed:** Installation from PyPI works perfectly
-- ✅ **Improved:** Banner display across all terminal widths
+- 🎨 **Updated:** Banner color scheme to lime green and dark gray theme
+- ✨ **Improved:** Visual aesthetics for better terminal display
 
 See [CHANGELOG.md](CHANGELOG.md) for complete release history.
 
