@@ -34,5 +34,8 @@ unrealmate = "unrealmate.cli:app"
 Homepage = "https://github.com/gktrk363/unrealmate"
 Repository = "https://github.com/gktrk363/unrealmate"
 
+[tool.setuptools]
+packages = ["unrealmate", "unrealmate.core", "unrealmate.core.assets", "unrealmate.core.blueprint", "unrealmate.core.build", "unrealmate.core.git", "unrealmate.core.performance", "unrealmate.core.plugins"]
+
 [tool.setuptools.package-data]
 unrealmate = ["templates/*"]
