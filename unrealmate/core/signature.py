@@ -30,7 +30,7 @@ SIGNATURE_THEME = Theme({
 })
 
 
-def get_ascii_banner(version: str = "1.0.9") -> str:
+def get_ascii_banner(version: str = "1.0.10") -> str:
     """
     Returns the UnrealMate ASCII art banner with developer signature.
     
@@ -159,7 +159,7 @@ def print_signature_banner(
     console: Optional[Console] = None,
     compact: bool = False,
     show_version: bool = True,
-    version: str = "1.0.9"
+    version: str = "1.0.10"
 ) -> None:
     """
     Prints the branded banner to console with custom styling.
@@ -191,30 +191,20 @@ def print_signature_banner(
     # Create styled text
     styled_banner = Text()
     for line in banner_text.split('\n'):
-        if 'Crafted by' in line:
-            # Split line for mixed styling: Gray "Crafted by" + Green Name + Green Bolts
-            parts = line.split('Crafted by')
-            before_text = parts[0] + "Crafted by "
+        if 'Crafted by' in line and '⚡' in line:
+            # Specific handling for the signature line to avoid duplication and ensure correct coloring
+            # Line format: "                      ⚡ Crafted by gktrk363 ⚡"
             
-            # Reconstruct with mixed styles
-            # Part 1: "                      ⚡ Crafted by " (Gray/Dim)
-            styled_banner.append(before_text.replace('⚡', ''), style="signature.dim")
-            
-            # Add the first bolt in green if it was stripped (it's at the start of the trimmed string usually)
-            if '⚡' in parts[0]: 
-                 # We need to be careful with exact reconstruction.
-                 # Let's simplify: The line is "                      ⚡ Crafted by gktrk363 ⚡"
-                 # We want: ⚡ (Green) " Crafted by " (Gray) "gktrk363" (Green) " ⚡" (Green)
-                 
-                 # Manual construction for this specific line for perfect control
-                 styled_banner.append("                      ", style="signature.text")
-                 styled_banner.append("⚡", style="signature.accent")
-                 styled_banner.append(" Crafted by ", style="signature.dim")
-                 styled_banner.append("gktrk363", style="signature.primary")
-                 styled_banner.append(" ⚡", style="signature.accent")
-            else:
-                 # Fallback if format changes
-                 styled_banner.append(line, style="signature.dim")
+            # 1. Padding
+            styled_banner.append("                      ", style="signature.text")
+            # 2. Left Bolt (Green)
+            styled_banner.append("⚡", style="signature.accent")
+            # 3. Label (Gray)
+            styled_banner.append(" Crafted by ", style="signature.dim")
+            # 4. Name (Green)
+            styled_banner.append("gktrk363", style="signature.primary")
+            # 5. Right Bolt (Green)
+            styled_banner.append(" ⚡", style="signature.accent")
 
         elif 'UnrealMate' in line or 'UNREAL' in line or '██' in line:
             # Highlight product name in green

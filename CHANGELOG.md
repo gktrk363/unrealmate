@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.0.10] - 2026-01-24
+
+### Fixed
+- 🐛 **Fixed:** Removed duplicated text in banner output that occurred when applying mixed colors to the "Crafted by" line.
+- 📦 Version bumped to 1.0.10.
+
 ## [1.0.9] - 2026-01-24
 
 ### Changed
