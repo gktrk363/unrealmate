@@ -148,7 +148,7 @@ def print_signature_banner(
     console: Optional[Console] = None,
     compact: bool = False,
     show_version: bool = True,
-    version: str = "0.1.10"
+    version: str = "1.0.4"
 ) -> None:
     """
     Prints the branded banner to console with custom styling.
