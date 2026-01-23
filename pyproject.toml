@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unrealmate"
-version = "1.0.0"
+version = "1.0.1"
 description = "Professional CLI toolkit for Unreal Engine developers - Complete with performance profiling, plugin management, CI/CD generation, and personal branding by gktrk363"
 readme = "README.md"
 license = {text = "MIT"}
