@@ -1,4 +1,4 @@
-include unrealmate/templates/*
+recursive-include unrealmate *
 include README.md
 include LICENSE
 global-exclude *.py[cod]
