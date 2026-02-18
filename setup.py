@@ -8,6 +8,7 @@ setup(
     install_requires=[
         "typer>=0.9.0",
         "rich>=13.0.0",
+        "rich-click>=1.6.0",
         "toml>=0.10.2",
         "flask>=2.3.0",
     ],
