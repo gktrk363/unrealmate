@@ -4,6 +4,7 @@ setup(
     name="unrealmate",
     version="1.1.0",
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         "typer>=0.9.0",
         "rich>=13.0.0",

@@ -1,0 +1,4 @@
+include unrealmate/templates/*
+include README.md
+include LICENSE
+global-exclude *.py[cod]
