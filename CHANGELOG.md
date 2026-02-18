@@ -5,10 +5,39 @@ All notable changes to UnrealMate will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2026-02-13
+## [1.1.0] - 2026-02-18
 
-### Fixed
-- Big update just arrived, buddy :D
+### 🚀 Major Features (AI & Collaboration Revolution)
+
+#### 🤖 AI-Powered Development
+- **Natural Language Command Processing (`ai nlp`):** Execute complex tasks using plain English (e.g., "scan project and backup to D drive").
+- **Automatic Bug Detection (`ai detect-bugs`):** AI scans your Blueprints and C++ code for common patterns of failure (circular dependencies, heavy loops).
+- **Intelligent Code Review (`ai review`):** Get instant feedback on your code style and potential logic errors.
+- **Auto-Fix (`automate fix`):** Automatically resolves simple issues like asset naming conventions or unused variables.
+
+#### 👥 Collaboration & Teamwork
+- **Web Dashboard (`report dashboard`):** A full visual interface running on localhost:8080 to track project health, build status, and team activity.
+- **Team Notifications (`report notify`):** Send updates directly to Slack or Discord from the CLI.
+- **Project Templates (`template`):** Create, save, and share standardized project structures across your team.
+
+#### 🏗️ Automation & DevOps
+- **Docker Support (`build docker`):** One-click generation of UE5-compatible Dockerfiles.
+- **CI/CD Pipelines (`build ci-init`):** Auto-generate configuration files for GitHub Actions, GitLab CI, and Jenkins.
+- **Git LFS Configuration (`git lfs`):** Automatic setup of `.gitattributes` for optimized large file handling.
+
+#### 📦 Asset & Project Management
+- **Smart Asset Organization (`asset organize`):** Automatically cleans up your Content folder by moving files to appropriate directories.
+- **Duplicate Finder (`asset duplicates`):** Identifies identical files to save disk space.
+- **Marketplace Integration (`marketplace`):** Search and install assets from the CLI (Simulation Mode).
+
+### 📚 Documentation
+- **New User Guides:** Comprehensive guides in both English (`USER_GUIDE.md`) and Turkish (`USER_GUIDE_TR.md`).
+- **Doc Reorganization:** All technical docs moved to `docs/` folder for a cleaner root directory.
+
+### 🔧 Technical Improvements
+- **Performance:** Optimized file scanning algorithms for large projects.
+- **CLI UX:** Enhanced progress bars, colored output, and interactive prompts.
+- **Refactoring:** Modular architecture with `core/`, `cli.py`, and `utils/` separation.
 
 ## [1.0.10] - 2026-01-24
 
