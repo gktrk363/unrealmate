@@ -14,15 +14,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Starttoos/unrealmate/releases">
-    <img src="https://img.shields.io/badge/version-1.1.0-blue.svg?style=flat-square" alt="Version">
-  </a>
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square" alt="Python">
-  </a>
-  <a href="https://github.com/Starttoos/unrealmate/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
-  </a>
+  <img src="https://img.shields.io/badge/version-1.1.0-blue.svg?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square" alt="Python">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg?style=flat-square" alt="Downloads">
   <img src="https://img.shields.io/badge/platform-windows%20%7C%20linux-lightgrey.svg?style=flat-square" alt="Platform">
 </p>
