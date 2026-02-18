@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  🦁 UnrealMate
+  🥶 UnrealMate
   <br>
 </h1>
 
