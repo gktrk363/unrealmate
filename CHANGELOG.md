@@ -5,6 +5,10 @@ All notable changes to UnrealMate will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-02-18
+- Fixed `ModuleNotFoundError` by renaming `unrealmate.core.build` to `unrealmate.core.automation`.
+- Resolved naming conflict with reserved `build` directory.
+
 ## [1.1.2] - 2026-02-18
 - Comprehensive version synchronization.
 - Ensuring all code and documentation reflect the latest version.

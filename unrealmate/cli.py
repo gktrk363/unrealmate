@@ -31,7 +31,7 @@ try:
     rich_click.rich_click.STYLE_SWITCH = "green"
     
     # Header and Footer
-    HEADER = "[bold green]UNREALMATE[/bold green] v1.1.2 • [cyan]Unreal Engine Developer Toolkit[/cyan]"
+    HEADER = "[bold green]UNREALMATE[/bold green] v1.1.3 • [cyan]Unreal Engine Developer Toolkit[/cyan]"
     FOOTER = None
     
     rich_click.rich_click.HEADER_TEXT = HEADER
@@ -87,7 +87,7 @@ from unrealmate.core.performance.profiler import PerformanceProfiler
 from unrealmate.core.performance.shader_analyzer import ShaderAnalyzer
 from unrealmate.core.performance.memory_auditor import MemoryAuditor
 from unrealmate.core.plugins.manager import PluginManager
-from unrealmate.core.build.ci_generator import CIGenerator
+from unrealmate.core.automation.ci_generator import CIGenerator
 from unrealmate.core import visuals
 
 
@@ -105,7 +105,7 @@ def premium_help_callback(ctx: typer.Context, show_help: bool = False):
         return
     
     if show_help or (ctx.invoked_subcommand is None):
-        VERSION = "1.1.2"
+        VERSION = "1.1.3"
         
         # 1. Header
         console.print()
@@ -559,7 +559,7 @@ def get_complexity_rating(nodes: int) -> tuple:
 @app.command()
 def version():
     """Show system and version information."""
-    VERSION = "1.1.2"
+    VERSION = "1.1.3"
     REPO = "https://github.com/gktrk363/unrealmate"
     
     console.print()
@@ -2101,7 +2101,7 @@ def build_info(
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# V1.1.2 - NEW COMMAND GROUPS
+# V1.1.3 - NEW COMMAND GROUPS
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Optimization commands

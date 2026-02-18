@@ -57,12 +57,12 @@ unrealmate/core/assets/__init__.py
 unrealmate/core/assets/duplicates.py
 unrealmate/core/assets/organizer.py
 unrealmate/core/assets/scanner.py
+unrealmate/core/automation/__init__.py
+unrealmate/core/automation/ci_generator.py
 unrealmate/core/blueprint/__init__.py
 unrealmate/core/blueprint/complexity
 unrealmate/core/blueprint/parser.py
 unrealmate/core/blueprint/report.py
-unrealmate/core/build/__init__.py
-unrealmate/core/build/ci_generator.py
 unrealmate/core/git/__init__.py
 unrealmate/core/git/gitignore
 unrealmate/core/git/lfs.py

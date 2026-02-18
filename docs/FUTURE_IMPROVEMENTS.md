@@ -354,6 +354,6 @@ UnrealMate'i profesyonel bir Unreal Engine geliştirme aracı olarak endüstri s
 ---
 
 **Son Güncelleme**: 2026-02-18 05:00
-**Versiyon**: 1.1.2 Stable
+**Versiyon**: 1.1.3 Stable
 **Durum**: CLI Özellikleri Tamamlandı 🎉 Sonraki Hedef: v2.0 (Editor Plugin & Desktop App)
 

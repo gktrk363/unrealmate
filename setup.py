@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="unrealmate",
-    version="1.1.2",
+    version="1.1.3",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
