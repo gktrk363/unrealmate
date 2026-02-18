@@ -1,8 +1,13 @@
+from pathlib import Path
 from setuptools import setup, find_packages
+
+# Read the contents of README file
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="unrealmate",
-    version="1.1.0",
+    version="1.1.1",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -27,6 +32,8 @@ setup(
     },
     python_requires=">=3.10",
     description="All-in-one CLI toolkit for Unreal Engine developers",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="gktrk363",
     url="https://github.com/gktrk363/unrealmate",
     classifiers=[

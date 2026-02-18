@@ -1,4 +1,4 @@
-# 📘 UnrealMate CLI v1.1.0 — User Guide
+# 📘 UnrealMate CLI v1.1.1 — User Guide
 
 **The All-in-One CLI Toolkit for Unreal Engine Developers**
 

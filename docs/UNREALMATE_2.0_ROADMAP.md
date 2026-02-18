@@ -141,5 +141,5 @@ Bu v2.0 vizyonunu desteklemek için çekirdeğin evrimleşmesi gerekiyor:
 
 ---
 
-> **Hazırlayan**: gktrk363 (Mevcut) UnrealMate v1.1.0
+> **Hazırlayan**: gktrk363 (Mevcut) UnrealMate v1.1.1
 > **Hedef**: UnrealMate v2.0 (Ekosistem)

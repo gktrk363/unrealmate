@@ -1,3 +1,39 @@
+Metadata-Version: 2.4
+Name: unrealmate
+Version: 1.1.1
+Summary: All-in-one CLI toolkit for Unreal Engine developers
+Home-page: https://github.com/gktrk363/unrealmate
+Author: gktrk363
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer>=0.9.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: rich-click>=1.6.0
+Requires-Dist: toml>=0.10.2
+Requires-Dist: flask>=2.3.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
 <h1 align="center">
   <br>
   🥶 UnrealMate
@@ -14,7 +50,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.1-blue.svg?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.0-blue.svg?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square" alt="Python">
   <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg?style=flat-square" alt="Downloads">

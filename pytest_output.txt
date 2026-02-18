@@ -1,0 +1,24 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.11, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\sempr\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\sempr\Documents\unrealmate
+configfile: pyproject.toml
+plugins: cov-7.0.0
+collecting ... collected 1 item
+
+tests/test_cli.py::test_version FAILED                                   [100%]
+
+================================== FAILURES ===================================
+________________________________ test_version _________________________________
+
+    def test_version():
+        result = runner.invoke(app, ["version"])
+        assert result.exit_code == 0
+>       assert "UnrealMate CLI" in result.stdout
+E       AssertionError: assert 'UnrealMate CLI' in '\\n             \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510              \\n             \u2502                                                  \u2502              \\n             \u2502                    UNREALMATE                    \u2502              \\n             \u2502                      v1.1.0                      \u2502              \\n             \u2502                                                  \u2502              \\n             \u2502                                                  \u2502              \\n             \u2502              developed by gktrk363               \u2502              \\n             \u2502      https://github.com/gktrk363/unrealmate      \u2502              \\n             \u2502                                                  \u2502              \\n             \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518              \\n\\n'
+E        +  where '\\n             \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510              \\n             \u2502                                                  \u2502              \\n             \u2502                    UNREALMATE                    \u2502              \\n             \u2502                      v1.1.0                      \u2502              \\n             \u2502                                                  \u2502              \\n             \u2502                                                  \u2502              \\n             \u2502              developed by gktrk363               \u2502              \\n             \u2502      https://github.com/gktrk363/unrealmate      \u2502              \\n             \u2502                                                  \u2502              \\n             \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518              \\n\\n' = <Result okay>.stdout
+
+tests\test_cli.py:9: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_cli.py::test_version - AssertionError: assert 'UnrealMate C...
+============================== 1 failed in 0.29s ==============================
