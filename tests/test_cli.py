@@ -6,4 +6,4 @@ runner = CliRunner()
 def test_version():
     result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
-    assert "UnrealMate CLI" in result.stdout
+    assert "UNREALMATE" in result.stdout
