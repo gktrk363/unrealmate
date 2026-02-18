@@ -15,6 +15,14 @@ setup(
             "unrealmate=unrealmate.cli:app",
         ],
     },
+    extras_require={
+        "dev": [
+            "pytest>=7.0.0",
+            "pytest-cov>=4.0.0",
+            "ruff>=0.1.0",
+            "mypy>=1.0.0",
+        ],
+    },
     python_requires=">=3.10",
     description="All-in-one CLI toolkit for Unreal Engine developers",
     author="gktrk363",
