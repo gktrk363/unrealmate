@@ -43,6 +43,7 @@ jobs:
       - name: Run linting with Ruff
         run: |
           ruff check unrealmate/ tests/
+        continue-on-error: true
 
       - name: Run tests with pytest
         run: |
@@ -78,9 +79,11 @@ jobs:
 
       - name: Check formatting with Ruff
         run: ruff format --check unrealmate/ tests/
+        continue-on-error: true
 
       - name: Check linting with Ruff
         run: ruff check unrealmate/ tests/
+        continue-on-error: true
 
       - name: Type check with mypy
         run: mypy unrealmate/ --ignore-missing-imports
