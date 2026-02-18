@@ -4,6 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.10+-yellow.svg)
+![Downloads](https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux-lightgrey.svg)
 
