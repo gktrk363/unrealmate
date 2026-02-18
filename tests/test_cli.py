@@ -10,5 +10,5 @@ def test_version():
     """Test the version command output."""
     result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
-    assert "UNREALMATE" in result.stdout
+    assert "v1.1.0" in result.stdout
 
