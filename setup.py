@@ -8,6 +8,7 @@ setup(
         "typer>=0.9.0",
         "rich>=13.0.0",
         "toml>=0.10.2",
+        "flask>=2.3.0",
     ],
     entry_points={
         "console_scripts": [
