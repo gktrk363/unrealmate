@@ -2,9 +2,9 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                           UnrealMate Signature System                        ║
 ║                                                                              ║
-║  Author: gktrk363                                                           ║
-║  Purpose: Personal branding and signature utilities                         ║
-║  Created: 2026-01-23                                                        ║
+║  Author: gktrk363                                                            ║
+║  Purpose: Personal branding and signature utilities                          ║
+║  Created: 2026-01-23                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Personal signature and branding system for UnrealMate.
@@ -227,7 +227,7 @@ def get_signature_footer() -> str:
     Returns:
         str: Footer signature text
     """
-    return "\n✨ Powered by UnrealMate | Crafted by gktrk363 ✨\n"
+    return ""
 
 
 def create_branded_panel(

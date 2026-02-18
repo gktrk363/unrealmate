@@ -1,0 +1,32 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    UnrealMate - Config Templates                             ║
+# ║                                                                              ║
+# ║  Author: gktrk363                                                            ║
+# ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
+# ║  Purpose: Configuration templates for different project types                ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+#
+# Template: Mobile Game
+# Optimized for mobile game development with aggressive caching
+
+version = "1.0.0"
+
+[performance]
+cache_enabled = true
+cache_ttl_hours = 48
+max_cache_size_mb = 50
+parallel_processing = true
+max_workers = 2
+
+[signature]
+show_banner = true
+compact_banner = true
+show_footer = false
+color_theme = "green_blue"
+
+[git]
+auto_lfs = true
+commit_template_enabled = true
+pre_commit_hooks = true

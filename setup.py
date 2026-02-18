@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="unrealmate",
-    version="0.1.5",
+    version="1.1.0",
     packages=find_packages(),
     install_requires=[
         "typer>=0.9.0",

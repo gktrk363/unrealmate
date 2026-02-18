@@ -1,0 +1,127 @@
+#compdef unrealmate
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    UnrealMate - Zsh Completion Script                        ║
+# ║                                                                              ║
+# ║  Author: gktrk363                                                            ║
+# ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
+# ║  Purpose: Auto-completion for unrealmate commands in Zsh                     ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+#
+# Installation:
+#   Copy to ~/.zsh/completions/_unrealmate
+#   Add to ~/.zshrc: fpath=(~/.zsh/completions $fpath)
+
+_unrealmate() {
+    local -a commands
+    local -a git_commands
+    local -a asset_commands
+    local -a blueprint_commands
+    local -a performance_commands
+    local -a config_commands
+    local -a plugin_commands
+    local -a build_commands
+
+    commands=(
+        'git:Git helper commands'
+        'asset:Asset management commands'
+        'blueprint:Blueprint analysis commands'
+        'bp:Blueprint analysis (alias)'
+        'performance:Performance analysis commands'
+        'perf:Performance analysis (alias)'
+        'config:Configuration management'
+        'cfg:Configuration (alias)'
+        'plugin:Plugin management'
+        'build:Build and CI/CD tools'
+        'doctor:Check project health'
+        'version:Show version information'
+    )
+
+    git_commands=(
+        'init:Initialize Git repository for UE project'
+        'lfs:Setup Git LFS for large files'
+        'clean:Clean unnecessary files (Saved, Intermediate, etc.)'
+        'status:Show Git status'
+    )
+
+    asset_commands=(
+        'scan:Scan and analyze project assets'
+        'organize:Organize assets by type'
+        'duplicates:Find duplicate assets'
+        'validate:Validate asset integrity'
+    )
+
+    blueprint_commands=(
+        'analyze:Analyze blueprint complexity'
+        'complexity:Check cyclomatic complexity'
+        'lint:Lint blueprint files'
+    )
+
+    performance_commands=(
+        'profile:Profile project performance'
+        'memory:Memory usage analysis'
+        'shader:Shader complexity analysis'
+        'audit:Full performance audit'
+    )
+
+    config_commands=(
+        'init:Initialize configuration file'
+        'show:Show current configuration'
+        'get:Get configuration value'
+        'set:Set configuration value'
+    )
+
+    plugin_commands=(
+        'list:List installed plugins'
+        'install:Install a plugin'
+        'enable:Enable a plugin'
+        'disable:Disable a plugin'
+    )
+
+    build_commands=(
+        'generate:Generate CI/CD configuration'
+        'validate:Validate build configuration'
+    )
+
+    _arguments -C \
+        '1: :->command' \
+        '2: :->subcommand' \
+        '*: :->args'
+
+    case $state in
+        command)
+            _describe 'command' commands
+            ;;
+        subcommand)
+            case $words[2] in
+                git)
+                    _describe 'git subcommand' git_commands
+                    ;;
+                asset)
+                    _describe 'asset subcommand' asset_commands
+                    ;;
+                blueprint|bp)
+                    _describe 'blueprint subcommand' blueprint_commands
+                    ;;
+                performance|perf)
+                    _describe 'performance subcommand' performance_commands
+                    ;;
+                config|cfg)
+                    _describe 'config subcommand' config_commands
+                    ;;
+                plugin)
+                    _describe 'plugin subcommand' plugin_commands
+                    ;;
+                build)
+                    _describe 'build subcommand' build_commands
+                    ;;
+            esac
+            ;;
+        args)
+            _files
+            ;;
+    esac
+}
+
+_unrealmate "$@"

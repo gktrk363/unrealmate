@@ -1,0 +1,32 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    UnrealMate - Config Templates                             ║
+# ║                                                                              ║
+# ║  Author: gktrk363                                                            ║
+# ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
+# ║  Purpose: Configuration templates for different project types                ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+#
+# Template: CI/CD Pipeline
+# Minimal output, maximum performance for automated builds
+
+version = "1.0.0"
+
+[performance]
+cache_enabled = false
+cache_ttl_hours = 0
+max_cache_size_mb = 0
+parallel_processing = true
+max_workers = 4
+
+[signature]
+show_banner = false
+compact_banner = true
+show_footer = false
+color_theme = "monochrome"
+
+[git]
+auto_lfs = true
+commit_template_enabled = false
+pre_commit_hooks = false

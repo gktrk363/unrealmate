@@ -2,10 +2,10 @@ version = "1.0.0"
 
 [performance]
 cache_enabled = true
-cache_ttl_hours = 24
-max_cache_size_mb = 100
-parallel_processing = true
-max_workers = 4
+cache_ttl_hours = 12
+max_cache_size_mb = 50
+parallel_processing = false
+max_workers = 2
 
 [signature]
 show_banner = true
