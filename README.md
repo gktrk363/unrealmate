@@ -1,12 +1,37 @@
-# 🦁 UnrealMate
+<h1 align="center">
+  <br>
+  🦁 UnrealMate
+  <br>
+</h1>
 
-> **The Ultimate CLI Companion for Unreal Engine Developers.**
+<h4 align="center">The AI-Powered CLI Companion for Unreal Engine Developers.</h4>
 
-![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.10+-yellow.svg)
-![Downloads](https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux-lightgrey.svg)
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#contributing">Contributing</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Starttoos/unrealmate/releases">
+    <img src="https://img.shields.io/badge/version-1.1.0-blue.svg?style=flat-square" alt="Version">
+  </a>
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square" alt="Python">
+  </a>
+  <a href="https://github.com/Starttoos/unrealmate/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
+  </a>
+  <img src="https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg?style=flat-square" alt="Downloads">
+  <img src="https://img.shields.io/badge/platform-windows%20%7C%20linux-lightgrey.svg?style=flat-square" alt="Platform">
+</p>
+
+<div align="center">
+  <sub>Built with ❤︎ by <a href="https://github.com/gktrk363">gktrk363</a></sub>
+</div>
+
+<br>
 
 **UnrealMate** is a feature-rich command-line interface (CLI) designed to streamline your Unreal Engine workflow. From optimizing projects and managing plugins to tracking team performance and deploying CI/CD pipelines, UnrealMate handles the heavy lifting so you can focus on creating.
 
