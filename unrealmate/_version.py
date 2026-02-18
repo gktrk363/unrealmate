@@ -19,7 +19,7 @@ from typing import Final
 # VERSION INFORMATION
 # ═══════════════════════════════════════════════════════════════════════════════
 
-__version__: Final[str] = "1.1.1"
+__version__: Final[str] = "1.1.2"
 __version_info__: Final[tuple[int, int, int]] = (1, 1, 0)
 
 # ═══════════════════════════════════════════════════════════════════════════════
