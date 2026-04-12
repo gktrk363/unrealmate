@@ -1,12 +1,12 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                    UnrealMate - Pre-commit Configuration                     ║
 # ║                                                                              ║
-# ║  Author: gktrk363                                                            ║
+# ║  Author: G & E ZYNTH                                                            ║
 # ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 # ║  Purpose: Git hooks for code quality enforcement                             ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 #
 # Install: pip install pre-commit && pre-commit install
 # Run manually: pre-commit run --all-files
@@ -61,3 +61,4 @@ ci:
   autoupdate_branch: 'develop'
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
   autoupdate_schedule: monthly
+

@@ -2,19 +2,19 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - shader_analyzer.py                           ║
 ║                                                                              ║
-║  Author: gktrk363                                                           ║
+║  Author: G & E ZYNTH                                                           ║
 ║  Purpose: Shader complexity analysis and optimization                       ║
 ║  Created: 2026-01-23                                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Shader analysis system for detecting complexity issues and optimization opportunities.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import re
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List, Optional
 from dataclasses import dataclass
 from rich.table import Table
 from rich.console import Console
@@ -238,4 +238,5 @@ class ShaderAnalyzer:
                 console.print()
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+

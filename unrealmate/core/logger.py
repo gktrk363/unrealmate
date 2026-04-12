@@ -2,14 +2,14 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                        UnrealMate - logger.py                                ║
 ║                                                                              ║
-║  Author: gktrk363                                                           ║
+║  Author: G & E ZYNTH                                                           ║
 ║  Purpose: Comprehensive logging system                                      ║
 ║  Created: 2026-01-23                                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Logging system for UnrealMate with debug mode and file rotation.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import logging
@@ -109,4 +109,5 @@ def get_logger(debug: bool = False) -> UnrealMateLogger:
     return _global_logger
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+

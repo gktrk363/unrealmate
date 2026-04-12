@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                        UnrealMate - NLP Commands                             ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Natural language command parser for UnrealMate CLI                 ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,13 +10,13 @@
 Natural language processing for CLI commands.
 Allows users to type commands in plain English.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import re
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Callable
+from typing import Dict, List, Optional, Tuple
 from difflib import SequenceMatcher
 
 logger = logging.getLogger(__name__)
@@ -511,5 +511,6 @@ class IntentClassifier:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

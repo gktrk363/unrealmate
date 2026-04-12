@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                          UnrealMate - Bug Detector                           ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Pattern-based automated bug detection for UE projects              ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,17 +10,16 @@
 Automated bug detection system using pattern matching and static analysis.
 Identifies common issues in Blueprint, C++, and asset configurations.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
-import os
 import re
 import json
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Callable
+from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -238,7 +237,7 @@ class BugDetector:
             if extension in ['.h', '.hpp', '.cpp', '.ini', '.cs']:
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                     content = f.read()
-                    lines = content.split('\n')
+                    content.split('\n')
                 
                 for pattern in self.patterns:
                     if extension not in pattern.file_extensions:
@@ -496,5 +495,6 @@ class CppBugDetector:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

@@ -2,13 +2,13 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Plugin Architecture                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Extensibility and plugin management                                ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Optional, Type
+from typing import Any, Callable, Optional
 
 from rich.console import Console
 
@@ -296,7 +296,7 @@ class {class_name}(UnrealMatePlugin):
 
 def create_plugin_template(
     name: str,
-    author: str = "gktrk363",
+    author: str = "G & E ZYNTH",
     description: str = "A custom UnrealMate plugin",
     output_dir: Optional[Path] = None,
 ) -> Path:
@@ -332,3 +332,4 @@ def create_plugin_template(
 
 # Global plugin manager
 plugin_manager = PluginManager()
+

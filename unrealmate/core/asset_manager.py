@@ -2,27 +2,24 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Asset Manager                                ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Advanced asset management and optimization tools                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import hashlib
-import json
 import shutil
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
 from rich.console import Console
-from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 from rich.tree import Tree
@@ -271,7 +268,7 @@ class UnusedAssetDetector:
     def find_unused(self, reference_maps: Optional[list[Path]] = None) -> list[AssetInfo]:
         """Find assets that are not referenced by any map or other asset."""
         # Get all root assets (assets with no dependents)
-        root_paths = set(self.dependency_tree.find_root_assets())
+        set(self.dependency_tree.find_root_assets())
         
         # If we have reference maps, mark those as used
         used_paths: set[str] = set()
@@ -333,7 +330,7 @@ class DuplicateAssetFinder:
             TextColumn("[bold blue]Scanning for duplicates..."),
             console=console,
         ) as progress:
-            task = progress.add_task("Hashing", total=None)
+            progress.add_task("Hashing", total=None)
             
             for file_path in self.content_path.rglob("*"):
                 if file_path.is_file() and file_path.suffix in {".uasset", ".png", ".jpg", ".wav"}:
@@ -626,7 +623,7 @@ class AssetManager:
             TextColumn("[bold blue]Scanning assets..."),
             console=console,
         ) as progress:
-            task = progress.add_task("Scanning", total=None)
+            progress.add_task("Scanning", total=None)
             
             for file_path in self.content_path.rglob("*"):
                 if file_path.is_file():
@@ -732,3 +729,4 @@ class AssetManager:
         )
         
         console.print(table)
+

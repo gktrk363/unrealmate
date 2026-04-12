@@ -1,6 +1,7 @@
 """
 UnrealMate Blueprint Report Generator
-Author: gktrk363
+Author: G & E ZYNTH
 GitHub: https://github.com/gktrk363/unrealmate
 """
 # Blueprint report generation functions
+

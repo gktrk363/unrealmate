@@ -2,14 +2,14 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                        UnrealMate - Project Health                           ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Project health monitoring and quality metrics                      ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Calculates project health score based on various metrics.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from typing import Dict
@@ -60,3 +60,4 @@ class CodeQualityMetrics:
     def get_lint_score(self) -> float:
         # Placeholder for lint output parsing
         return 95.0
+

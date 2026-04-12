@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                           UnrealMate Signature System                        ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Personal branding and signature utilities                          ║
 ║  Created: 2026-01-23                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,7 +10,7 @@
 Personal signature and branding system for UnrealMate.
 Provides ASCII art banners, code headers, and custom theming.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from rich.console import Console
@@ -19,104 +19,40 @@ from rich.text import Text
 from rich.theme import Theme
 from datetime import datetime
 from typing import Optional
+import sys
 
 # Custom color theme - Standard Terminal Colors
 SIGNATURE_THEME = Theme({
-    "signature.primary": "bright_green bold",      # Lime Green
-    "signature.secondary": "bright_green",         # Lime Green (Unified)
-    "signature.accent": "bright_green",            # Lime Green (Unified)
+    "signature.primary": "cyan",                   # Soft Cyan
+    "signature.secondary": "cyan",                 # Soft Cyan
+    "signature.accent": "dim",                     # Dim Gray
     "signature.text": "white",                     # White
     "signature.dim": "bright_black",               # Dark Gray
 })
 
 
-def get_ascii_banner(version: str = "1.0.10") -> str:
-    """
-    Returns the UnrealMate ASCII art banner with developer signature.
-    
-    Args:
-        version: Version string to display
-    
-    Returns:
-        str: Multi-line ASCII art banner
-        
-    Example:
-        >>> print(get_ascii_banner())
-        # Displays branded ASCII art
-    """
-    lines = [
-        "",
-        "    ═══════════════════════════════════════════════════════════════",
-        "    ",
-        "           ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ",
-        "           ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ",
-        "           ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ",
-        "           ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ",
-        "           ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗",
-        "            ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝",
-        "    ",
-        "                  ███╗   ███╗ █████╗ ████████╗███████╗",
-        "                  ████╗ ████║██╔══██╗╚══██╔══╝██╔════╝",
-        "                  ██╔████╔██║███████║   ██║   █████╗  ",
-        "                  ██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ",
-        "                  ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗",
-        "                  ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝",
-        "    ",
-        "                All-in-One CLI Toolkit for Unreal Engine",
-        "    ",
-        "                      ⚡ Crafted by gktrk363 ⚡",
-        "               Version: v" + version + " │ GitHub: gktrk363/unrealmate",
-        "    ",
-        "    ═══════════════════════════════════════════════════════════════",
-        "",
-    ]
-    return "\n".join(lines)
+def _pipe_char() -> str:
+    """Return an ASCII-safe pipe separator when the visuals module is in ASCII mode."""
+    try:
+        from unrealmate.core.visuals import ASCII_MODE
+        return "|" if ASCII_MODE else "│"
+    except ImportError:
+        return "│"
 
+
+def get_ascii_banner(version: str = "1.0.10") -> str:
+    """Returns the UnrealMate minimal banner with developer signature."""
+    return f"\n  UnrealMate v{version} {_pipe_char()} CLI Toolkit for Unreal Engine\n"
 
 def get_compact_banner(version: str = "1.0.6") -> str:
-    """
-    Returns a compact version of the banner with version info.
-    
-    Args:
-        version: Version string to display
-    
-    Returns:
-        str: Compact ASCII art banner with version
-    """
-    # Build banner line by line to ensure version is included
-    lines = [
-        "",
-        "    ═══════════════════════════════════════════════════════════════",
-        "    ",
-        "           ██╗   ██╗███╗   ██╗██████╗ ███████╗ █████╗ ██╗     ",
-        "           ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗██║     ",
-        "           ██║   ██║██╔██╗ ██║██████╔╝█████╗  ███████║██║     ",
-        "           ██║   ██║██║╚██╗██║██╔══██╗██╔══╝  ██╔══██║██║     ",
-        "           ╚██████╔╝██║ ╚████║██║  ██║███████╗██║  ██║███████╗",
-        "            ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝",
-        "    ",
-        "                  ███╗   ███╗ █████╗ ████████╗███████╗",
-        "                  ████╗ ████║██╔══██╗╚══██╔══╝██╔════╝",
-        "                  ██╔████╔██║███████║   ██║   █████╗  ",
-        "                  ██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ",
-        "                  ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗",
-        "                  ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝",
-        "    ",
-        "                All-in-One CLI Toolkit for Unreal Engine",
-        "    ",
-        "                      ⚡ Crafted by gktrk363 ⚡",
-        "               Version: v" + version + " │ GitHub: gktrk363/unrealmate",
-        "    ",
-        "    ═══════════════════════════════════════════════════════════════",
-        "",
-    ]
-    return "\n".join(lines)
+    """Returns a compact version of the banner."""
+    return f"\n  UnrealMate v{version} {_pipe_char()} Crafted by G & E ZYNTH\n"
 
 
 def get_code_header(
     filename: str,
     purpose: str,
-    author: str = "gktrk363",
+    author: str = "G & E ZYNTH",
     created_date: Optional[str] = None
 ) -> str:
     """
@@ -125,7 +61,7 @@ def get_code_header(
     Args:
         filename: Name of the file
         purpose: Brief description of file's purpose
-        author: Developer name (default: gktrk363)
+        author: Developer name (default: G & E ZYNTH)
         created_date: Creation date (default: current date)
         
     Returns:
@@ -161,63 +97,23 @@ def print_signature_banner(
     show_version: bool = True,
     version: str = "1.0.10"
 ) -> None:
-    """
-    Prints the branded banner to console with custom styling.
-    
-    Args:
-        console: Rich Console instance (creates new if None)
-        compact: Use compact banner for smaller displays
-        show_version: Display version information
-        version: Version string to display
-        
-    Example:
-        >>> print_signature_banner()
-        # Displays full banner with colors
-    """
+    """Prints the minimal branded banner to console with subtle styling."""
     if console is None:
         console = Console(theme=SIGNATURE_THEME)
     
-    # Auto-detect terminal width and force compact if too narrow
-    terminal_width = console.width
-    if terminal_width < 80 and not compact:
-        compact = True  # Force compact mode for narrow terminals
-    
-    # Get appropriate banner (both get version parameter now)
-    if compact:
-        banner_text = get_compact_banner(version)
-    else:
-        banner_text = get_ascii_banner(version)  # Now pass version here too!
-    
-    # Create styled text
     styled_banner = Text()
-    for line in banner_text.split('\n'):
-        if 'Crafted by' in line and '⚡' in line:
-            # Specific handling for the signature line to avoid duplication and ensure correct coloring
-            # Line format: "                      ⚡ Crafted by gktrk363 ⚡"
-            
-            # 1. Padding
-            styled_banner.append("                      ", style="signature.text")
-            # 2. Left Bolt (Green)
-            styled_banner.append("⚡", style="signature.accent")
-            # 3. Label (Gray)
-            styled_banner.append(" Crafted by ", style="signature.dim")
-            # 4. Name (Green)
-            styled_banner.append("gktrk363", style="signature.primary")
-            # 5. Right Bolt (Green)
-            styled_banner.append(" ⚡", style="signature.accent")
-
-        elif 'UnrealMate' in line or 'UNREAL' in line or '██' in line:
-            # Highlight product name in green
-            styled_banner.append(line, style="signature.primary")
-        elif 'Version:' in line or 'GitHub:' in line:
-            # Highlight version line in dim
-            styled_banner.append(line, style="signature.dim")
-        else:
-            styled_banner.append(line, style="signature.text")
-        styled_banner.append('\n')
+    styled_banner.append("\n  ")
+    styled_banner.append("Unreal", style="bold white")
+    styled_banner.append("Mate", style="bold cyan")
+    styled_banner.append(f" v{version} ", style="bold white")
     
+    sep = _pipe_char()
+    if compact:
+        styled_banner.append(f"{sep} Crafted by G & E ZYNTH\n", style="dim")
+    else:
+        styled_banner.append(f"{sep} CLI Toolkit for Unreal Engine\n", style="dim")
+        
     console.print(styled_banner)
-    console.print()  # Empty line after
 
 
 def get_signature_footer() -> str:
@@ -274,11 +170,13 @@ def get_signature_console() -> Console:
         >>> console = get_signature_console()
         >>> console.print("Hello", style="signature.primary")
     """
-    return Console(theme=SIGNATURE_THEME)
+    encoding = getattr(sys.stdout, "encoding", None)
+    unicode_ok = bool(encoding and "utf" in encoding.lower())
+    return Console(theme=SIGNATURE_THEME, emoji=unicode_ok, safe_box=not unicode_ok)
 
 
 # Developer signature constant
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 DEVELOPER_GITHUB = "https://github.com/gktrk363"
 DEVELOPER_PROJECT = "https://github.com/gktrk363/unrealmate"
 
@@ -311,4 +209,5 @@ if __name__ == "__main__":
     console.print(get_signature_footer())
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+

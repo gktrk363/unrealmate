@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Caching System                               ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: High-performance caching for expensive operations                  ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ import hashlib
 import json
 import pickle
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import wraps
 from pathlib import Path
 from typing import Any, Callable, Optional, TypeVar
@@ -323,3 +323,4 @@ def clear_cache() -> None:
 def get_cache_stats() -> CacheStats:
     """Get global cache statistics."""
     return _memory_cache.stats
+

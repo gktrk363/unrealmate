@@ -2,23 +2,20 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                       UnrealMate - Smart Organizer                           ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Smart asset organization and management                            ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 Auto-categorizes, organizes, and enforces naming conventions.
 """
 
-import os
 import re
-import json
 import shutil
 import logging
 from collections import defaultdict
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -98,9 +95,6 @@ class AssetCategorizer:
     # Extension to category mapping
     EXTENSION_MAP = {
         # Blueprints
-        ".uasset": AssetCategory.BLUEPRINTS,  # Default, will be refined
-        
-        # Audio
         ".uasset": AssetCategory.BLUEPRINTS,
     }
     
@@ -486,5 +480,6 @@ class SmartOrganizer:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

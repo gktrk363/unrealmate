@@ -2,30 +2,28 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Performance Profiler                         ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Advanced performance profiling and analysis utilities              ║
 ║  Created: 2026-01-23                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import json
-import re
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any, Optional
 
 from rich.console import Console
 from rich.panel import Panel
-from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 
 console = Console()
@@ -404,7 +402,7 @@ class DrawCallAnalyzer:
         avg_draws = sum(f.total_draw_calls for f in self.frames) / len(self.frames)
         avg_tris = sum(f.triangle_count for f in self.frames) / len(self.frames)
         max_draws = max(f.total_draw_calls for f in self.frames)
-        max_tris = max(f.triangle_count for f in self.frames)
+        max(f.triangle_count for f in self.frames)
         
         # Check draw calls
         if avg_draws > self.DRAW_CALL_ERROR:
@@ -797,7 +795,7 @@ class PerformanceProfiler:
         """Export report to JSON file."""
         report = {
             "generated_at": datetime.now().isoformat(),
-            "generator": "UnrealMate Performance Profiler by gktrk363",
+            "generator": "UnrealMate Performance Profiler by G & E ZYNTH",
             "summary": self.get_summary(),
             "issues": [
                 {
@@ -815,3 +813,4 @@ class PerformanceProfiler:
         
         output_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
         console.print(f"[green]✓ Report exported to {output_path}[/green]")
+

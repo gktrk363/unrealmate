@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Visual Enhancements                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Visual enhancements and CLI aesthetics                             ║
 ║  Created: 2026-02-06                                                         ║
@@ -10,19 +10,19 @@
 
 Advanced visual components, animations, and branding.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
-import random
+import io
+import sys
 import time
-from datetime import datetime
 from typing import Any, Optional
 
+
 from rich.align import Align
-from rich.box import DOUBLE, HEAVY, MINIMAL, ROUNDED, SQUARE, Box
-from rich.columns import Columns
+from rich.box import ASCII, DOUBLE as BOX_DOUBLE, HEAVY as BOX_HEAVY, MINIMAL as BOX_MINIMAL, ROUNDED as BOX_ROUNDED
 from rich.console import Console, Group
 from rich.layout import Layout
 from rich.live import Live
@@ -35,12 +35,82 @@ from rich.progress import (
     TextColumn,
     TimeElapsedColumn,
 )
-from rich.style import Style
 from rich.table import Table
 from rich.text import Text
 from rich.tree import Tree
 
-console = Console()
+ASCII_MODE = False
+DOUBLE = BOX_DOUBLE
+HEAVY = BOX_HEAVY
+MINIMAL = BOX_MINIMAL
+ROUNDED = BOX_ROUNDED
+
+
+def _build_console() -> Console:
+    """Build a console that matches the current render-safety mode."""
+    return Console(emoji=not ASCII_MODE, safe_box=ASCII_MODE)
+
+
+console = _build_console()
+
+
+
+def is_utf8_encoding(encoding: Optional[str]) -> bool:
+    """Return True when the encoding can safely represent unicode output."""
+    if not encoding:
+        return False
+    return "utf" in encoding.lower()
+
+
+def output_supports_unicode(stream: Any | None = None) -> bool:
+    """Detect whether the target stream supports unicode output reliably."""
+    target = stream if stream is not None else sys.stdout
+    return is_utf8_encoding(getattr(target, "encoding", None))
+
+
+def configure_output_stream(stream: Any) -> bool:
+    """
+    Make non-UTF streams safe by switching to replacement error handling.
+
+    Returns:
+        True if stream settings were updated, False otherwise.
+    """
+    if stream is None:
+        return False
+
+    encoding = getattr(stream, "encoding", None)
+    if is_utf8_encoding(encoding):
+        return False
+
+    reconfigure = getattr(stream, "reconfigure", None)
+    if not callable(reconfigure):
+        return False
+
+    try:
+        if getattr(stream, "errors", None) != "replace":
+            reconfigure(errors="replace")
+            return True
+    except Exception:
+        return False
+
+    return False
+
+
+def configure_output_safety() -> bool:
+    """
+    Configure stdout/stderr for safe rendering on legacy code pages.
+
+    Returns:
+        True if any stream configuration changed.
+    """
+    changed = False
+    for stream in (sys.stdout, sys.stderr):
+        changed = configure_output_stream(stream) or changed
+
+    apply_render_mode(
+        not (output_supports_unicode(sys.stdout) and output_supports_unicode(sys.stderr))
+    )
+    return changed
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -49,8 +119,8 @@ console = Console()
 
 
 # Use built-in box styles
-UE_BOX = DOUBLE
-GAMING_BOX = HEAVY
+UE_BOX = MINIMAL
+GAMING_BOX = MINIMAL
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -60,48 +130,168 @@ GAMING_BOX = HEAVY
 
 class StatusIcons:
     """Status icons for CLI output."""
-    
+
     # Basic status
-    SUCCESS = "✅"
-    ERROR = "❌"
-    WARNING = "⚠️"
-    INFO = "ℹ️"
-    PENDING = "⏳"
-    
+    SUCCESS = "[OK]"
+    ERROR = "[X]"
+    WARNING = "[!]"
+    INFO = "[i]"
+    PENDING = "..."
+
     # Actions
-    ROCKET = "🚀"
-    CHECK = "✓"
-    CROSS = "✗"
-    ARROW = "→"
-    STAR = "⭐"
-    FIRE = "🔥"
-    SPARKLES = "✨"
-    
+    ROCKET = ">>"
+    CHECK = "[OK]"
+    CROSS = "[X]"
+    ARROW = "->"
+    STAR = "*"
+    FIRE = "*"
+    SPARKLES = "*"
+
     # Objects
-    FOLDER = "📁"
-    FILE = "📄"
-    PACKAGE = "📦"
-    GEAR = "⚙️"
-    WRENCH = "🔧"
-    HAMMER = "🔨"
-    
+    FOLDER = "[DIR]"
+    FILE = "[FILE]"
+    PACKAGE = "[PKG]"
+    GEAR = "[CFG]"
+    WRENCH = "[TOOL]"
+    HAMMER = "[BUILD]"
+
     # Gaming/UE
-    GAMEPAD = "🎮"
-    JOYSTICK = "🕹️"
-    BLUEPRINT = "📊"
-    LIGHTNING = "⚡"
-    TARGET = "🎯"
-    TROPHY = "🏆"
-    
+    GAMEPAD = "[GAME]"
+    JOYSTICK = "[CTRL]"
+    BLUEPRINT = "[BP]"
+    LIGHTNING = "[!]"
+    TARGET = "[TARGET]"
+    TROPHY = "[WIN]"
+
     # Code
-    BUG = "🐛"
-    CODE = "💻"
-    TERMINAL = "💻"
-    GIT = "📝"
-    
+    BUG = "[BUG]"
+    CODE = "[CODE]"
+    TERMINAL = "[TERM]"
+    GIT = "[GIT]"
+
+    # Extra icons used across CLI commands
+    TIMER = "[TIME]"
+    UP_ARROW = "[UP]"
+    TIP = "[TIP]"
+    SEARCH = "[?]"
+    ALERT = "[!!]"
+    CELEBRATE = "[OK]"
+    THUMBSUP = "[OK]"
+    LOCK = "[LOCK]"
+    CHART = "[CHART]"
+    GLOBE = "[WEB]"
+    SEND = "[SEND]"
+    SAVE = "[SAVE]"
+    CLIPBOARD = "[CLIP]"
+    DOCKER = "[DOCK]"
+    ROBOT = "[AI]"
+    TEAM = "[TEAM]"
+    CART = "[SHOP]"
+    REFRESH = "[SYNC]"
+    HOSPITAL = "[HP]"
+    BELL = "[BELL]"
+
     @classmethod
     def get_status(cls, success: bool) -> str:
         return cls.SUCCESS if success else cls.ERROR
+
+
+def _apply_unicode_status_icons() -> None:
+    """Apply full unicode icons when the terminal supports UTF-8."""
+    icons = {
+        "SUCCESS": "[OK]",
+        "ERROR": "[X]",
+        "WARNING": "[!]",
+        "INFO": "[i]",
+        "PENDING": "...",
+        "ROCKET": ">>",
+        "CHECK": "[OK]",
+        "CROSS": "[X]",
+        "ARROW": "->",
+        "STAR": "*",
+        "FIRE": "*",
+        "SPARKLES": "*",
+        "FOLDER": "[DIR]",
+        "FILE": "[FILE]",
+        "PACKAGE": "[PKG]",
+        "GEAR": "[CFG]",
+        "WRENCH": "[TOOL]",
+        "HAMMER": "[BUILD]",
+        "GAMEPAD": "[GAME]",
+        "JOYSTICK": "[CTRL]",
+        "BLUEPRINT": "[BP]",
+        "LIGHTNING": "[!]",
+        "TARGET": "[TARGET]",
+        "TROPHY": "[WIN]",
+        "BUG": "[BUG]",
+        "CODE": "[CODE]",
+        "TERMINAL": "[TERM]",
+        "GIT": "[GIT]",
+        "TIMER": "[TIME]",
+        "UP_ARROW": "[UP]",
+        "TIP": "[TIP]",
+        "SEARCH": "[?]",
+        "ALERT": "[!!]",
+        "CELEBRATE": "[OK]",
+        "THUMBSUP": "[OK]",
+        "LOCK": "[LOCK]",
+        "CHART": "[CHART]",
+        "GLOBE": "[WEB]",
+        "SEND": "[SEND]",
+        "SAVE": "[SAVE]",
+        "CLIPBOARD": "[CLIP]",
+        "DOCKER": "[DOCK]",
+        "ROBOT": "[AI]",
+        "TEAM": "[TEAM]",
+        "CART": "[SHOP]",
+        "REFRESH": "[SYNC]",
+        "HOSPITAL": "[HP]",
+        "BELL": "[BELL]",
+    }
+    for attr, value in icons.items():
+        setattr(StatusIcons, attr, value)
+
+
+def _apply_ascii_status_icons() -> None:
+    """Alias kept for backward compat; icons default to ASCII already."""
+    _apply_unicode_status_icons()
+
+
+def _apply_box_styles() -> None:
+    """Switch shared box styles to ASCII-safe variants when needed."""
+    global DOUBLE, HEAVY, MINIMAL, ROUNDED, UE_BOX, GAMING_BOX
+
+    if ASCII_MODE:
+        DOUBLE = ASCII
+        HEAVY = ASCII
+        MINIMAL = ASCII
+        ROUNDED = ASCII
+    else:
+        DOUBLE = BOX_DOUBLE
+        HEAVY = BOX_HEAVY
+        MINIMAL = BOX_MINIMAL
+        ROUNDED = BOX_ROUNDED
+
+    UE_BOX = DOUBLE
+    GAMING_BOX = HEAVY
+
+
+def _refresh_console() -> None:
+    """Refresh the shared module console after render-mode changes."""
+    global console
+    console = _build_console()
+
+
+def apply_render_mode(ascii_mode: bool) -> None:
+    """Update shared visuals to match the requested render mode."""
+    global ASCII_MODE
+    ASCII_MODE = ascii_mode
+    if ASCII_MODE:
+        _apply_ascii_status_icons()
+    else:
+        _apply_unicode_status_icons()
+    _apply_box_styles()
+    _refresh_console()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -144,6 +334,390 @@ def rainbow_text(text: str) -> Text:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 
+_KIND_STYLES: dict[str, tuple[str, str]] = {
+    "info": ("cyan", "white"),
+    "success": ("green", "white"),
+    "warning": ("yellow", "white"),
+    "error": ("red", "white"),
+}
+
+
+def _normalize_panel_rows(
+    rows: dict[str, Any] | list[tuple[str, Any]] | tuple[tuple[str, Any], ...],
+) -> list[tuple[str, Any]]:
+    """Normalize stat/key-value input into a list of rows."""
+    if isinstance(rows, dict):
+        return list(rows.items())
+    return list(rows)
+
+
+def create_hero_panel(
+    title: str,
+    subtitle: str = "",
+    eyebrow: str = "",
+    accent: str = "cyan",
+) -> Group:
+    """Create a minimal hero group for command banners."""
+    content = Text()
+    if eyebrow:
+        content.append(f"{eyebrow}\n", style="dim")
+    content.append(title, style="bold white")
+    if subtitle:
+        content.append(f"  {subtitle}", style="dim")
+    return Group(content, Text(""))
+
+
+def create_section_title(title: str, subtitle: str = "") -> Group:
+    """Create a compact section title group with optional subtitle."""
+    content = Text()
+    content.append(title, style="bold white")
+    if subtitle:
+        content.append(f"  {subtitle}", style="dim")
+
+    return Group(content, Text(""))
+
+
+def create_key_value_panel(
+    title: str,
+    rows: dict[str, Any] | list[tuple[str, Any]] | tuple[tuple[str, Any], ...],
+    accent: str = "cyan",
+) -> Panel:
+    """Create a consistent key-value summary panel."""
+    table = Table(show_header=False, box=None, padding=(0, 1))
+    table.add_column("Key", style="bold white", no_wrap=True)
+    table.add_column("Value", style=accent, overflow="fold")
+
+    for key, value in _normalize_panel_rows(rows):
+        table.add_row(f"{key}:", str(value))
+
+    return Panel(
+        table,
+        title=f"[bold]{title}[/bold]",
+        border_style=accent,
+        box=ROUNDED,
+        padding=(0, 1),
+    )
+
+
+def create_message_panel(
+    kind: str,
+    title: str,
+    body: str = "",
+    suggestion: str = "",
+    stats: dict[str, Any] | list[tuple[str, Any]] | tuple[tuple[str, Any], ...] | None = None,
+) -> Panel:
+    """Create a consistent info/success/warning/error panel."""
+    accent, body_style = _KIND_STYLES.get(kind, ("cyan", "white"))
+    content_parts: list[Any] = []
+
+    if body:
+        content_parts.append(Text.from_markup(body, style=body_style))
+
+    if stats:
+        if content_parts:
+            content_parts.append(Text(""))
+        stats_table = Table(show_header=False, box=None, padding=(0, 1))
+        stats_table.add_column("Key", style="bold white", no_wrap=True)
+        stats_table.add_column("Value", style=accent, overflow="fold")
+        for key, value in _normalize_panel_rows(stats):
+            stats_table.add_row(f"{key}:", str(value))
+        content_parts.append(stats_table)
+
+    if suggestion:
+        if content_parts:
+            content_parts.append(Text(""))
+        suggestion_text = Text()
+        suggestion_text.append("Suggestion: ", style=f"bold {accent}")
+        suggestion_text.append(suggestion, style="dim")
+        content_parts.append(suggestion_text)
+
+    if not content_parts:
+        content_parts.append(Text("", style=body_style))
+
+    return Panel(
+        Group(*content_parts),
+        title=f"[bold {accent}]{title}[/bold {accent}]",
+        border_style=accent,
+        box=ROUNDED,
+        padding=(0, 1),
+    )
+
+
+def create_command_card(
+    step: str,
+    command: str,
+    description: str,
+    accent: str = "cyan",
+) -> Panel:
+    """Create a compact command card for onboarding and identity surfaces."""
+    content = Text()
+    content.append(f"{step}\n", style=f"bold {accent}")
+    content.append(command, style="bold white")
+    content.append(f"\n{description}", style="dim")
+
+    return Panel(
+        content,
+        border_style=accent,
+        box=ROUNDED,
+        padding=(0, 1),
+    )
+
+
+def create_command_section_panel(
+    title: str,
+    rows: list[tuple[str, str]],
+    *,
+    accent: str = "cyan",
+    subtitle: str = "",
+    command_width: int = 24,
+) -> Group:
+    """Create a help-oriented section group with minimal visual noise."""
+    table = Table.grid(expand=False, padding=(0, 2))
+    table.add_column(width=3)
+    table.add_column(style="cyan", width=command_width)
+    table.add_column(style="dim")
+
+    for command_name, description in rows:
+        table.add_row("", command_name, description)
+
+    parts: list[Any] = []
+    
+    header = Text()
+    if title:
+        header.append(f"{title}\n", style="bold white")
+    if subtitle:
+        header.append(f"  {subtitle}\n", style="dim")
+    
+    if len(header):
+        parts.append(header)
+        
+    parts.append(table)
+    parts.append(Text(""))
+
+    return Group(*parts)
+
+
+def render_renderables_to_text(
+    renderable: Any,
+    *,
+    use_color: bool,
+    width: int,
+) -> str:
+    """Render Rich content to terminal text, preserving ANSI only when requested."""
+    capture_buffer = io.StringIO()
+    capture_console = Console(
+        file=capture_buffer,
+        record=True,
+        width=width,
+        force_terminal=use_color and not ASCII_MODE,
+        color_system="standard" if use_color and not ASCII_MODE else None,
+        emoji=not ASCII_MODE,
+        safe_box=ASCII_MODE,
+    )
+    capture_console.print(renderable)
+    return capture_console.export_text(styles=use_color and not ASCII_MODE)
+
+
+def render_version_screen(
+    *,
+    version: str,
+    subtitle: str,
+    runtime_rows: list[tuple[str, str]],
+    release_rows: list[tuple[str, str]],
+    help_rows: list[tuple[str, str]],
+    repository: str,
+) -> Group:
+    """Render the CLI identity/version screen."""
+
+    identity = Text()
+    identity.append("UnrealMate CLI ", style="bold white")
+    identity.append(f"v{version}\n", style="cyan")
+    identity.append(subtitle, style="dim")
+
+    detail_table = Table(show_header=False, box=None, padding=(0, 2, 0, 0), expand=False)
+    detail_table.add_column("Key", style="dim", no_wrap=True)
+    detail_table.add_column("Value", style="white", overflow="fold")
+
+    for key, value in runtime_rows:
+        detail_table.add_row(key, value)
+    if runtime_rows and release_rows:
+        detail_table.add_row("", "")
+    for key, value in release_rows:
+        detail_table.add_row(key, value)
+
+    help_table = Table.grid(expand=False, padding=(0, 2))
+    help_table.add_column(style="cyan")
+    help_table.add_column(style="dim")
+
+    for flag, description in help_rows:
+        help_table.add_row(flag, description)
+
+    repo_text = Text(f"\n{repository}", style="dim")
+
+    return Group(identity, Text("\n"), detail_table, Text("\n"), help_table, repo_text)
+
+
+def render_root_help_screen(
+    *,
+    version: str,
+    subtitle: str,
+    identity_body: str,
+    start_safe_cards: list[tuple[str, str, str]],
+    later_when_ready_body: str,
+    workflow_sections: list[dict[str, Any]],
+    labels_body: str,
+    labels_suggestion: str,
+) -> Group:
+    """Render the stable/default root help screen as a curated workflow hub."""
+
+    # --- Compact identity ---
+    identity = Text(justify="center")
+    identity.append("UNREALMATE", style="bold cyan")
+    identity.append(f"  v{version}\n", style="bold white")
+    identity.append(subtitle, style="dim")
+
+    # (identity panel removed — minimalist format uses inline identity below)
+
+    # --- Compact identity ---
+    identity = Text()
+    identity.append("Unreal", style="bold white")
+    identity.append("Mate ", style="bold cyan")
+    identity.append(f"v{version}\n", style="bold white")
+    identity.append(subtitle, style="dim")
+
+    usage = Group(
+        Text("USAGE", style="bold white"),
+        Text("  $ unrealmate [command] [options]\n", style="dim"),
+    )
+
+    # --- Unified Commands ---
+    command_table = Table.grid(expand=False, padding=(0, 2))
+    command_table.add_column(width=2)
+    command_table.add_column(style="cyan", width=24)
+    command_table.add_column(style="dim")
+
+    for section in workflow_sections:
+        command_table.add_row("", Text(section["title"], style="bold white"), "")
+        for cmd, desc in section["rows"]:
+            command_table.add_row("", cmd, desc)
+        command_table.add_row("", "", "")
+
+    commands_group = Group(
+        Text("COMMANDS", style="bold white"),
+        command_table
+    )
+
+    parts: list[Any] = [
+        identity, Text("\n"),
+        usage,
+        commands_group,
+    ]
+
+    if labels_suggestion:
+        footer = Group(
+            Text("\nEXPLORE", style="bold white"),
+            Text(f"  {labels_suggestion}", style="dim")
+        )
+        parts.append(footer)
+
+    return Group(*parts)
+
+
+def render_help_all_screen(
+    *,
+    root_renderable: Group,
+    explore_intro_body: str,
+    opt_in_sections: list[dict[str, Any]],
+) -> Group:
+    """Render the explicit opt-in/secondary exploration view."""
+    opt_in_panels = [
+        Group(
+            Text(section["title"], style="bold white"),
+            Text(f"  {section.get('subtitle', '')}\n", style="dim"),
+            create_command_section_panel(
+                "",
+                section["rows"],
+                accent=section.get("accent", "dim"),
+                subtitle="",
+                command_width=section.get("command_width", 22),
+            )
+        )
+        for section in opt_in_sections
+    ]
+
+    separator = Group(
+        Text("\nEXPLORE BEYOND THE PRIMARY SURFACE", style="bold white"),
+        Text("  Opt-in, experimental, mock, and secondary surfaces\n", style="dim"),
+        Text.from_markup(f"  [dim]{explore_intro_body}[/]\n"),
+    )
+
+    parts: list[Any] = [root_renderable, separator]
+    parts.extend(opt_in_panels)
+    return Group(*parts)
+
+
+def render_group_help_screen(
+    *,
+    title: str,
+    subtitle: str,
+    eyebrow: str,
+    note_body: str,
+    note_suggestion: str,
+    sections: list[dict[str, Any]],
+    footer_rows: list[tuple[str, str]],
+    usage: str,
+) -> Group:
+    """Render a custom, intentionally sectioned group help screen."""
+    # --- Compact identity header ---
+    header = Text()
+    header.append(f"{title}\n", style="bold white")
+    header.append(f"  {subtitle}", style="dim")
+
+    # --- Usage note ---
+    note_content = Text()
+    note_content.append_text(Text.from_markup(f"  {note_body}"))
+    if note_suggestion:
+        note_content.append("\nTip: ", style="cyan")
+        note_content.append(note_suggestion, style="dim")
+
+    section_panels = [
+        Group(
+            Text(section["title"], style="bold white"),
+            Text(f"  {section.get('subtitle', '')}\n", style="dim"),
+            create_command_section_panel(
+                "",
+                section["rows"],
+                accent=section.get("accent", "cyan"),
+                subtitle="",
+                command_width=section.get("command_width", 18),
+            )
+        )
+        for section in sections
+    ]
+
+    # --- Footer ---
+    footer = Group(
+        Text("Options", style="bold white"),
+        Text(f"  Usage: {usage}\n", style="dim"),
+        create_command_section_panel(
+            "",
+            footer_rows,
+            accent="dim",
+            subtitle="",
+            command_width=28,
+        )
+    )
+
+    parts: list[Any] = [
+        header, Text("\n"),
+        note_content, Text("\n")
+    ]
+    parts.extend(section_panels)
+    parts.append(footer)
+
+    return Group(*parts)
+
+
 def create_header_box(
     title: str,
     subtitle: str = "",
@@ -160,19 +734,7 @@ def create_header_box(
     Returns:
         Rich Panel object
     """
-    content = Text()
-    content.append(f"  {title}  ", style=f"bold {style}")
-    
-    if subtitle:
-        content.append("\n")
-        content.append(f"  {subtitle}  ", style="dim")
-    
-    return Panel(
-        Align.center(content),
-        box=DOUBLE,
-        border_style=style,
-        padding=(1, 2),
-    )
+    return create_hero_panel(title=title, subtitle=subtitle, accent=style)
 
 
 def print_header_banner(
@@ -188,22 +750,10 @@ def print_header_banner(
         subtitle: Optional subtitle
         style: Color style for the box
     """
-    console = Console()
-    content = Text()
-    content.append(f"{title}", style=f"bold {style}")
-    
-    if subtitle:
-        content.append("\n")
-        content.append(f"{subtitle}", style="dim")
-    
-    console.print()
-    console.print(Panel(
-        Align.center(content),
-        box=DOUBLE,
-        border_style=style,
-        padding=(0, 4),
-    ))
-    console.print()
+    active_console = _build_console()
+    active_console.print()
+    active_console.print(create_hero_panel(title=title, subtitle=subtitle, accent=style))
+    active_console.print()
 
 
 def create_status_box(
@@ -222,22 +772,22 @@ def create_status_box(
     Returns:
         Rich Panel with status items
     """
-    content = Text()
-    
+    table = Table(show_header=False, box=None, padding=(0, 1))
+    table.add_column("Status", width=6, no_wrap=True)
+    table.add_column("Name", style="bold white", no_wrap=True)
+    table.add_column("Description", style="dim")
+
     for name, desc, success in items:
         icon = StatusIcons.SUCCESS if success else StatusIcons.ERROR
         status_style = "green" if success else "red"
-        
-        content.append(f"  {icon} ", style=status_style)
-        content.append(f"{name}", style="bold")
-        content.append(f" - {desc}\n", style="dim")
-    
+        table.add_row(f"[{status_style}]{icon}[/{status_style}]", name, desc)
+
     return Panel(
-        content,
+        table,
         title=f"[bold]{title}[/bold]",
         box=ROUNDED,
         border_style=box_style,
-        padding=(1, 2),
+        padding=(0, 1),
     )
 
 
@@ -257,19 +807,7 @@ def create_stats_panel(
     Returns:
         Rich Panel with formatted statistics
     """
-    table = Table(show_header=False, box=None, padding=(0, 2))
-    table.add_column("Key", style="bold")
-    table.add_column("Value", style=style)
-    
-    for key, value in stats.items():
-        table.add_row(f"{key}:", str(value))
-    
-    return Panel(
-        table,
-        title=f" {StatusIcons.STAR} {title} ",
-        box=ROUNDED,
-        border_style=style,
-    )
+    return create_key_value_panel(title=title, rows=stats, accent=style)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -285,7 +823,7 @@ def create_fancy_progress() -> Progress:
         Rich Progress object with custom styling
     """
     return Progress(
-        SpinnerColumn("dots", style="bright_green"),
+        SpinnerColumn(safe_spinner("dots"), style="bright_green"),
         TextColumn("[bold bright_green]{task.description}"),
         BarColumn(
             bar_width=40,
@@ -307,9 +845,10 @@ def create_gaming_progress() -> Progress:
     Returns:
         Rich Progress with gaming theme
     """
+    separator = "|" if ASCII_MODE else "│"
     return Progress(
-        SpinnerColumn("arrow3", style="cyan"),
-        TextColumn("[bold cyan]⚡ {task.description}"),
+        SpinnerColumn(safe_spinner("arrow3"), style="cyan"),
+        TextColumn("[bold cyan]{task.description}"),
         BarColumn(
             bar_width=30,
             style="grey30",
@@ -318,7 +857,7 @@ def create_gaming_progress() -> Progress:
             pulse_style="cyan",
         ),
         TextColumn("[bold]{task.percentage:>3.0f}%"),
-        TextColumn("[dim]│"),
+        TextColumn(f"[dim]{separator}"),
         TimeElapsedColumn(),
         console=console,
     )
@@ -336,6 +875,25 @@ LOADING_FRAMES_DOTS = [
     "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏",
 ]
 
+LOADING_FRAMES_ASCII = [
+    "-", "\\", "|", "/",
+]
+
+
+def get_loading_frames(encoding: Optional[str] = None) -> list[str]:
+    """Select loading frames based on output encoding support."""
+    active_encoding = encoding
+    if active_encoding is None:
+        active_encoding = getattr(sys.stdout, "encoding", None)
+    if is_utf8_encoding(active_encoding) and not ASCII_MODE:
+        return LOADING_FRAMES_DOTS
+    return LOADING_FRAMES_ASCII
+
+
+def safe_spinner(preferred: str = "dots") -> str:
+    """Return an ASCII-safe spinner name when unicode output is unreliable."""
+    return preferred if not ASCII_MODE else "line"
+
 
 def animated_loading(message: str, duration: float = 2.0, color: str = "bright_green") -> None:
     """
@@ -346,7 +904,7 @@ def animated_loading(message: str, duration: float = 2.0, color: str = "bright_g
         duration: How long to show the animation
         color: Color style for the animation
     """
-    frames = LOADING_FRAMES_DOTS
+    frames = get_loading_frames()
     start = time.time()
     i = 0
     
@@ -376,28 +934,14 @@ def print_success_banner(
         message: Success message
         stats: Optional statistics to display
     """
-    content = Text()
-    content.append(f"\n  {StatusIcons.SUCCESS} ", style="bold green")
-    content.append(title, style="bold bright_green")
-    
-    if message:
-        content.append(f"\n  {message}", style="green")
-    
-    if stats:
-        content.append("\n")
-        for key, value in stats.items():
-            content.append(f"\n  {StatusIcons.ARROW} ", style="dim")
-            content.append(f"{key}: ", style="dim")
-            content.append(str(value), style="bright_green")
-    
-    content.append("\n")
-    
-    console.print(Panel(
-        content,
-        box=ROUNDED,
-        border_style="green",
-        padding=(0, 2),
-    ))
+    console.print(
+        create_message_panel(
+            "success",
+            f"{StatusIcons.SUCCESS} {title}",
+            body=message,
+            stats=stats,
+        )
+    )
 
 
 def print_error_banner(
@@ -413,48 +957,26 @@ def print_error_banner(
         message: Error message
         suggestion: Optional suggestion to fix the error
     """
-    content = Text()
-    content.append(f"\n  {StatusIcons.ERROR} ", style="bold red")
-    content.append(title, style="bold red")
-    
-    if message:
-        content.append(f"\n  {message}", style="red")
-    
-    if suggestion:
-        content.append(f"\n\n  {StatusIcons.INFO} Suggestion: ", style="yellow")
-        content.append(suggestion, style="dim")
-    
-    content.append("\n")
-    
-    console.print(Panel(
-        content,
-        box=ROUNDED,
-        border_style="red",
-        padding=(0, 2),
-    ))
+    console.print(
+        create_message_panel(
+            "error",
+            f"{StatusIcons.ERROR} {title}",
+            body=message,
+            suggestion=suggestion,
+        )
+    )
 
 
 def print_warning_banner(title: str, message: str = "", suggestion: str = "") -> None:
     """Print a warning banner."""
-    content = Text()
-    content.append(f"\n  {StatusIcons.WARNING} ", style="bold yellow")
-    content.append(title, style="bold yellow")
-    
-    if message:
-        content.append(f"\n  {message}", style="yellow")
-    
-    if suggestion:
-        content.append(f"\n\n  {StatusIcons.INFO} Suggestion: ", style="yellow")
-        content.append(suggestion, style="dim")
-    
-    content.append("\n")
-    
-    console.print(Panel(
-        content,
-        box=ROUNDED,
-        border_style="yellow",
-        padding=(0, 2),
-    ))
+    console.print(
+        create_message_panel(
+            "warning",
+            f"{StatusIcons.WARNING} {title}",
+            body=message,
+            suggestion=suggestion,
+        )
+    )
 
 
 def print_tip(message: str) -> None:
@@ -462,10 +984,10 @@ def print_tip(message: str) -> None:
     from rich.padding import Padding
     content = Text()
     content.append(f" {message}", style="cyan")
-    
+
     panel = Panel(
         Align.center(content),
-        title="[yellow]💡 UnrealMate Tip[/yellow]",
+        title=f"[yellow]{StatusIcons.TIP} UnrealMate Tip[/yellow]",
         box=ROUNDED,
         border_style="yellow",
         padding=(0, 2),
@@ -610,7 +1132,7 @@ def format_command_result(
         content.append(f"\n{output}\n", style="dim")
     
     if duration > 0:
-        content.append(f"\n  ⏱️  {duration:.2f}s", style="dim")
+        content.append(f"\n  {StatusIcons.TIMER}  {duration:.2f}s", style="dim")
     
     return Panel(
         content,
@@ -697,3 +1219,9 @@ def step(number: int, message: str) -> None:
 def bullet(message: str) -> None:
     """Print a bullet point."""
     console.print(f"  {StatusIcons.ARROW} {message}", style="dim")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODULE BOOTSTRAP — must run AFTER all classes/functions are defined
+# ═══════════════════════════════════════════════════════════════════════════════
+configure_output_safety()

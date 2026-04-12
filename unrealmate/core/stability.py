@@ -2,14 +2,14 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                          UnrealMate - Stability                              ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Stability features, backup, and rollback                           ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Ensures system stability through backups and error handling.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import shutil
@@ -79,3 +79,4 @@ class BackupManager:
         except Exception as e:
             logging.error(f"Restore failed: {e}")
             return False
+

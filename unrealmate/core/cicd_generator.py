@@ -2,25 +2,22 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - CI/CD Pipeline Generator                     ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Generate CI/CD pipelines for Unreal Engine projects                ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
-from datetime import datetime
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 
 console = Console()
@@ -226,7 +223,7 @@ class JenkinsPipelineGenerator:
         ])
         
         if config.notify_slack:
-            lines.append(f"            slackSend(color: 'good', message: 'Build succeeded: ${{env.JOB_NAME}} #${{env.BUILD_NUMBER}}')")
+            lines.append("            slackSend(color: 'good', message: 'Build succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}')")
         
         lines.extend([
             "            echo 'Build succeeded!'",
@@ -235,7 +232,7 @@ class JenkinsPipelineGenerator:
         ])
         
         if config.notify_slack:
-            lines.append(f"            slackSend(color: 'danger', message: 'Build failed: ${{env.JOB_NAME}} #${{env.BUILD_NUMBER}}')")
+            lines.append("            slackSend(color: 'danger', message: 'Build failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}')")
         
         lines.extend([
             "            echo 'Build failed!'",
@@ -255,7 +252,7 @@ class JenkinsPipelineGenerator:
         """Generate build command for a platform."""
         cmd_parts = [
             "                    def buildCmd = \"${UE_ROOT}/Engine/Build/BatchFiles/RunUAT.bat\"",
-            f"                    buildCmd += \" BuildCookRun\"",
+            "                    buildCmd += \" BuildCookRun\"",
             f"                    buildCmd += \" -project=${{WORKSPACE}}/{config.project_name}.uproject\"",
             f"                    buildCmd += \" -targetplatform={platform.value}\"",
             f"                    buildCmd += \" -clientconfig={build_config.value}\"",
@@ -336,8 +333,8 @@ class GitLabCIGenerator:
                     f"{job_name}:",
                     "  stage: build",
                     "  script:",
-                    f"    - $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun",
-                    f"      -project=\"$CI_PROJECT_DIR/$PROJECT_NAME.uproject\"",
+                    "    - $UE_ROOT/Engine/Build/BatchFiles/RunUAT.bat BuildCookRun",
+                    "      -project=\"$CI_PROJECT_DIR/$PROJECT_NAME.uproject\"",
                     f"      -targetplatform={platform.value}",
                     f"      -clientconfig={build_config.value}",
                 ])
@@ -368,8 +365,8 @@ class GitLabCIGenerator:
                 "test:",
                 "  stage: test",
                 "  script:",
-                f"    - $UE_ROOT/Engine/Binaries/Win64/UnrealEditor-Cmd.exe",
-                f"      \"$CI_PROJECT_DIR/$PROJECT_NAME.uproject\"",
+                "    - $UE_ROOT/Engine/Binaries/Win64/UnrealEditor-Cmd.exe",
+                "      \"$CI_PROJECT_DIR/$PROJECT_NAME.uproject\"",
                 "      -ExecCmds=\"Automation RunTests Now\"",
                 "      -Unattended -NoPause -Log",
                 "  artifacts:",
@@ -455,8 +452,8 @@ class AzureDevOpsPipelineGenerator:
                     "      displayName: 'Build'",
                     "      inputs:",
                     "        script: |",
-                    f"          \"$(UE_ROOT)/Engine/Build/BatchFiles/RunUAT.bat\" BuildCookRun ^",
-                    f"          -project=\"$(Build.SourcesDirectory)/$(PROJECT_NAME).uproject\" ^",
+                    "          \"$(UE_ROOT)/Engine/Build/BatchFiles/RunUAT.bat\" BuildCookRun ^",
+                    "          -project=\"$(Build.SourcesDirectory)/$(PROJECT_NAME).uproject\" ^",
                     f"          -targetplatform={platform.value} ^",
                     f"          -clientconfig={build_config.value} ^",
                 ])
@@ -476,7 +473,7 @@ class AzureDevOpsPipelineGenerator:
                     "    - task: PublishBuildArtifacts@1",
                     "      displayName: 'Publish Artifacts'",
                     "      inputs:",
-                    f"        PathtoPublish: '$(BUILD_OUTPUT)'",
+                    "        PathtoPublish: '$(BUILD_OUTPUT)'",
                     f"        ArtifactName: '{platform.value}_{build_config.value}'",
                     "",
                 ])
@@ -495,8 +492,8 @@ class AzureDevOpsPipelineGenerator:
                 "      displayName: 'Run Tests'",
                 "      inputs:",
                 "        script: |",
-                f"          \"$(UE_ROOT)/Engine/Binaries/Win64/UnrealEditor-Cmd.exe\" ^",
-                f"          \"$(Build.SourcesDirectory)/$(PROJECT_NAME).uproject\" ^",
+                "          \"$(UE_ROOT)/Engine/Binaries/Win64/UnrealEditor-Cmd.exe\" ^",
+                "          \"$(Build.SourcesDirectory)/$(PROJECT_NAME).uproject\" ^",
                 "          -ExecCmds=\"Automation RunTests Now\" ^",
                 "          -Unattended -NoPause -Log",
                 "",
@@ -803,3 +800,4 @@ class CICDGenerator:
             table.add_row(name, output, f"[{style}]{status}[/{style}]")
         
         return table
+

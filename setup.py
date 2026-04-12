@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="unrealmate",
-    version="1.1.3",
+    version="1.1.4",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -31,13 +31,13 @@ setup(
         ],
     },
     python_requires=">=3.10",
-    description="All-in-one CLI toolkit for Unreal Engine developers",
+    description="CLI-first Unreal Engine workflow toolkit",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="gktrk363",
+    author="G & E ZYNTH",
     url="https://github.com/gktrk363/unrealmate",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.10",

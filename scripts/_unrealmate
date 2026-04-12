@@ -1,87 +1,76 @@
 #compdef unrealmate
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                    UnrealMate - Zsh Completion Script                        ║
-# ║                                                                              ║
-# ║  Author: gktrk363                                                            ║
-# ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
-# ║  Purpose: Auto-completion for unrealmate commands in Zsh                     ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
-#
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
-#
-# Installation:
-#   Copy to ~/.zsh/completions/_unrealmate
-#   Add to ~/.zshrc: fpath=(~/.zsh/completions $fpath)
+# Generated from unrealmate/registry/command_registry.toml
+# Do not edit manually; run: python scripts/sync_completion_from_registry.py
 
 _unrealmate() {
     local -a commands
-    local -a git_commands
     local -a asset_commands
-    local -a blueprint_commands
-    local -a performance_commands
-    local -a config_commands
-    local -a plugin_commands
     local -a build_commands
+    local -a config_commands
+    local -a git_commands
+    local -a performance_commands
+    local -a plugin_commands
+    local -a report_commands
 
     commands=(
-        'git:Git helper commands'
         'asset:Asset management commands'
-        'blueprint:Blueprint analysis commands'
-        'bp:Blueprint analysis (alias)'
-        'performance:Performance analysis commands'
-        'perf:Performance analysis (alias)'
-        'config:Configuration management'
-        'cfg:Configuration (alias)'
-        'plugin:Plugin management'
         'build:Build and CI/CD tools'
-        'doctor:Check project health'
-        'version:Show version information'
-    )
-
-    git_commands=(
-        'init:Initialize Git repository for UE project'
-        'lfs:Setup Git LFS for large files'
-        'clean:Clean unnecessary files (Saved, Intermediate, etc.)'
-        'status:Show Git status'
+        'config:Configuration management'
+        'git:Git helper commands'
+        'performance:Performance analysis commands'
+        'plugin:Plugin management'
+        'report:Reporting commands'
+        'analytics:Show usage analytics and metrics. (local-only)'
+        'doctor:Run interactive health checks for the project.'
+        'version:Show system and version information.'
     )
 
     asset_commands=(
-        'scan:Scan and analyze project assets'
-        'organize:Organize assets by type'
-        'duplicates:Find duplicate assets'
-        'validate:Validate asset integrity'
-    )
-
-    blueprint_commands=(
-        'analyze:Analyze blueprint complexity'
-        'complexity:Check cyclomatic complexity'
-        'lint:Lint blueprint files'
-    )
-
-    performance_commands=(
-        'profile:Profile project performance'
-        'memory:Memory usage analysis'
-        'shader:Shader complexity analysis'
-        'audit:Full performance audit'
-    )
-
-    config_commands=(
-        'init:Initialize configuration file'
-        'show:Show current configuration'
-        'get:Get configuration value'
-        'set:Set configuration value'
-    )
-
-    plugin_commands=(
-        'list:List installed plugins'
-        'install:Install a plugin'
-        'enable:Enable a plugin'
-        'disable:Disable a plugin'
+        'duplicates:Find and report duplicate assets by name or content hash.'
+        'organize:Organize assets into proper directory structure based on file types.'
+        'scan:Scan directory for Unreal Engine assets and provide a detailed report.'
     )
 
     build_commands=(
-        'generate:Generate CI/CD configuration'
-        'validate:Validate build configuration'
+        'ci-init:Generate CI/CD pipeline configuration.'
+        'docker:Generate optimized Dockerfile for Unreal Engine.'
+        'info:Show build information and recommendations.'
+    )
+
+    config_commands=(
+        'edit:Opens .unrealmate.toml in the system default editor.'
+        'get:Get a configuration value.'
+        'init:Initialize .unrealmate.toml configuration file.'
+        'set:Set a configuration value.'
+        'show:Show current configuration.'
+        'template:Apply a performance preset template to .unrealmate.toml.'
+        'validate:Validates .unrealmate.toml structure and values.'
+    )
+
+    git_commands=(
+        'clean:Clean build artifacts, intermediate files, and temporary data.'
+        'init:Initialize git configuration with optimized settings for Unreal Engine.'
+        'lfs:Setup Git LFS used for large binary files (assets, maps, etc).'
+    )
+
+    performance_commands=(
+        'memory:Audit memory usage and identify optimization opportunities.'
+        'profile:Analyze performance metrics and detect bottlenecks.'
+        'shaders:Analyze shader complexity and optimization opportunities.'
+    )
+
+    plugin_commands=(
+        'disable:Disable a plugin in .uproject file.'
+        'enable:Enable a plugin in .uproject file.'
+        'install:Install a plugin from Git or local directory.'
+        'list:List all installed plugins.'
+        'remove:Remove a plugin from project.'
+    )
+
+    report_commands=(
+        'html:Generate HTML project report with real stats.'
+        'json:Export project stats as JSON (prints or saves to file).'
+        'notify:Save a team notification to the project notification log. (local-only)'
     )
 
     _arguments -C \
@@ -95,26 +84,26 @@ _unrealmate() {
             ;;
         subcommand)
             case $words[2] in
-                git)
-                    _describe 'git subcommand' git_commands
-                    ;;
                 asset)
                     _describe 'asset subcommand' asset_commands
                     ;;
-                blueprint|bp)
-                    _describe 'blueprint subcommand' blueprint_commands
+                build)
+                    _describe 'build subcommand' build_commands
                     ;;
-                performance|perf)
-                    _describe 'performance subcommand' performance_commands
-                    ;;
-                config|cfg)
+                config)
                     _describe 'config subcommand' config_commands
+                    ;;
+                git)
+                    _describe 'git subcommand' git_commands
+                    ;;
+                performance)
+                    _describe 'performance subcommand' performance_commands
                     ;;
                 plugin)
                     _describe 'plugin subcommand' plugin_commands
                     ;;
-                build)
-                    _describe 'build subcommand' build_commands
+                report)
+                    _describe 'report subcommand' report_commands
                     ;;
             esac
             ;;

@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - ci_generator.py                              ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: CI/CD pipeline generation for UE projects                          ║
 ║  Created: 2026-01-23                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,7 +10,7 @@
 CI/CD pipeline generator for Unreal Engine projects.
 Generates GitHub Actions, GitLab CI, and Jenkins configurations.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from pathlib import Path
@@ -37,7 +37,7 @@ class CIGenerator:
             str: GitHub Actions YAML content
         """
         workflow = f"""# UnrealMate Generated GitHub Actions Workflow
-# © 2026 gktrk363
+# © 2026 G & E ZYNTH
 
 name: Unreal Engine Build
 
@@ -86,7 +86,7 @@ jobs:
         # Add your test commands here
         echo "Running tests..."
 
-# Crafted with UnrealMate by gktrk363
+# Crafted with UnrealMate by G & E ZYNTH
 """
         return workflow
 
@@ -98,7 +98,7 @@ jobs:
             str: GitLab CI YAML content
         """
         config = f"""# UnrealMate Generated GitLab CI Configuration
-# © 2026 gktrk363
+# © 2026 G & E ZYNTH
 
 stages:
   - build
@@ -141,7 +141,7 @@ test:
   dependencies:
     - build_windows
 
-# Crafted with UnrealMate by gktrk363
+# Crafted with UnrealMate by G & E ZYNTH
 """
         return config
 
@@ -153,7 +153,7 @@ test:
             str: Jenkinsfile content
         """
         jenkinsfile = f"""// UnrealMate Generated Jenkinsfile
-// © 2026 gktrk363
+// © 2026 G & E ZYNTH
 
 pipeline {{
     agent {{
@@ -213,7 +213,7 @@ pipeline {{
     }}
 }}
 
-// Crafted with UnrealMate by gktrk363
+// Crafted with UnrealMate by G & E ZYNTH
 """
         return jenkinsfile
 
@@ -242,4 +242,5 @@ pipeline {{
         return jenkins_file
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+

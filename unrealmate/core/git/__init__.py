@@ -1,6 +1,6 @@
 """
 UnrealMate Git Integration Modules
-Author: gktrk363
+Author: G & E ZYNTH
 GitHub: https://github.com/gktrk363/unrealmate
 """
 # Git modules

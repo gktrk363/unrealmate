@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                          UnrealMate - Auto Fix                               ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Automatic fixing of common Unreal Engine project issues            ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,19 +10,17 @@
 Auto-fix system for common Unreal Engine project issues.
 Supports dry-run mode, backup before changes, and rollback.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
-import os
 import re
-import json
 import shutil
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Callable, Any
+from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -193,7 +191,7 @@ class AutoFixer:
                 
                 action = FixAction(
                     id=f"NAMING_{len(actions)}",
-                    title=f"Add prefix to asset",
+                    title="Add prefix to asset",
                     description=f"Rename '{name}' to '{new_name}'",
                     category=FixCategory.NAMING,
                     file_path=str(asset_path),
@@ -351,7 +349,6 @@ class AutoFixer:
                 with open(cpp_file, 'r', encoding='utf-8', errors='ignore') as f:
                     content = f.read()
                 
-                original_content = content
                 modified = False
                 
                 # Fix 1: Add missing Super:: calls
@@ -481,5 +478,6 @@ class AutoFixer:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

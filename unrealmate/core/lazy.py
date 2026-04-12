@@ -2,18 +2,17 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Lazy Loading System                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Lazy loading utilities for deferred initialization                 ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import importlib
-import sys
 from functools import cached_property
 from typing import Any, Callable, Generic, Optional, TypeVar
 
@@ -296,3 +295,4 @@ class cached:
                 count += 1
 
         return count
+

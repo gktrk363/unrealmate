@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                       UnrealMate - Template Sharing                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Collaboration and template sharing                                 ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 Export, import, and share project templates.
 """
 
@@ -168,7 +168,7 @@ class TemplateExporter:
                 with open(uproject_files[0], 'r') as f:
                     data = json.load(f)
                     return data.get("EngineAssociation", "5.0")
-            except:
+            except Exception:
                 pass
         return "5.0"
     
@@ -176,7 +176,7 @@ class TemplateExporter:
                output_path: str,
                name: str,
                description: str = "",
-               author: str = "gktrk363",
+               author: str = "G & E ZYNTH",
                version: str = "1.0.0",
                tags: Optional[List[str]] = None,
                include_content: bool = True) -> Optional[str]:
@@ -208,7 +208,7 @@ class TemplateExporter:
         
         for root, dirs, files in os.walk(self.project_path):
             root_path = Path(root)
-            rel_root = root_path.relative_to(self.project_path)
+            root_path.relative_to(self.project_path)
             
             # Filter directories
             dirs[:] = [d for d in dirs if not self._should_exclude(root_path / d)]
@@ -360,7 +360,7 @@ class TemplateImporter:
             if project_name:
                 uproject_files = list(target_path.glob("*.uproject"))
                 if uproject_files:
-                    old_name = uproject_files[0].stem
+                    uproject_files[0].stem
                     new_uproject = target_path / f"{project_name}.uproject"
                     uproject_files[0].rename(new_uproject)
                     
@@ -510,5 +510,6 @@ class TemplateSharingManager:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

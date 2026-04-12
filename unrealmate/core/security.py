@@ -2,20 +2,19 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                          UnrealMate - Security                               ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Security scanning and credential management                        ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Handles security checks and secure storage.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import os
-import json
 import logging
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 class SecurityScanner:
     """
@@ -54,3 +53,4 @@ class PermissionSystem:
     def has_permission(self, user: str, action: str) -> bool:
         # Default allow for local CLI usage
         return True
+

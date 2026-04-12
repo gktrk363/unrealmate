@@ -5,6 +5,20 @@ All notable changes to UnrealMate will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Current Product Truth
+
+- UnrealMate is currently a CLI-first product in release-hardening mode.
+- The stable/default CLI surface is the primary product surface.
+- `report dashboard` is real but experimental.
+- `report notify` is local-only; remote webhook delivery is not implemented in this repo.
+- Build generators are starter/template-oriented, not turnkey CI/CD automation.
+- UE editor plugin work is direction-only in this repo.
+- For current product positioning and maturity labels, prefer `docs/PROJECT_STATUS.md` and `docs/PRODUCT_AND_UX_STATUS.md` over older changelog wording below.
+## [1.1.4] - 2026-04-12
+- End-to-end repository test audit and stabilization.
+- Restored visual UI and CLI format consistency after minimalist overhaul.
+- Fixed layout string regressions in regression tests and fallback behaviors.
+
 ## [1.1.3] - 2026-02-18
 - Fixed `ModuleNotFoundError` by renaming `unrealmate.core.build` to `unrealmate.core.automation`.
 - Resolved naming conflict with reserved `build` directory.
@@ -19,28 +33,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2026-02-18
 
-### 🚀 Major Features (AI & Collaboration Revolution)
+### Feature Additions
 
-#### 🤖 AI-Powered Development
+#### 🤖 Experimental AI-Assisted Commands
 - **Natural Language Command Processing (`ai nlp`):** Execute complex tasks using plain English (e.g., "scan project and backup to D drive").
 - **Automatic Bug Detection (`ai detect-bugs`):** AI scans your Blueprints and C++ code for common patterns of failure (circular dependencies, heavy loops).
 - **Intelligent Code Review (`ai review`):** Get instant feedback on your code style and potential logic errors.
 - **Auto-Fix (`automate fix`):** Automatically resolves simple issues like asset naming conventions or unused variables.
 
 #### 👥 Collaboration & Teamwork
-- **Web Dashboard (`report dashboard`):** A full visual interface running on localhost:8080 to track project health, build status, and team activity.
-- **Team Notifications (`report notify`):** Send updates directly to Slack or Discord from the CLI.
+- **Experimental Dashboard (`report dashboard`):** A CLI-launched local web surface for project snapshots and team-style views.
+- **Team Notifications (`report notify`):** Write local notification log entries only; remote webhook delivery is not implemented in this repo.
 - **Project Templates (`template`):** Create, save, and share standardized project structures across your team.
 
 #### 🏗️ Automation & DevOps
-- **Docker Support (`build docker`):** One-click generation of UE5-compatible Dockerfiles.
-- **CI/CD Pipelines (`build ci-init`):** Auto-generate configuration files for GitHub Actions, GitLab CI, and Jenkins.
+- **Docker Support (`build docker`):** Starter Dockerfile generation for Unreal Engine projects.
+- **CI/CD Pipelines (`build ci-init`):** Starter CI configuration generation for GitHub Actions, GitLab CI, and Jenkins.
 - **Git LFS Configuration (`git lfs`):** Automatic setup of `.gitattributes` for optimized large file handling.
 
 #### 📦 Asset & Project Management
 - **Smart Asset Organization (`asset organize`):** Automatically cleans up your Content folder by moving files to appropriate directories.
 - **Duplicate Finder (`asset duplicates`):** Identifies identical files to save disk space.
-- **Marketplace Integration (`marketplace`):** Search and install assets from the CLI (Simulation Mode).
+- **Marketplace Integration (`marketplace`):** Search and inspect marketplace-like asset data via simulated flows.
 
 ### 📚 Documentation
 - **New User Guides:** Comprehensive guides in both English (`USER_GUIDE.md`) and Turkish (`USER_GUIDE_TR.md`).
@@ -225,4 +239,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-**© 2026 gktrk363 - Crafted with passion for Unreal Engine developers**
+**© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers**
+

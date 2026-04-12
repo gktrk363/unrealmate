@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                        UnrealMate - config.py                                ║
 ║                                                                              ║
-║  Author: gktrk363                                                           ║
+║  Author: G & E ZYNTH                                                           ║
 ║  Purpose: Configuration management system                                   ║
 ║  Created: 2026-01-23                                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,12 +10,12 @@
 Configuration management system for UnrealMate.
 Handles .unrealmate.toml files and user preferences.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import toml
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Optional
 from dataclasses import dataclass, asdict
 
 
@@ -47,12 +47,19 @@ class GitConfig:
 
 
 @dataclass
+class NotificationConfig:
+    """Notification-related configuration."""
+    webhook_url: str = ""
+
+
+@dataclass
 class UnrealMateConfig:
     """Main UnrealMate configuration."""
     version: str = "1.0.0"
     performance: PerformanceConfig = None
     signature: SignatureConfig = None
     git: GitConfig = None
+    notification: NotificationConfig = None
     
     def __post_init__(self):
         if self.performance is None:
@@ -61,6 +68,8 @@ class UnrealMateConfig:
             self.signature = SignatureConfig()
         if self.git is None:
             self.git = GitConfig()
+        if self.notification is None:
+            self.notification = NotificationConfig()
 
 
 DEFAULT_CONFIG = UnrealMateConfig()
@@ -103,12 +112,14 @@ def load_config(project_root: Optional[Path] = None) -> UnrealMateConfig:
         perf_data = data.get("performance", {})
         sig_data = data.get("signature", {})
         git_data = data.get("git", {})
+        notification_data = data.get("notification", {})
         
         config = UnrealMateConfig(
             version=data.get("version", "1.0.0"),
             performance=PerformanceConfig(**perf_data),
             signature=SignatureConfig(**sig_data),
-            git=GitConfig(**git_data)
+            git=GitConfig(**git_data),
+            notification=NotificationConfig(**notification_data)
         )
         
         return config
@@ -135,7 +146,8 @@ def save_config(config: UnrealMateConfig, project_root: Optional[Path] = None) -
             "version": config.version,
             "performance": asdict(config.performance),
             "signature": asdict(config.signature),
-            "git": asdict(config.git)
+            "git": asdict(config.git),
+            "notification": asdict(config.notification),
         }
         
         with open(config_path, 'w') as f:
@@ -230,4 +242,5 @@ def set_config_value(key: str, value: Any, project_root: Optional[Path] = None) 
     return False
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+

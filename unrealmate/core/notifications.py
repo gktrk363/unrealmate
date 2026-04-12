@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Notification System                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Email and Slack/Discord notifications                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -144,7 +144,7 @@ class EmailNotifier(BaseNotifier):
                     <p style="margin: 0; line-height: 1.6;">{message.body.replace(chr(10), '<br>')}</p>
                 </div>
                 <p style="color: #888; font-size: 12px; margin-top: 20px;">
-                    © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+                    © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
                 </p>
             </div>
         </body>
@@ -204,7 +204,7 @@ class SlackNotifier(BaseNotifier):
                         "elements": [
                             {
                                 "type": "mrkdwn",
-                                "text": "© 2026 gktrk363 | <https://github.com/gktrk363/unrealmate|GitHub>",
+                                "text": "© 2026 G & E ZYNTH | <https://github.com/gktrk363/unrealmate|GitHub>",
                             }
                         ],
                     },
@@ -263,7 +263,7 @@ class DiscordNotifier(BaseNotifier):
                         "description": message.body,
                         "color": color,
                         "footer": {
-                            "text": "© 2026 gktrk363 - Crafted with passion for Unreal Engine developers"
+                            "text": "© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers"
                         },
                     }
                 ]
@@ -331,3 +331,4 @@ class NotificationManager:
     def notify_info(self, title: str, body: str) -> dict[str, bool]:
         """Send an info notification."""
         return self.notify(NotificationMessage(title, body, "info"))
+

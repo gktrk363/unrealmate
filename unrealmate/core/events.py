@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Event System                                 ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Publish-subscribe event system for decoupled communication         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -341,3 +341,4 @@ def emit_event(
             return result
         return wrapper
     return decorator
+

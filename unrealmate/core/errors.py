@@ -2,18 +2,17 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Error Handling                               ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Standardized error handling and custom exceptions                  ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import sys
-import traceback
 from dataclasses import dataclass
 from enum import Enum, auto
 from functools import wraps
@@ -333,3 +332,4 @@ def show_error(
 def show_warning(message: str) -> None:
     """Display a warning message."""
     console.print(f"[bold yellow]⚠️  Warning:[/bold yellow] {message}")
+

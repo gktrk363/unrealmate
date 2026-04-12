@@ -1,12 +1,12 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                    UnrealMate - CI/CD Test Workflow                          ║
 # ║                                                                              ║
-# ║  Author: gktrk363                                                            ║
+# ║  Author: G & E ZYNTH                                                            ║
 # ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 # ║  Purpose: Automated testing on push and pull requests                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 
 name: Tests
 
@@ -17,6 +17,66 @@ on:
     branches: [main]
 
 jobs:
+  registry-truth:
+    name: Registry Truth Gate
+    runs-on: ubuntu-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Validate registry load + parity + schema rules
+        run: |
+          python - <<'PY'
+          from unrealmate.registry import (
+              assert_registry_valid,
+              check_registry_cli_parity,
+              load_command_registry,
+          )
+
+          registry = load_command_registry()
+          parity = check_registry_cli_parity(registry, strict=True)
+          assert_registry_valid(registry, parity_report=parity)
+
+          print(f"Registry entries: {len(registry.commands)}")
+          print(f"CLI parity: {parity.registry_count}/{parity.cli_count} commands matched")
+          PY
+
+      - name: Run registry truth-surface test suite
+        run: |
+          python -m pytest \
+            tests/registry/test_command_registry.py \
+            tests/registry/test_registry_bindings.py \
+            tests/registry/test_help_surface_binding.py \
+            -q --tb=short
+
+      - name: Verify generated command registry artifact is up to date
+        run: |
+          python scripts/generate_command_registry_artifact.py --check
+
+      - name: Registry gate status note
+        if: always()
+        run: |
+          {
+            echo "## Registry Truth Gate"
+            echo "- Mode: blocking (\`continue-on-error: false\`)"
+            echo "- Scope: registry schema validation + cli parity + help/completion/docs truth-surface tests + generated artifact sync"
+            echo "- Rationale: prevent command metadata drift from re-entering the default user surface or generated support artifacts"
+          } >> "$GITHUB_STEP_SUMMARY"
+
   test:
     name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -40,18 +100,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
-      - name: Run linting with Ruff
-        run: |
-          ruff check unrealmate/ tests/
-        continue-on-error: true
-
       - name: Run tests with pytest
         run: |
-          pytest tests/ -v --tb=short
+          pytest tests/ -v --tb=short --ignore=tests/smoke
 
       - name: Run tests with coverage
         run: |
-          pytest tests/ --cov=unrealmate --cov-report=xml --cov-report=term
+          pytest tests/ --ignore=tests/smoke --cov=unrealmate --cov-report=xml --cov-report=term
 
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
@@ -83,8 +138,52 @@ jobs:
 
       - name: Check linting with Ruff
         run: ruff check unrealmate/ tests/
-        continue-on-error: true
 
       - name: Type check with mypy
         run: mypy unrealmate/ --ignore-missing-imports
         continue-on-error: true
+
+  smoke:
+    name: Smoke Tests (Stable CLI Surface)
+    runs-on: ubuntu-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run smoke suite
+        run: |
+          python -m pytest tests/smoke -q -rA --tb=short --junitxml=smoke-results.xml
+
+      - name: Upload smoke results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-results
+          path: smoke-results.xml
+          if-no-files-found: warn
+
+      - name: Smoke gate status note
+        if: always()
+        run: |
+          {
+            echo "## Smoke Gate Status"
+            echo "- Scope: \`tests/smoke\` (stable command surface)"
+            echo "- Current mode: blocking (\`continue-on-error: false\`)"
+            echo "- Why: stable/default-visible command regressions should now fail CI instead of only producing signal"
+            echo "- Expectation: keep this gate trustworthy by preserving narrow, deterministic smoke coverage"
+          } >> "$GITHUB_STEP_SUMMARY"
+

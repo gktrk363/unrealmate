@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                         UnrealMate - Code Review                             ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: GitHub/GitLab code review integration                              ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,10 +10,9 @@
 Code review integration for GitHub and GitLab.
 Create PRs, list reviews, and manage review workflows.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
-import os
 import json
 import logging
 import subprocess
@@ -22,7 +21,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -464,7 +463,7 @@ class CodeReviewManager:
                     text=True
                 )
                 source_branch = result.stdout.strip()
-            except:
+            except Exception:
                 source_branch = "HEAD"
         
         return self.provider.create_pull_request(
@@ -533,5 +532,6 @@ Deletions: -{diff.deletions}
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

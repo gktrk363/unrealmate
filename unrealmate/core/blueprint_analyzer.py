@@ -2,25 +2,22 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Blueprint Analyzer                           ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Advanced Blueprint analysis and optimization tools                 ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
-import json
-import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Optional
 
 from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
 
@@ -437,7 +434,7 @@ class CppConversionHelper:
         ]
         
         # Class declaration
-        lines.append(f"UCLASS()")
+        lines.append("UCLASS()")
         lines.append(f"class {blueprint.name.upper()}_API A{blueprint.name} : public {blueprint.parent_class}")
         lines.append("{")
         lines.append("    GENERATED_BODY()")
@@ -655,3 +652,4 @@ class BlueprintAnalyzer:
             )
         
         console.print(table)
+

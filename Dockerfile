@@ -1,3 +1,8 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#  UnrealMate - Dockerfile
+#  Author: G & E ZYNTH
+#  © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+# ═══════════════════════════════════════════════════════════════════════════════
 # UnrealMate Generated Dockerfile
 # Optimized for Unreal Engine build environment
 FROM ghcr.io/epicgames/unreal-engine:dev-5.4 AS builder

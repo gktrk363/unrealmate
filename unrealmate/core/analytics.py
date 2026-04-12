@@ -2,19 +2,18 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                          UnrealMate - Analytics                              ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Analytics and telemetry tracking                                   ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Controls usage tracking, performance metrics, and error reporting.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 import time
 import functools
-import platform
 import logging
 from typing import Dict, Any, Optional
 
@@ -50,7 +49,6 @@ class CommandTracker:
     """
     def __init__(self):
         from pathlib import Path
-        import json
         
         self.stats: Dict[str, int] = {}
         self.storage_dir = Path.home() / ".unrealmate"
@@ -124,3 +122,4 @@ class SentryIntegration:
         if self.initialized:
             # sentry_sdk.capture_exception(exception)
             logging.error(f"Sentry captured: {exception}")
+

@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                      UnrealMate - Performance Tuner                          ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  Purpose: Automated performance tuning for Unreal Engine projects            ║
 ║  Created: 2026-02-06                                                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,19 +10,16 @@
 Automated performance optimization and tuning system.
 Analyzes project settings and suggests/applies optimizations.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
-import os
 import re
-import json
-import configparser
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -506,7 +503,7 @@ class PerformanceTuner:
         report = """
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                     Performance Optimization Report                          ║
-║                           by gktrk363                                        ║
+║                           by G & E ZYNTH                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 """
@@ -542,5 +539,6 @@ class PerformanceTuner:
 
 
 # Developer signature
-DEVELOPER_SIGNATURE = "gktrk363"
+DEVELOPER_SIGNATURE = "G & E ZYNTH"
 MODULE_VERSION = "1.0.0"
+

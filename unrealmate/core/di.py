@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Dependency Injection                         ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Simple dependency injection container                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -272,3 +272,4 @@ def singleton(cls: Type[T]) -> Type[T]:
     """Decorator to register a class as a singleton."""
     container.register_singleton(cls)
     return cls
+

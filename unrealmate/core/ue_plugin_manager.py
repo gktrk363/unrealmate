@@ -2,29 +2,27 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Plugin Manager                               ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Manage Unreal Engine plugins - dependencies, conflicts, templates  ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import json
-import re
 import shutil
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import urlparse
 
 from rich.console import Console
 from rich.panel import Panel
-from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
+from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
@@ -726,7 +724,7 @@ class UEPluginManager:
             TextColumn("[bold blue]Scanning plugins..."),
             console=console,
         ) as progress:
-            task = progress.add_task("Scanning", total=None)
+            progress.add_task("Scanning", total=None)
             
             for uplugin in self.plugins_path.rglob("*.uplugin"):
                 plugin = PluginInfo.from_uplugin(uplugin)
@@ -812,3 +810,4 @@ class UEPluginManager:
         """Print the dependency tree."""
         tree = self.resolver.visualize()
         console.print(tree)
+

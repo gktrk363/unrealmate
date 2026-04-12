@@ -2,12 +2,12 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Async Operations                             ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Async/await utilities for I/O operations                           ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
@@ -284,3 +284,4 @@ def get_event_loop() -> asyncio.AbstractEventLoop:
 def shutdown_executor() -> None:
     """Shutdown the thread pool executor."""
     _executor.shutdown(wait=True)
+

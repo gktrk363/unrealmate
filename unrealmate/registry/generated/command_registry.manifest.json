@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "registry_version": 1,
+  "source": "unrealmate/registry/command_registry.toml",
+  "artifact_path": "unrealmate/registry/generated/command_registry.json",
+  "command_count": 59,
+  "checksum_sha256": "c70fff8bd971a487391c6a0b45de252e9a31400b3167cbdef10babe83126b002",
+  "registry_checksum_sha256": "c64e848e98e036760f63970ab467dd68364c612e7d1b87636f51e2c2af481d23",
+  "generated_at": null
+}

@@ -4,17 +4,17 @@
   <br>
 </h1>
 
-<h4 align="center">The AI-Powered CLI Companion for Unreal Engine Developers.</h4>
+<h4 align="center">CLI-first Unreal Engine workflow tooling.</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#documentation">Documentation</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#-current-surface">Current Surface</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-documentation">Documentation</a> •
+  <a href="#-contributing">Contributing</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.3-blue.svg?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.4-blue.svg?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square" alt="Python">
   <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/downloads-1k%2B%2Fmonth-brightgreen.svg?style=flat-square" alt="Downloads">
@@ -22,25 +22,21 @@
 </p>
 
 <div align="center">
-  <sub>Built with ❤︎ by <a href="https://github.com/gktrk363">gktrk363</a></sub>
+  <sub>Built with ❤︎ by <a href="https://github.com/gktrk363">G & E ZYNTH</a></sub>
 </div>
 
 <br>
 
-**UnrealMate** is a feature-rich command-line interface (CLI) designed to streamline your Unreal Engine workflow. From optimizing projects and managing plugins to tracking team performance and deploying CI/CD pipelines, UnrealMate handles the heavy lifting so you can focus on creating.
+**UnrealMate** is a CLI-first toolkit for Unreal Engine projects. The strongest current surface is the stable/default CLI: `doctor`, `config`, `git`, `asset`, `performance`, `plugin`, and local report export flows. `report dashboard` exists as an experimental secondary surface launched from the CLI.
 
 ---
 
-## ✨ Key Features
+## ✨ Current Surface
 
-*   **🔧 Git Automation**: Auto-configure `.gitignore` and `.gitattributes` (LFS) for UE projects.
-*   **📦 Asset Organization**: Scan and auto-organize your `Content` folder. Detect duplicates.
-*   **⚡ Optimization**: Analyze Blueprints, check Shader complexity, and audit memory usage.
-*   **👥 Collaboration**: View team activity dashboards (CLI & Web). Share templates.
-*   **🛒 Marketplace**: Search and manage assets directly from terminal.
-*   **🏗️ CI/CD Ready**: Generate Dockerfiles and CI pipelines for Jenkins/GitHub/GitLab.
-*   **🛡️ Secure**: Built-in project health checks (`doctor`) and security scans.
-*   **🤖 AI POWERED**: NLP commands (`ai nlp`), Bug Detection (`ai detect-bugs`), and Code Review.
+*   **Project checks**: `doctor`, `config validate`, `build info`
+*   **Project state management**: `git init`, `git lfs`, `git clean`, `plugin` commands
+*   **Project analysis**: `asset scan`, `asset duplicates`, `asset organize`, `performance profile`, `performance memory`, `performance shaders`
+*   **Local reporting**: `report html`, `report json`, and experimental `report dashboard`
 
 ---
 
@@ -48,7 +44,10 @@
 
 ```bash
 pip install unrealmate
+python -m unrealmate version
 ```
+
+After installation, you can run UnrealMate as either `python -m unrealmate` or the installed `unrealmate` command.
 
 ### Requirements
 *   Python 3.10 or higher
@@ -61,33 +60,52 @@ pip install unrealmate
 
 Detailed documentation is available in the project root:
 
-*   **[Kullanıcı Rehberi (Türkçe)](USER_GUIDE_TR.md)**: **Kapsamlı ve Detaylı Kullanım Kılavuzu.** (Önerilen)
-*   **[User Guide (English)](USER_GUIDE.md)**: Command reference.
-*   **[Deployment Guide](docs/DEPLOYMENT.md)**: For server hosting and CI/CD integration.
+*   **Canonical project status**: `docs/PROJECT_STATUS.md`
+*   **Product / UX reality snapshot**: `docs/PRODUCT_AND_UX_STATUS.md`
+*   **Generated command truth surfaces**: `docs/COMMAND_SURFACES.md`
 
 ---
 
-## 🎮 Quick Start
+## 🎮 First Run
+
+Most users should start with the stable/default CLI surface and inspection commands like these.
+
+Run these from your Unreal project root:
 
 ```bash
-# 1. Check system health
+# 1. Check local readiness
 unrealmate doctor
 
-# 2. Initialize project config
-unrealmate config init
+# 2. Review local config safely
+unrealmate config show
 
-# 3. Analyze performance
-unrealmate performance profile
+# 3. Scan project assets without changing files
+unrealmate asset scan Content
 
-# 4. Launch the visual dashboard
-unrealmate report dashboard
+# 4. Review local project metadata
+unrealmate build info .
+```
+
+Start with inspection commands like the examples above. Treat config setup, git setup or cleanup, plugin mutations, and local report exports as later steps once you are ready to change local state.
+
+Use `python -m unrealmate --help` for the stable/default CLI surface. Use `python -m unrealmate --help-all` when you want to review opt-in, experimental, mock, or secondary surfaces.
+
+---
+
+## 🧭 Use It On Your Project
+
+Run UnrealMate from your Unreal project root, or pass `<project-root>` to commands that accept a project path.
+
+```bash
+python -m unrealmate build info <project-root>
+python -m unrealmate plugin list <project-root>
 ```
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see `docs/CONTRIBUTING.md` (if available) or submit a Pull Request.
+Please read `docs/PROJECT_STATUS.md` first, then submit a Pull Request with tests.
 
 ---
 
@@ -95,4 +113,5 @@ We welcome contributions! Please see `docs/CONTRIBUTING.md` (if available) or su
 
 MIT License. See `LICENSE` for details.
 
-**Crafted with ❤ by gktrk363**
+**Crafted with ❤ by G & E ZYNTH**
+

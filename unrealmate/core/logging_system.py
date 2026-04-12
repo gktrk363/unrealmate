@@ -2,19 +2,18 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - Advanced Logging System                      ║
 ║                                                                              ║
-║  Author: gktrk363                                                            ║
+║  Author: G & E ZYNTH                                                            ║
 ║  GitHub: https://github.com/gktrk363/unrealmate                              ║
 ║  Purpose: Enhanced logging with rotation, formatting, and handlers           ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from __future__ import annotations
 
 import json
 import logging
-import sys
 from datetime import datetime
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from pathlib import Path
@@ -276,3 +275,4 @@ def configure_logging(
     """
     global logger
     logger = UnrealMateLogger(level=level, log_dir=log_dir)
+

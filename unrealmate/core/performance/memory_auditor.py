@@ -2,7 +2,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    UnrealMate - memory_auditor.py                            ║
 ║                                                                              ║
-║  Author: gktrk363                                                           ║
+║  Author: G & E ZYNTH                                                           ║
 ║  Purpose: Memory usage tracking and leak detection                          ║
 ║  Created: 2026-01-23                                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -10,11 +10,11 @@
 Memory auditing system for Unreal Engine projects.
 Tracks asset memory usage and identifies potential leaks.
 
-© 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+© 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
 """
 
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple
+from typing import List, Optional
 from dataclasses import dataclass
 from rich.table import Table
 from rich.console import Console
@@ -220,4 +220,5 @@ class MemoryAuditor:
                 console.print("  → Reduce sample rate\n")
 
 
-# © 2026 gktrk363 - Crafted with passion for Unreal Engine developers
+# © 2026 G & E ZYNTH - Crafted with passion for Unreal Engine developers
+
