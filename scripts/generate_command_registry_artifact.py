@@ -33,6 +33,11 @@ from unrealmate.registry.artifact import (  # noqa: E402
 )
 
 
+def _canonical_text_bytes(path: Path) -> bytes:
+    """Read UTF-8 text and normalize line endings for cross-platform checksums."""
+    return path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
 def _sync_file(path: Path, expected_content: str, check_only: bool) -> bool:
     current = path.read_text(encoding="utf-8") if path.exists() else None
     if current == expected_content:
@@ -56,7 +61,7 @@ def _build_payloads(artifact_path: Path) -> tuple[str, str]:
     parity = check_registry_cli_parity(registry=registry, strict=True)
     assert_registry_valid(registry=registry, parity_report=parity)
 
-    registry_checksum = sha256_bytes(default_registry_path().read_bytes())
+    registry_checksum = sha256_bytes(_canonical_text_bytes(default_registry_path()))
     artifact_payload = build_registry_artifact_payload(
         registry=registry,
         parity_report=parity,

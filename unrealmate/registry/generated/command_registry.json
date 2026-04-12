@@ -4,7 +4,7 @@
     "version": 1,
     "source": "unrealmate/registry/command_registry.toml",
     "coverage": "phase1",
-    "checksum_sha256": "c64e848e98e036760f63970ab467dd68364c612e7d1b87636f51e2c2af481d23"
+    "checksum_sha256": "0406c81be783102b5313cc037ea8f45ee3ae695e5a19c185c4685d14eda09ee4"
   },
   "parity": {
     "registry_count": 59,

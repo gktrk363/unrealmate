@@ -140,3 +140,17 @@ def test_artifact_generator_check_mode_detects_stale_artifact(tmp_path: Path) ->
     assert check_proc.returncode == 1
     assert "out of date" in check_proc.stdout.lower()
     assert str(output_path) in check_proc.stdout
+
+
+def test_artifact_generator_registry_checksum_is_line_ending_invariant(tmp_path: Path) -> None:
+    output_path = tmp_path / "command_registry.json"
+    manifest_path = tmp_path / "command_registry.manifest.json"
+
+    proc = _run_generator(output_path=output_path, manifest_path=manifest_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+    artifact = json.loads(output_path.read_text(encoding="utf-8"))
+    registry_bytes = (REPO_ROOT / "unrealmate" / "registry" / "command_registry.toml").read_bytes()
+    lf_normalized = registry_bytes.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+    assert artifact["registry"]["checksum_sha256"] == sha256_bytes(lf_normalized)

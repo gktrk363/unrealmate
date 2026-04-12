@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -71,6 +72,6 @@ def test_asset_duplicates_cli_by_content_mode_is_stable(monkeypatch, tmp_path: P
 
     assert result.exit_code == 0
     assert "Found 1 duplicate groups" in result.output
-    assert "Texture_A.png" in result.output
-    assert "Texture_B.png" in result.output
-
+    squashed_output = re.sub(r"\s+", "", result.output)
+    assert "Texture_A.png" in squashed_output
+    assert "Texture_B.png" in squashed_output
